@@ -1,12 +1,12 @@
 .profile_section {
     margin-top: 2px;
-    /* max-width: 85%; */
+    max-width: 100%;
+    
     border-radius: 5px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
   }
-
-  
   .image img{
     width:20rem;
     border:1px solid black;
