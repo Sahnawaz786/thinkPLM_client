@@ -25,9 +25,41 @@ class PartServices {
         }
     }
 
+    async editPartById(id,partData) {
+        try {
+            const response = await axios.put(`${this.baseURL}/SupplierMasterObject/${id}`,partData);
+
+            if (response.status!=200) {
+                throw new Error(`Failed to add part: ${response.statusText}`);
+            }
+            return await response;
+        } catch (error) {
+            console.error('Error adding part:', error);
+            return null;
+        }
+    }
+
     async getPartById(id) {
         try {
             const response = await axios.get(`${baseURL}/SupplierMasterObject1/${id}`);
+            if (response.status!==200) {
+                throw new Error(`Failed to fetch parts: ${response.statusText}`);
+            }
+            return await response;
+        } catch (error) {
+            console.error('Error fetching parts:', error);
+            return null;
+        }
+    }
+
+    
+    async getPartHistoryById(id) {
+        try {
+            console.log({testID:id});
+
+            const response = await axios.get(`${baseURL}/SupplierMasterObject/${id}`);
+            console.log({testResponse:response});
+            
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }

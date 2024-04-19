@@ -19,7 +19,7 @@ const PartTable = () => {
 
   const navigate = useNavigate();
 
-  const deleteUser = (id) => {
+  const deletePartBtn = (id) => {
     setId(id);
     if (!users.includes(id)) {
       setUser([...users, id]);
@@ -34,6 +34,10 @@ const PartTable = () => {
     console.log('The value of alert is ', showAlert);
   };
 
+  const handlePartEditBtn = async ()=>{
+       navigate(`/edit-part/${id}`)
+  }
+
   useEffect(() => {
     if (choice) {
       const newData = data.filter((elem) => !users.includes(elem.id));
@@ -44,7 +48,11 @@ const PartTable = () => {
 
   const handleAPI = async () => {
     const response = await getPart();
-    setData(response.data);
+
+    const newPartsData = response?.data.map(elem => {
+      return { ...elem, parts: [elem?.parts?.sort((a, b) => b.id - a.id)?.[0]] }
+    })
+    setData(newPartsData);
     console.log('Parts', response.data);
   };
 
@@ -100,6 +108,9 @@ const PartTable = () => {
             width={30}
             height={30}
             alt=''
+            onClick={() => {
+              handlePartEditBtn();
+            }}
           />
         </div>
         <div className={styles.searchSection}>
@@ -112,18 +123,14 @@ const PartTable = () => {
           <tr>
             <th></th>
             <th>Sl.No</th>
+            <th>Created By</th>
             <th>Supplier Name</th>
             <th>state</th>
             <th>Version</th>
             <th>Iteration</th>
-            <th>Mpm Number</th>
-            <th>Modified Date</th>
+            <th>Mpn Number</th>
             <th>Created Date</th>
-            <th>Compliance Info</th>
-            <th>Cost</th>
-            <th>Material</th>
-            <th>Dimension</th>
-            <th>Quality Matrices</th>
+            <th>Modified Date</th>
             <th></th>
           </tr>
         </thead>
@@ -131,12 +138,15 @@ const PartTable = () => {
           {data.map((elem, index) => (
             <tr key={elem.id}>
               <td>
-                <input onClick={() => deleteUser(elem.id)} type='checkbox' />
+                <input onClick={() => deletePartBtn(elem.id)} type='checkbox' />
               </td>
 
               <td>{index + 1}</td>
+              <td>John</td>
+
 
               <td>{elem?.parts[0]?.supplier_name}</td>
+
 
               <td className={styles.open}>
                 Open{' '}
@@ -153,16 +163,13 @@ const PartTable = () => {
 
               <td>{elem?.parts[0]?.mpn_number}</td>
 
-              <td>{elem?.parts[0]?.modifiedDate}</td>
-
               <td>{elem?.createdDate}</td>
 
-              <td>{elem?.parts[0]?.compliance_information}</td>
 
-              <td>{elem?.parts[0]?.cost}</td>
-              <td>{elem?.parts[0]?.material}</td>
-              <td>{elem?.parts[0]?.dimension}</td>
-              <td>{elem?.parts[0]?.quality_matrices}</td>
+              <td>{elem?.parts[0]?.modifiedDate}</td>
+
+
+              
               <td>
                 <img
                   src='https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid'

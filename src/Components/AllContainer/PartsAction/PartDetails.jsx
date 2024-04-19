@@ -9,14 +9,14 @@ const PartDetails = ({ id }) => {
   const [partInformation, setPartInformation] = useState([]);
 
   const navigate = useNavigate();
-  const { getPartById } = new PartServices();
+    const { getPartById } = new PartServices();
 
   const getPartApi = async (id) => {
     const partInfo = await getPartById(id);
     console.log('part info data', { partInfo });
-    const newParts = (partInfo?.parts || [])
+    const newParts = (partInfo?.data.parts || [])
       .map((elem) => {
-        return { ...elem, createdDate: partInfo?.createdDate };
+        return { ...elem, createdDate: partInfo?.data?.createdDate };
       })
       .sort((a, b) => b.id - a.id)?.[0];
     const newPartsData = { ...partInfo, parts: [newParts || {}] };
@@ -24,12 +24,13 @@ const PartDetails = ({ id }) => {
   };
   useEffect(() => {
     getPartApi(id);
-  }, [id]);
+  }, []);
   console.log('part state', partInformation);
   return (
     <>
       {/* here */}
       <PartContainer id={id}>
+        <div>
         <div className={classes.part_details_paragrah}>
           <p className={classes.part_details_heading}>Part Details:-</p>
           <div className={classes.image_part}>
@@ -49,26 +50,34 @@ const PartDetails = ({ id }) => {
                         <p>System:-</p>
                       </div>
                       <p>
-                        <strong>Created Date:</strong> {part.data.createdDate}
+                        <strong>Created Date:</strong> {part?.data?.createdDate}
                       </p>
 
                       <p>
                         <strong>Modified Date:</strong>{' '}
-                        {part.data.parts[0].modifiedDate}
+                        {part?.data?.parts[0].modifiedDate}
                       </p>
 
                       <p>
-                        <strong>Description:</strong> {part.data.description}
+                        <strong>Description:</strong> {part?.data?.description}
                       </p>
 
                       <p>
-                        <strong>Part Name:</strong> {part.data.part_name}
+                        <strong>Part Name:</strong> {part?.data?.part_name}
                       </p>
                       <p>
-                        <strong>Part No.:</strong> {part.data.part_number}
+                        <strong>Part No.:</strong> {part?.data?.part_number}
                       </p>
                     </div>
-                    {part.data.parts.map((childParts, i) => {
+                    
+                  </div>
+                </>
+              );
+            })}
+          </div>
+        </div>
+        <div className={classes.bottomDetails}>
+        {partInformation[0]?.parts?.map((childParts, i) => {
                       return (
                         <>
                           <div key={i} className={classes.child_part}>
@@ -109,11 +118,7 @@ const PartDetails = ({ id }) => {
                         </>
                       );
                     })}
-                  </div>
-                </>
-              );
-            })}
-          </div>
+        </div>
         </div>
       </PartContainer>
       {/* here */}

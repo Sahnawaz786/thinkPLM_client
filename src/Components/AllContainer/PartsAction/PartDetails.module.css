@@ -1,0 +1,94 @@
+.profile_section {
+}
+/*  */
+.image img {
+  width: 20rem;
+  border: 1px solid black;
+  margin: 15px;
+  height: 13.5rem;
+}
+
+.image_part {
+  display: flex;
+}
+
+.part_container {
+  display: flex;
+  /* justify-content: center; */
+  flex-direction: column;
+  margin: 16px;
+}
+.master_part {
+  max-width: 54rem;
+  width: 53rem;
+  max-height: auto;
+  height: 13.5rem;
+  border: 1px solid black;
+  padding: 20px;
+  position: relative;
+}
+.masterpart_header {
+  position: absolute;
+  top: -23px; /* Adjust this value as needed */
+  left: 10px; /* Adjust this value as needed */
+  background-color: white;
+  padding: 0 5px;
+  /* border: 1px solid black; */
+  border-radius: 5px;
+}
+.masterpart_header p {
+  font-size: 20px;
+  font-weight: bold;
+}
+.master_part p {
+  margin: 5px;
+}
+
+.child_part {
+  width: 75rem;
+  max-height: auto;
+  height: 10rem;
+  border: 1px solid black;
+  padding: 20px;
+  margin-top: 40px;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-left: 10px;
+  position: relative;
+}
+.child_part p {
+  margin: 3px;
+}
+
+.childpart_header {
+  position: absolute;
+  top: -21px; /* Adjust this value as needed */
+  left: 10px; /* Adjust this value as needed */
+  background-color: white;
+  padding: 0 5px;
+  /* border: 1px solid black; */
+  border-radius: 5px;
+}
+.childpart_header p {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.childpart_header p {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.part_details_paragrah .part_details_heading {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bolder;
+  text-decoration: underline;
+}
+
+/* .bottomDetails{
+    border: 10px solid red;
+} */

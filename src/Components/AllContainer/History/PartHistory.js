@@ -1,12 +1,15 @@
 import InfoIcon from "@mui/icons-material/Info";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PartServices from "../../../services/parts.services";
 import PartContainer from '../PartContainer';
+import { PartsContext } from '../../../store/PartsProvider';
 
 const PartHistory = ({id}) => {
   const [histories, setPartHistories] = useState([]);
   const { getPartHistoryById } = new PartServices();
+
+  const {setPartsHistory} = useContext(PartsContext);
  
  const navigate=useNavigate();
   console.log({'ParanstestIDDD': id});
@@ -18,12 +21,13 @@ const PartHistory = ({id}) => {
       console.log({partInfo})
 
       const newPartInfo = (partInfo?.data.parts || []).map(elem => {
-        return { ...elem, part_name: partInfo?.data.part_name, part_number: partInfo?.data.part_number,createdDate:partInfo.data.createdDate }
+        return { ...elem, part_name: partInfo?.data.part_name, part_number: partInfo?.data?.part_number,createdDate:partInfo.data.createdDate }
       }).sort((a, b) => b.iteration_info - a.iteration_info);
       console.log({partInfo, newPartInfo});
       // const newPartsData = {...partInfo, parts: newPartInfo}
       // console.log({newPartsData})
       setPartHistories(newPartInfo || []);
+      setPartsHistory(partInfo.data || {});
     
   };
   useEffect(() => {
@@ -31,8 +35,8 @@ const PartHistory = ({id}) => {
   }, []);
   console.log(histories);
 
-  const InformationHistoryFun = (id) => {
-    navigate("/part-historyInfo/" + id);
+  const InformationHistoryFun = (childId) => {
+    navigate(`/part-historyInfo/${id}/${childId}`);
   };
 
   return (
@@ -67,7 +71,7 @@ const PartHistory = ({id}) => {
                 return (
                 
                     <tr key={index}>
-                      <td>{index}</td>
+                      <td>{index+1}</td>
                       <td>{part.part_name}</td>
                       <td>{part.part_number}</td>
                       <td>{part.iteration_info}</td>
