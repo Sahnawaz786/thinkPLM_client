@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import PartContainer from '../PartContainer';
 import HashLoader from 'react-spinners/HashLoader';
 import styles from '../../../style.module.css';
+import PartContainer from '../PartContainer';
 
 const Structure = ({ id }) => {
 

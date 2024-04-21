@@ -20,6 +20,13 @@
   text-decoration: underline;
  }
 
+ .activeBtn{
+  border-color: #0b0b0b !important;
+  background-color: #f7f9fa !important;
+  color:rgb(14, 13, 13) !important;
+  border-bottom: none !important;
+}
+
 .tab_nav{
   display: flex;
   justify-content: space-between;

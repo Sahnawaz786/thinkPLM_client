@@ -4,13 +4,15 @@ import styles from '../style.module.css';
 import Structure from './AllContainer/BomStructure/Structure';
 import PartHistory from './AllContainer/History/PartHistory';
 import PartHistoryInfo from './AllContainer/History/PartHistoryInfo';
+import EditPart from './AllContainer/PartsAction/EditPart';
 import PartDetails from './AllContainer/PartsAction/PartDetails';
+import SupplierDetails from './AllContainer/SupplierActions/SupplierDetails';
+import SupplierReferenceObject from './AllContainer/SupplierActions/SupplierReferenceObject';
 import Contract from './Contract';
 import OnBoard from './OnBoard';
 import PartManagementPage from './Pages/PartManagementPage';
 import SupplierPage from './Pages/SupplierPage';
 import PartTable from './PartTable';
-import EditPart from './AllContainer/PartsAction/EditPart';
 
 const RightBar = () => {
   let location = useLocation();
@@ -65,6 +67,20 @@ const RightBar = () => {
         componentToRender = <EditPart id={id} />;
       }
       break;
+      case `/supplier-details/${id}`:
+        if (id) {
+          componentToRender = <SupplierDetails id={id} />;
+        }
+      break;
+
+      case `/reference-object/${id}`:
+        if (id) {
+          componentToRender = <SupplierReferenceObject id={id} />;
+        }
+      break;
+
+      default :
+          componentToRender = <PartTable />
   }
 
   return <div className={styles.rightbarConatiner}>{componentToRender}</div>;

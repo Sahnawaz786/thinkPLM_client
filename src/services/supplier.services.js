@@ -22,7 +22,7 @@ class SupplierServices {
 
     async getSupplierById(id) {
         try {
-            const response = await axios.get(`${baseURL}/getsuppliers/${id}`);
+            const response = await axios.get(`${baseURL}/getIdsuppliers/${id}`);
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }

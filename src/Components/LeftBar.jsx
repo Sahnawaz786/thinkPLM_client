@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import { ImCross } from 'react-icons/im';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from '../style.module.css';
 import SupplierServices from '../services/supplier.services';
+import styles from '../style.module.css';
 
 const LeftBar = () => {
   const navigate = useNavigate();
@@ -91,7 +91,7 @@ const LeftBar = () => {
                     </div>
                     {elem.isVisible ? (
                       <div className={styles.leftbarOptions}>
-                        <Link to={`/part-details/${elem.id}`}>Details</Link>
+                        <Link to={`/supplier-details/${elem.id}`}>Details</Link>
                         <Link to={'/onboard-status'}>Onboarding status</Link>
                         <Link to='/contract-details'>View Contract details</Link>
                       </div>

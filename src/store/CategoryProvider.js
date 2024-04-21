@@ -176,7 +176,7 @@ const CategoryProvider = (props) => {
 
   const getResultManufacturer = async () => {
     // `http://localhost:8181/suppliers1/${"manufacturer"}`
-    //https://kkh-mech-default-rtdb.firebaseio.com/manufacturer.json
+  
     try {
       const res = await fetch(
         `http://localhost:8181/suppliers1/${"manufacturer"}`

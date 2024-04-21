@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PartServices from "../../../services/parts.services";
-import PartContainer from "../PartContainer";
+import PartContainer from "../PartContainer/PartContainer";
 import classes from '../PartsAction/PartDetails.module.css';
 import styles  from '../../../style.module.css';
 import HashLoader from 'react-spinners/HashLoader';

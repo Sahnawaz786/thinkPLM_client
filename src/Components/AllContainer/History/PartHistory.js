@@ -1,11 +1,10 @@
-import InfoIcon from "@mui/icons-material/Info";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HashLoader from 'react-spinners/HashLoader';
 import PartServices from "../../../services/parts.services";
-import PartContainer from '../PartContainer';
 import { PartsContext } from '../../../store/PartsProvider';
 import styles from '../../../style.module.css';
-import HashLoader from 'react-spinners/HashLoader';
+import PartContainer from '../PartContainer/PartContainer';
 
 const PartHistory = ({ id }) => {
   const [histories, setPartHistories] = useState([]);

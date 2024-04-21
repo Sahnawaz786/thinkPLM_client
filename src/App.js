@@ -20,6 +20,8 @@ function App() {
           <Route path="/part-history/:id" element={<></>} />
           <Route path="/part-historyInfo/:pid/:cid" element={<></>} />
           <Route path="/edit-part/:id" element={<></>} />
+          <Route path="/supplier-details/:id" element={<></>} />
+          <Route path="/reference-object/:id" element={<></>} />
         </Routes>
       </Router>
     </div>

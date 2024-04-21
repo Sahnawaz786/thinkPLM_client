@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PartServices from '../../../services/parts.services';
-import PartContainer from '../PartContainer';
-import classes from './PartDetails.module.css';
-import styles from '../../../style.module.css';
 import HashLoader from 'react-spinners/HashLoader';
+import PartServices from '../../../services/parts.services';
+import styles from '../../../style.module.css';
+import PartContainer from '../PartContainer/PartContainer';
+import classes from './PartDetails.module.css';
 
 const PartDetails = ({ id }) => {
+ 
   const [partInformation, setPartInformation] = useState([]);
 
   const [timer, setTimer] = useState(true);
@@ -16,6 +17,7 @@ const PartDetails = ({ id }) => {
 
   const getPartApi = async (id) => {
     const partInfo = await getPartById(id);
+    // console.log('part info data', { partInfo });
     const newParts = (partInfo?.data.parts || [])
       .map((elem) => {
         return { ...elem, createdDate: partInfo?.data?.createdDate };
