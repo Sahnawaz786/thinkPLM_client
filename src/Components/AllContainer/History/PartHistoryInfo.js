@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom";
 import PartServices from "../../../services/parts.services";
 import PartContainer from "../PartContainer";
 import classes from '../PartsAction/PartDetails.module.css';
+import styles  from '../../../style.module.css';
+import HashLoader from 'react-spinners/HashLoader';
 
 const PartHistoryInfo = ({ pid, id }) => {
   const [partInformation, setPartInformation] = useState([]);
+  const [timer,setTimer] = useState(true)
   const { getPartHistoryById } = new PartServices();
   const navigate = useNavigate();
 
@@ -41,13 +44,22 @@ const PartHistoryInfo = ({ pid, id }) => {
     getPartApi(id);
   }, [id]);
 
+  useEffect(()=>{
+    setTimeout(()=>{
+       setTimer(false)
+    },1000)
+  })
+
   console.log("PARTINFO", partInformation);
 
 
   return (
-    <>
+    timer ? <div className={styles.spinnerContainer}>
+    {' '}
+    <HashLoader color='#0E6EFD' />{' '}
+  </div> :
       <PartContainer id={pid}>
-        <div>
+        <div className={classes.detailContainer}>
 
         <div className={classes.profile_section}>
           <div className={classes.part_details_paragrah}>
@@ -147,7 +159,7 @@ const PartHistoryInfo = ({ pid, id }) => {
 
         </div>
       </PartContainer>
-    </>
+    
   );
 };
 

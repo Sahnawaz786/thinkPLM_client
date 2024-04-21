@@ -3,8 +3,8 @@
     max-width: 100%;
     
     border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* background-color: #fff; */
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
     
   }
   .image img{
@@ -36,7 +36,7 @@
   color:white;
   /* box-shadow: 0 15px 20px rgba(0,0,0,0.6); */
 }
-.tab_buttons button.selected{
+/* .tab_buttons button.selected{
   font-weight: bold;
   margin:5px;
   padding:8px;
@@ -46,7 +46,15 @@
   color:rgb(14, 13, 13);
   border-bottom: none;
   /* box-shadow: 0 15px 20px rgba(0,0,0,0.6); */
+
+
+.activeBtn{
+  border-color: #0b0b0b !important;
+  background-color: #f7f9fa !important;
+  color:rgb(14, 13, 13) !important;
+  border-bottom: none !important;
 }
+
 .container_paragraph{
  margin-top: 6px;
 }

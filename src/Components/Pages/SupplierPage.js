@@ -1,16 +1,20 @@
 import { useContext, useEffect, useState } from 'react';
-import ClipLoader from "react-spinners/ClipLoader";
+import HashLoader from "react-spinners/HashLoader";
 import { categoryContext } from '../../store/CategoryProvider';
 import ManufacturerForm from '../Form/Supplier/ManufacturerForm';
 import Tier1 from '../Form/Supplier/Tier1';
 import Tier2 from '../Form/Supplier/Tier2';
 import VendorForm from '../Form/Supplier/VendorForm';
 import classes from './SupplierPage.module.css';
+import spinnerStyle from './../../style.module.css';
 
 const SupplierPage = () => {
 
   const categoryItemsCtx = useContext(categoryContext);
   console.log(categoryItemsCtx)
+
+  const [timer, setTimer] = useState(true);
+
 
   const [selected, setSelected] = useState('');
   const handleChange = (e) => {
@@ -46,13 +50,12 @@ const SupplierPage = () => {
     localStorage.removeItem('tier2')
   }
 
-  const [timer, setTimer] = useState(true);
 
   useEffect(() => {
     setTimer(true);
     const timeout = setTimeout(() => {
       setTimer(false);
-    }, 500)
+    }, 1000)
     return (() => clearTimeout(timeout));
 
   }, [selected])
@@ -92,7 +95,11 @@ const SupplierPage = () => {
           <div className={classes.components}>
 
             {
-              timer ? <ClipLoader /> : <>
+               timer ?  <div className={spinnerStyle.spinnerContainer}>
+               {' '}
+               <HashLoader color='#0E6EFD' />{' '}
+             </div>
+            : <>
                 {selected === "manufacturer" ? <ManufacturerForm /> : ""}
                 {selected === "vendor" ? <VendorForm /> : ""}
                 {selected === "tier1" ? <Tier1 /> : ""}

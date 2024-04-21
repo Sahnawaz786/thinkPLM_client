@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PartContainer from '../PartContainer';
+import HashLoader from 'react-spinners/HashLoader';
+import styles from '../../../style.module.css';
 
-const Structure = ({id}) => {
+const Structure = ({ id }) => {
+
+  const [timer, setTimer] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTimer(false);
+    }, 1000)
+  })
 
   return (
-    <>
-    <PartContainer id={id}>
-  
-    <h1>Bom Structure</h1>
-   
-    </PartContainer>
-    </>
+    timer ? <div className={styles.spinnerContainer}>
+      {' '}
+      <HashLoader color='#0E6EFD' />{' '}
+    </div> :
+      <>
+        <PartContainer id={id}>
+
+          <div style={{backgroundColor:'whitesmoke'}}>
+            <h1>Bom Structure</h1>
+          </div>
+
+        </PartContainer>
+      </>
   )
 }
 

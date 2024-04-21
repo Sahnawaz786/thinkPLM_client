@@ -1,6 +1,6 @@
 import SettingsIcon from '@mui/icons-material/Settings';
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import PartServices from '../../services/parts.services';
 import classes from './PartContainer.module.css';
 
@@ -8,6 +8,11 @@ import classes from './PartContainer.module.css';
 const PartContainer = ({ children, id }) => {
 
   const [partInformation, setPartInformation] = useState([]);
+
+  const [activeBtn,setActiveBtn] = useState('');
+  const {pathname} = useLocation();
+
+
   console.log("part-container id", { id })
 
   const navigate = useNavigate();
@@ -32,25 +37,31 @@ const PartContainer = ({ children, id }) => {
     getPartApi(id);
   }, [id])
 
+  useEffect(()=>{
+    let url = pathname.split('/')[1];
+    setActiveBtn(url);
+    console.log("ACTIVEBTN ",activeBtn);
+  })
+
   console.log(partInformation)
   // console.log(id)
 
   const historyHandler = () => {
-   
+
     navigate('/part-history/' + id)
 
   }
 
   const structureHandler = () => {
-    
+
     navigate('/bom-structure/' + id)
-   
+
   }
 
   const detailsHandler = () => {
-    
+
     navigate('/part-details/' + id)
-   
+
   }
 
 
@@ -69,9 +80,9 @@ const PartContainer = ({ children, id }) => {
           <div className={classes.tab_nav}>
 
             <div className={classes.tab_buttons}>
-              <button onClick={() => detailsHandler()} >Details</button>
-              <button onClick={() => structureHandler()} >Structure</button>
-              <button onClick={() => historyHandler()} >History</button>
+              <button className={activeBtn == 'part-details' ? classes.activeBtn : ''} onClick={() => detailsHandler()} >Details</button>
+              <button className={activeBtn == 'bom-structure' ? classes.activeBtn : ''} onClick={() => structureHandler()} >Structure</button>
+              <button className={activeBtn == 'part-history' ? classes.activeBtn : ''} onClick={() => historyHandler()} >History</button>
             </div>
 
             <div className={classes.linkarea}>

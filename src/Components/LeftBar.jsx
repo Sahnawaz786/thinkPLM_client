@@ -35,7 +35,7 @@ const LeftBar = () => {
 
   useEffect(() => {
     handleAPI();
-  }, []);
+  },[]);
 
   return (
     <div className={styles.leftbar}>
