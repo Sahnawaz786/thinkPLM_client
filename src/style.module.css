@@ -57,7 +57,12 @@
   margin-left: 20px;
   margin-top: 20px;
   width:25%;
-  height: 100vh;
+  /* height: 100vh; */
+}
+
+.home{
+  color: black;
+  text-decoration: none;
 }
 
 .leftbarChild{
@@ -142,4 +147,16 @@ td{
 th{
   background-color: #45546c;
   color: white;
+}
+
+
+.spinnerContainer {
+  position: fixed;
+  top: 14%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  z-index: 9999; /* Ensure it's on top of other elements */
+  padding: 20px;
+  border-radius: 5px;
+  display: flex;
 }

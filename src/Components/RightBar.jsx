@@ -18,7 +18,7 @@ const RightBar = () => {
   let pid = location.pathname.split('/').slice(-2)[0];
   console.log({ id });
 
-  console.log("PATHNAME",pid,id);
+  console.log('PATHNAME', pid, id);
 
   let componentToRender = <PartTable />;
 
@@ -44,28 +44,27 @@ const RightBar = () => {
       }
       break;
     case `/bom-structure/${id}`:
-        if (id) {
-          componentToRender = <Structure id={id} />;
-        }
+      if (id) {
+        componentToRender = <Structure id={id} />;
+      }
       break;
 
-      case `/part-history/${id}`:
-        if (id) {
-          componentToRender = <PartHistory id={id} />;
-        }
+    case `/part-history/${id}`:
+      if (id) {
+        componentToRender = <PartHistory id={id} />;
+      }
       break;
 
-      case `/part-historyInfo/${pid}/${id}`:
-        if (id) {
-          componentToRender = <PartHistoryInfo pid={pid} id={id} />;
-        }
+    case `/part-historyInfo/${pid}/${id}`:
+      if (id) {
+        componentToRender = <PartHistoryInfo pid={pid} id={id} />;
+      }
       break;
-      case `/edit-part/${id}`:
-        if (id) {
-          componentToRender = <EditPart id={id} />;
-        }
+    case `/edit-part/${id}`:
+      if (id) {
+        componentToRender = <EditPart id={id} />;
+      }
       break;
-      
   }
 
   return <div className={styles.rightbarConatiner}>{componentToRender}</div>;

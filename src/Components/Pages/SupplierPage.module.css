@@ -16,8 +16,9 @@
 
 
 .components{
-    display: flex;
-    justify-content: center;
+    /* display: flex; */
+    /* justify-content: center; */
+    margin: 10px;
 }
 .container{
   
@@ -54,7 +55,7 @@
 .headerContainer{
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid black;
+    /* border-bottom: 1px solid black; */
     align-items: center;
     margin-bottom: 15px;
     height: 62px;

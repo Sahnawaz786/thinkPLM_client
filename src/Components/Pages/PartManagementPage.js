@@ -4,6 +4,8 @@ import { categoryContext } from '../../store/CategoryProvider';
 import CustomParts from '../Form/Parts/CustomParts';
 import StandardParts from '../Form/Parts/StandardParts';
 import classes from './SupplierPage.module.css';
+import HashLoader from 'react-spinners/HashLoader';
+import spinnerStyle from '../../style.module.css'
 
 const PartManagementPage = () => {
 
@@ -67,19 +69,14 @@ const PartManagementPage = () => {
 
       <div className={classes.supplierContainer} >
 
-
-        <div className={classes.supplier_page}>
-         
-        </div>
         <div className={classes.components}>
 
-          {
-            timer ? <ClipLoader /> : <>
+          <>
               {selected === "standard parts" ? <StandardParts /> : ""}
               {selected === "custom parts" ? <CustomParts /> : ""}
               
             </>
-          }
+          
 
 
         </div>
