@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { useContext } from 'react';
 import { UserContext } from '../store/UserProvider';
-import styles from '../style.module.css';
 
 const DisplayAlert = () => {
   const [showModal, setShowModal] = useState(false);
@@ -24,7 +22,7 @@ const DisplayAlert = () => {
         <Modal.Header closeButton>
           <Modal.Title>Delete User</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you Sure you want to delete the User ?</Modal.Body>
+        <Modal.Body>Are you Sure you want to delete ?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={()=>{setChoice(false);setShowAlert(false);handleClose()}}>
             Cancel

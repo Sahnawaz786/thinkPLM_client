@@ -8,7 +8,7 @@ import classes from './SupplierContainer.module.css';
 const SupplierContainer = ({ children, id }) => {
 
   const [supplierInformation, setSupplierInformation] = useState([]);
-  console.log("part-container id", { id })
+  console.log("supplier container id", { id })
 
   const navigate = useNavigate();
   const {getSupplierById}=new SupplierServices()
@@ -17,7 +17,7 @@ const SupplierContainer = ({ children, id }) => {
   const getSupplierApi = async (id) => {
 
     const partInfo = await getSupplierById(id);
-    console.log("part container data:", { partInfo })
+    console.log("supplier container data:", { partInfo })
     const newParts = (partInfo?.data || [])
     setSupplierInformation(newParts);
 
