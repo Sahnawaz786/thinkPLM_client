@@ -35,7 +35,7 @@ class SupplierServices {
 
     async deleteSupplier(id) {
         try {
-            const response = await axios.delete(`${baseURL}/getsuppliers/${id}`);
+            const response = await axios.delete(`${baseURL}/deletesuppliers/${id}`);
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
@@ -46,14 +46,14 @@ class SupplierServices {
         }
     }
 
-    async addSupplier(partData) {
+    async updateSupplier(supplierData) {
         try {
-            const response = await axios.post(`${this.baseURL}/SupplierMasterObject`, {
+            const response = await axios.post(`${this.baseURL}/updateSuppliers`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(partData)
+                body: JSON.stringify(supplierData)
             });
             if (response.status!=200) {
                 throw new Error(`Failed to add part: ${response.statusText}`);
@@ -65,21 +65,15 @@ class SupplierServices {
         }
     }
 
-    async updatePart(id,partData) {
+    async getFileDownload(id) {
         try {
-            const response = await axios.post(`${this.baseURL}/SupplierMasterObject/${id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(partData)
-            });
-            if (response.status!=200) {
-                throw new Error(`Failed to add part: ${response.statusText}`);
+            const response = await axios.get(`${baseURL}/downloadFile/${id}`);
+            if (response.status!==200) {
+                throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
-            return await response.json();
+            return await response;
         } catch (error) {
-            console.error('Error adding part:', error);
+            console.error('Error fetching parts:', error);
             return null;
         }
     }
