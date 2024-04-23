@@ -65,10 +65,10 @@ class SupplierServices {
         }
     }
 
-    async updatePart(id,partData) {
+    async updateSupplier(partData) {
         try {
-            const response = await axios.post(`${this.baseURL}/SupplierMasterObject/${id}`, {
-                method: 'POST',
+            const response = await axios.post(`${this.baseURL}/updateSuppliers`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },

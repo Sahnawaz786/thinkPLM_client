@@ -5,6 +5,7 @@ import PartServices from "../../../services/parts.services";
 import { PartsContext } from '../../../store/PartsProvider';
 import styles from '../../../style.module.css';
 import PartContainer from '../PartContainer/PartContainer';
+import tableStyle from '../../../style.module.css';
 
 const PartHistory = ({ id }) => {
   const [histories, setPartHistories] = useState([]);
@@ -55,18 +56,12 @@ const PartHistory = ({ id }) => {
     </div> :
       <PartContainer id={id}>
         <div style={{ marginTop: "30px" }}>
-          <h4 style={{ fontSize: "20px", textDecoration: "underline" }}>
-            Part History:-
-          </h4>
+         
 
           <div className="container mt-5" style={{ maxWidth: "100%" }}>
-            <table
-              className="table table-sm table-striped table-hover table-bordered "
-              style={{ fontSize: "12px" }}
-            >
-              <thead className="table-dark">
+            <table>
+              <thead>
                 <tr>
-                  <th scope="col">Serial no.</th>
                   <th scope="col">Part Name</th>
                   <th scope="col">Part Number</th>
                   <th scope="col">Iteration Info</th>
@@ -83,7 +78,6 @@ const PartHistory = ({ id }) => {
                   return (
 
                     <tr key={index}>
-                      <td>{index + 1}</td>
                       <td>{part.part_name}</td>
                       <td>{part.part_number}</td>
                       <td>{part.iteration_info}</td>

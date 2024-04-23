@@ -1,16 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import classes from "../../Form/AllForm.module.css";
+import spinnerStyle from "../../../style.module.css";
 import { categoryContext } from "../../../store/CategoryProvider";
 import PartServices from '../../../services/parts.services';
-
-// import {message} from "antd";
+import styles from '../../Form/Parts/PartAttribut.module.css';
+import HashLoader from 'react-spinners/HashLoader';
+import { Button } from 'react-bootstrap';
+import classes from "../../Form/AllForm.module.css";
 
 const EditPart = ({id}) => {
 
   const {getPartById} = new PartServices();
 
   const categoryItemsCtx = useContext(categoryContext);
+
+  const [timer,setTimer] = useState(false);
 
 
   const navigate = useNavigate();
@@ -104,153 +108,181 @@ const EditPart = ({id}) => {
     }
    };
 
-  return (
-    <>
-      <h3>Part Management</h3>
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}
-      >
-        <div className={classes.container_align}>
-          <div className={classes.container}>
-            <form className={classes.form} onSubmit={submitHandler}>
-              <h3>Custom Parts</h3>
-              <div className={classes.content}>
-                <div className={classes.input}>
-                  <label htmlFor="text">Part Number(Non-Editable)</label>
-                  <input
-                    type="text"
-                    name="part_number"
-                    value={userData?.data?.part_number}
-                    onChange={postUser}
-                    readOnly
-                  />
+   return (
+    timer ?  <div className={spinnerStyle.spinnerContainer}>
+            {' '}
+            <HashLoader color='#0E6EFD' />{' '}
+          </div>
+         :
+    <div>
+      {/* <h3>Part Management</h3> */}
+      <div className={styles.parentContainer}>
+        <div className={styles.childContainer}>
+          <div className={styles.systemAttribute}>
+            <div className={styles.part_container}>
+              <div className={styles.master_part}>
+                <div className={styles.masterpart_header}>
+                  <p>System Attribute:-</p>
+                </div>
+                <div className={styles.formContainer}>
+                  <div className={styles.formInput}>
+                    <strong>Part Name(Non-Editable)</strong>
+                    <input
+                      type='text'
+                      name='part_name'
+                      value={userData?.data?.part_name}
+                      onChange={(e) => postUser(e)}
+                      className={styles.partName}
+                      readOnly
+                    />
+                  </div>
+
+                  <div
+                    className={styles.formInput}
+                    style={{ marginTop: '10px' }}
+                  >
+                    <strong>Part Number(Non-Editable)</strong>
+                    <input
+                      className={styles.partNumber}
+                      name='part_number'
+                      onChange={(e) => postUser(e)}
+                      value={userData?.data?.part_number}
+                      type='number'
+                      readOnly
+                    />
+                  </div>
+
+                  <div className={styles.formInput}>
+                    <strong>Description(Non-Editable)</strong>
+                    <textarea
+                      type='text'
+                      name='description'
+                      value={userData?.data?.description}
+                      onChange={(e) => postUser(e)}
+                      className={styles.partName}
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={styles.bussinessAttribute}>
+            <div className={styles.part_container}>
+              <div className={styles.master_part}>
+                <div className={styles.masterpart_header}>
+                  <p>Bussiness Attribute:-</p>
                 </div>
 
-                <div className={classes.input}>
-                  <label htmlFor="text">Part Name(Non-Editable)</label>
-                  <input
-                    type="text"
-                    name="part_name"
-                    value={userData?.data?.part_name}
-                    onChange={postUser}
-                    readOnly
-                  />
-                </div>
-
-                <div className={classes.input}>
-                  <label htmlFor="text">Description(Non-Editable)</label>
-                  <input
-                    type="text"
-                    name="description"
-                    value={userData?.data?.description}
-                    onChange={postUser}
-                    readOnly
-                  />
-                </div>
-
-                {userData.parts.map((childPart, index) => {
-                  return (
+                <div className={styles.formContainer}>
+                  {userData.parts.map((part, index) => (
                     <>
-                      <div className={classes.input}>
-                        <label>Supplier Name(Non-Editable)</label>
+                      <div className={styles.formInput}>
+                        <strong>Supplier Name(Non-Editable)</strong>
                         <input
                           type="text"
                           name="supplier_name"
-                          value={childPart.supplier_name}
+                          value={part.supplier_name}
                           onChange={(event) => postUserData(event, index)}
                           readOnly
                         />
                       </div>
 
-                      <div className={classes.input}>
-                        <label htmlFor="text">Material</label>
+                      <div className={styles.formInput}>
+                        <strong>Material:</strong>
                         <input
-                          type="text"
-                          name="material"
-                          value={childPart.material}
+                          type='text'
+                          name='material'
+                          value={part.material}
+                          className={styles.partName}
                           onChange={(event) => postUserData(event, index)}
                         />
                       </div>
 
-                      <div className={classes.input}>
-                        <label htmlFor="text">MPN Number</label>
+                      <div className={styles.formInput}>
+                        <strong>MPN No:</strong>
                         <input
-                          type="text"
-                          name="mpn_number"
-                          value={childPart.mpn_number}
+                          type='number'
+                          name='mpn_number'
+                          value={part.mpn_number}
+                          className={styles.partNumber}
                           onChange={(event) => postUserData(event, index)}
                         />
                       </div>
-
-                      <div className={classes.input}>
-                        <label htmlFor="text">Weight</label>
+                      <div className={styles.formInput}>
+                        <strong>Weight:</strong>
                         <input
-                          type="text"
-                          name="weight"
-                          value={childPart.weight}
+                          type='number'
+                          name='weight'
+                          value={part.weight}
+                          className={styles.partNumber}
                           onChange={(event) => postUserData(event, index)}
                         />
                       </div>
-
-                      <div className={classes.input}>
-                        <label htmlFor="text">Dimensions</label>
+                      <div className={styles.formInput}>
+                        <strong>Dimension:</strong>
                         <input
-                          type="text"
-                          name="dimension"
-                          value={childPart.dimension}
+                          type='number'
+                          name='dimension'
+                          value={part.dimension}
+                          className={styles.partNumber}
                           onChange={(event) => postUserData(event, index)}
                         />
                       </div>
-
-                      <div className={classes.input}>
-                        <label htmlFor="text">Cost</label>
+                      <div className={styles.formInput}>
+                        <strong>Cost:</strong>
                         <input
-                          type="text"
-                          name="cost"
-                          value={childPart.cost}
+                          type='number'
+                          name='cost'
+                          value={part.cost}
+                          className={styles.partNumber}
                           onChange={(event) => postUserData(event, index)}
                         />
                       </div>
-
-                      <div className={classes.input}>
-                        <label htmlFor="text">Lead date</label>
+                      <div className={styles.formInput}>
+                        <strong>Lead Date:</strong>
                         <input
-                          type="date"
-                          name="lead_date"
-                          value={childPart.lead_date}
+                          type='date'
+                          name='lead_date'
+                          value={part.lead_date}
+                          className={styles.partName}
                           onChange={(event) => postUserData(event, index)}
                         />
                       </div>
-                      <div className={classes.input}>
-                        <label htmlFor="text">Quality_matrices</label>
+                      <div className={styles.formInput}>
+                        <strong>Quality Matrices:</strong>
                         <input
-                          type="text"
-                          name="quality_matrices"
-                          value={childPart.quality_matrices}
+                          type='number'
+                          name='quality_matrices'
+                          value={part.quality_matrices}
+                          className={styles.partNumber}
                           onChange={(event) => postUserData(event, index)}
                         />
                       </div>
-                      <div className={classes.input}>
-                        <label htmlFor="text">Compliance Information</label>
+                      <div className={styles.formInput}>
+                        <strong>Compliance Information:</strong>
                         <input
-                          type="text"
-                          name="compliance_information"
-                          value={childPart.compliance_information}
+                          type='text'
+                          name='compliance_information'
+                          value={part.compliance_information}
+                          className={styles.partName}
                           onChange={(event) => postUserData(event, index)}
                         />
                       </div>
                     </>
-                  );
-                })}
+                  ))}
+                </div>
               </div>
-              <div className={classes.button_container}>
-                <button>Update details</button>
-              </div>
-            </form>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'right' }}>
+              <Button variant='primary' onClick={(e) => submitHandler(e)}>
+                Submit
+              </Button>{' '}
+            </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

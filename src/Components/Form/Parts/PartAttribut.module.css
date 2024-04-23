@@ -23,7 +23,7 @@
 
 .systemAttribute{
    padding: 20px;
-   width: 50rem;
+   width: 40vw;
    display: flex;
 }
 
@@ -41,7 +41,7 @@
 }
 
 strong{
-    width: 200px;
+    width: 20vw;
 }
 
 
@@ -73,11 +73,11 @@ h3{
 }
 
 .partNumber{
-    width: 8rem;
+    width: 8vw;
 }
 
 .selectFormInput{
-    width: 20rem;
+    width: 22vw;
     height: 1.8rem;
 }
 
@@ -107,7 +107,7 @@ h3{
 
   .master_part {
     max-width: 54rem;
-    width: 53rem;
+    width: 53vw;
     border: 1px solid black;
     padding: 20px;
     position: relative;
@@ -132,7 +132,7 @@ h3{
     padding: 11px;
     background-color: rgba(183, 184, 192, 0.955);
     /* box-shadow: 0 15px 20px rgba(0,0,0,3); */
-    height:50px;
+    height:50vh;
     border-radius: 5px;
     color: black;
     margin-right: 10px;

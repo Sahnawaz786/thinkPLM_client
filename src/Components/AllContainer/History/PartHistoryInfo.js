@@ -63,7 +63,6 @@ const PartHistoryInfo = ({ pid, id }) => {
 
         <div className={classes.profile_section}>
           <div className={classes.part_details_paragrah}>
-            <p className={classes.part_details_heading}>Part History:-</p>
             <div className={classes.image_part}>
               <div className={classes.image}>
                 <img

@@ -48,7 +48,6 @@ const PartDetails = ({ id }) => {
       <PartContainer id={id}>
         <div className={classes.detailContainer}>
           <div className={classes.part_details_paragrah}>
-            <p className={classes.part_details_heading}>Part Details:-</p>
             <div className={classes.image_part}>
               <div className={classes.image}>
                 <img
