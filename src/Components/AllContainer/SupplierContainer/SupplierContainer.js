@@ -11,7 +11,6 @@ import HomeIcon from '@mui/icons-material/Home';
 const SupplierContainer = ({ children, id }) => {
 
   const [supplierInformation, setSupplierInformation] = useState([]);
-  console.log("part-container id", { id })
   const [activeBtn,setActiveBtn] = useState('');
   const {pathname} = useLocation();
 
@@ -22,7 +21,7 @@ q
   const getSupplierApi = async (id) => {
 
     const partInfo = await getSupplierById(id);
-    console.log("part container data:", { partInfo })
+    console.log("supplier container data:", { partInfo })
     const newParts = (partInfo?.data || [])
     setSupplierInformation(newParts);
 

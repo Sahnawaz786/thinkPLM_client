@@ -1,15 +1,14 @@
-import React from 'react';
-import styles from './../Parts/PartAttribut.module.css';
-import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
+import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import spinnerStyle from '../../../style.module.css';
 import HashLoader from 'react-spinners/HashLoader';
+import spinnerStyle from '../../../style.module.css';
+import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
+import styles from './../Parts/PartAttribut.module.css';
 
 const Tier1 = () => {
   const navigate = useNavigate();
-
+  const date=new Date().toJSON().slice(0, 10);
   let supplier_type = localStorage.getItem('tier1');
 
   const [timer, setTimer] = useState(false);
@@ -20,6 +19,8 @@ const Tier1 = () => {
     email: '',
     contact: '',
     pt: '',
+    createdDate:date,
+    modifiedDate:date,
     country: '',
     state: '',
     district: '',
@@ -52,6 +53,8 @@ const Tier1 = () => {
   };
 
   const submitHandler = async (event) => {
+
+    const date=new Date().toJSON().slice(0, 10);
     event.preventDefault();
     const {
       category,
@@ -59,6 +62,8 @@ const Tier1 = () => {
       email,
       contact,
       pt,
+      createdDate=date,
+      modifiedDate=date,
       country,
       state,
       district,
@@ -82,6 +87,8 @@ const Tier1 = () => {
           email,
           contact,
           pt,
+          createdDate,
+          modifiedDate,
           country,
           state,
           district,
@@ -98,6 +105,8 @@ const Tier1 = () => {
           contact: '',
           category: '',
           pt: '',
+          createdDate:null,
+          modifiedDate:null,
           country: '',
           state: '',
           district: '',

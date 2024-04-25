@@ -1,15 +1,14 @@
-import React from 'react';
-import styles from './../Parts/PartAttribut.module.css';
-import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
+import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import spinnerStyle from '../../../style.module.css';
 import HashLoader from 'react-spinners/HashLoader';
+import spinnerStyle from '../../../style.module.css';
+import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
+import styles from './../Parts/PartAttribut.module.css';
 
 const Test = () => {
   const navigate = useNavigate();
-
+  const date=new Date().toJSON().slice(0, 10);
   let supplier_type = localStorage.getItem('manufacturer');
 
   const [timer, setTimer] = useState(false);
@@ -20,6 +19,8 @@ const Test = () => {
     email: '',
     contact: '',
     pt: '',
+    createdDate:date,
+    modifiedDate:date,
     country: '',
     state: '',
     district: '',
@@ -52,6 +53,9 @@ const Test = () => {
   };
 
   const submitHandler = async (event) => {
+
+    
+
     event.preventDefault();
     const {
       category,
@@ -59,6 +63,8 @@ const Test = () => {
       email,
       contact,
       pt,
+      createdDate,
+      modifiedDate,
       country,
       state,
       district,
@@ -82,6 +88,8 @@ const Test = () => {
           email,
           contact,
           pt,
+          createdDate,
+          modifiedDate,
           country,
           state,
           district,
@@ -98,6 +106,8 @@ const Test = () => {
           contact: '',
           category: '',
           pt: '',
+          createdDate:null,
+          modifiedDate:null,
           country: '',
           state: '',
           district: '',
