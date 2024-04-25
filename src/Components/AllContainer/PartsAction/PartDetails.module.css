@@ -9,6 +9,13 @@
   display: flex;
 }
 
+.detailContainer{
+  width: 70vw;
+  height: 75vh;
+  margin-left: 15px;
+  margin-top:2rem;
+}
+
 .part_container {
   display: flex;
   /* justify-content: center; */
@@ -16,8 +23,8 @@
   margin: 14px;
 }
 .master_part {
-  max-width: 54rem;
-  width: 53rem;
+  max-width: 55vw;
+  width: 55vw;
   max-height: auto;
   height: 13.5rem;
   border: 1px solid black;
@@ -33,6 +40,11 @@
   /* border: 1px solid black; */
   border-radius: 5px;
 }
+
+.master_part .systemInfo{
+  margin-top: 20px;
+}
+
 .masterpart_header p {
   font-size: 20px;
   font-weight: bold;
@@ -42,7 +54,7 @@
 }
 
 .child_part {
-  width: 75rem;
+  width: 80vw;
   max-height: auto;
   height: 10rem;
   border: 1px solid black;
@@ -86,6 +98,9 @@
   text-decoration: underline;
 }
 
-/* .bottomDetails{
-    border: 10px solid red;
-} */
+.editIcons{
+  display: flex;
+  justify-content: end;
+  gap: 5px;
+  margin-right: 25px;
+}

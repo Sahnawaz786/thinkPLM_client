@@ -66,17 +66,17 @@ class SupplierServices {
     }
 
     async getFileDownload(id) {
-        try {
-            const response = await axios.get(`${baseURL}/downloadFile/${id}`);
-            if (response.status!==200) {
-                throw new Error(`Failed to fetch parts: ${response.statusText}`);
-            }
-            return await response;
-        } catch (error) {
-            console.error('Error fetching parts:', error);
-            return null;
-        }
+      try {
+          const response = await axios.get(`${baseURL}/downloadFile/${id}`);
+          if (response.status!==200) {
+              throw new Error(`Failed to fetch parts: ${response.statusText}`);
+          }
+          return await response;
+      } catch (error) {
+          console.error('Error fetching parts:', error);
+          return null;
+      }
     }
-}
+  }
 
 export default SupplierServices;

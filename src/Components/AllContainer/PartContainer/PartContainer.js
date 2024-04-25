@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import PartServices from '../../../services/parts.services';
 import classes from './PartContainer.module.css';
+import HomeIcon from '@mui/icons-material/Home';
+
+
 
 
 const PartContainer = ({ children, id }) => {
@@ -79,13 +82,13 @@ const PartContainer = ({ children, id }) => {
           <div className={classes.tab_nav}>
 
             <div className={classes.tab_buttons}>
-              <button className={activeBtn === 'part-details' ? classes.activeBtn : ''} onClick={() => detailsHandler()} >Details</button>
+              <button className={activeBtn === 'part-details' || activeBtn ==='part-historyInfo' ? classes.activeBtn : ''} onClick={() => detailsHandler()} >Details</button>
               <button className={activeBtn === 'bom-structure' ? classes.activeBtn : ''} onClick={() => structureHandler()} >Structure</button>
-              <button className={['part-history', 'part-historyInfo'].includes(activeBtn) ? classes.activeBtn : ''} onClick={() => historyHandler()} >History</button>
+              <button className={activeBtn === 'part-history' ? classes.activeBtn : ''} onClick={() => historyHandler()} >History</button>
             </div>
 
             <div className={classes.linkarea}>
-              <Link className={classes.link} to='/part-table' style={{ width: "50px", border: "2px solid black", padding: "5px", backgroundColor: "lightgrey", color: "darkblue", borderStyle: "none" }}>Go to Action Page</Link>
+              <Link className={classes.link} to='/part-table' style={{ width: "50px", border: "2px solid black", padding: "5px", backgroundColor: "lightgrey", color: "darkblue", borderStyle: "none" }}><HomeIcon/></Link>
             </div>
 
           </div>

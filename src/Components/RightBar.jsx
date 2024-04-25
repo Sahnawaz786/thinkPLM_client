@@ -13,6 +13,7 @@ import OnBoard from './OnBoard';
 import PartManagementPage from './Pages/PartManagementPage';
 import SupplierPage from './Pages/SupplierPage';
 import PartTable from './PartTable';
+import EditSupplier from './AllContainer/SupplierActions/EditSupplier';
 
 const RightBar = () => {
   let location = useLocation();
@@ -67,20 +68,25 @@ const RightBar = () => {
         componentToRender = <EditPart id={id} />;
       }
       break;
-      case `/supplier-details/${id}`:
-        if (id) {
-          componentToRender = <SupplierDetails id={id} />;
-        }
+    case `/edit-supplier/${id}`:
+      if (id) {
+        componentToRender = <EditSupplier id={id} />;
+      }
+      break;
+    case `/supplier-details/${id}`:
+      if (id) {
+        componentToRender = <SupplierDetails id={id} />;
+      }
       break;
 
-      case `/reference-object/${id}`:
-        if (id) {
-          componentToRender = <SupplierReferenceObject id={id} />;
-        }
+    case `/reference-object/${id}`:
+      if (id) {
+        componentToRender = <SupplierReferenceObject id={id} />;
+      }
       break;
 
-      default :
-          componentToRender = <PartTable />
+    default:
+      componentToRender = <PartTable />;
   }
 
   return <div className={styles.rightbarConatiner}>{componentToRender}</div>;

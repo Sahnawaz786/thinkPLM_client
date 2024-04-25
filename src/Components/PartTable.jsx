@@ -15,36 +15,23 @@ const PartTable = () => {
 
   const [id, setId] = useState();
 
-  const [users, setUser] = useState([]);
-
   const navigate = useNavigate();
 
-  const deletePartBtn = (id) => {
-    setId(id);
-    if (!users.includes(id)) {
-      setUser([...users, id]);
-    } else {
-      const data = users.filter((elem) => elem !== id);
-      setUser(data);
+  const handleDeleteBtn = async()=>{
+    if (choice) {
+      await deletePart(id);
+      const newData = await getPart();
+      setData(newData.data);
     }
-  };
-
-  const handleDeleteBtn = async () => {
-    setShowAlert(true);
-    console.log('The value of alert is ', showAlert);
-  };
+  }
 
   const handlePartEditBtn = async ()=>{
        navigate(`/edit-part/${id}`)
   }
 
   useEffect(() => {
-    if (choice) {
-      const newData = data.filter((elem) => !users.includes(elem.id));
-      setData(newData);
-      deletePart(id);
-    }
-  }, [choice, id]);
+   handleDeleteBtn();
+  }, [choice]);
 
   const handleAPI = async () => {
     const response = await getPart();
@@ -55,6 +42,7 @@ const PartTable = () => {
     setData(newPartsData);
     console.log('Parts', response.data);
   };
+
 
   useEffect(() => {
     handleAPI();
@@ -100,7 +88,7 @@ const PartTable = () => {
             alt=''
             className={styles.deleteIcon}
             onClick={() => {
-              handleDeleteBtn();
+              setShowAlert(true);
             }}
           />
           <img
@@ -122,30 +110,35 @@ const PartTable = () => {
         <thead>
           <tr>
             <th></th>
-            <th>Sl.No</th>
-            <th>Created By</th>
             <th>Supplier Name</th>
+            <th>Created By</th>
+           <th>Part Name</th>
+           <th>Part Number</th>
             <th>state</th>
             <th>Version</th>
             <th>Iteration</th>
-            <th>Mpn Number</th>
             <th>Created Date</th>
             <th>Modified Date</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          {data.map((elem, index) => (
+          {data?.map((elem, index) => (
             <tr key={elem.id}>
               <td>
-                <input onClick={() => deletePartBtn(elem.id)} type='checkbox' />
+                <input onClick={() => setId(elem.id)} type='checkbox' />
               </td>
 
-              <td>{index + 1}</td>
-              <td>John</td>
+              
 
 
               <td>{elem?.parts[0]?.supplier_name}</td>
+
+
+              <td>John</td>
+
+              <td>{elem?.part_name}</td>
+              <td>{elem?.part_number}</td>
 
 
               <td className={styles.open}>
@@ -161,9 +154,10 @@ const PartTable = () => {
 
               <td>{elem?.parts[0]?.iteration_info}</td>
 
-              <td>{elem?.parts[0]?.mpn_number}</td>
 
               <td>{elem?.createdDate}</td>
+
+
 
 
               <td>{elem?.parts[0]?.modifiedDate}</td>

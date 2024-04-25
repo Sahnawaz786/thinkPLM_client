@@ -3,17 +3,21 @@ import { Link, useNavigate } from 'react-router-dom';
 import SupplierServices from '../../../services/supplier.services';
 import styles from '../../../style.module.css';
 import classes from './SupplierContainer.module.css';
+import { useLocation } from 'react-router-dom';
+import styleBtn from '../PartContainer/PartContainer.module.css';
+import HomeIcon from '@mui/icons-material/Home';
 
 
 const SupplierContainer = ({ children, id }) => {
 
   const [supplierInformation, setSupplierInformation] = useState([]);
-  console.log("supplier container id", { id })
+  const [activeBtn,setActiveBtn] = useState('');
+  const {pathname} = useLocation();
 
   const navigate = useNavigate();
   const {getSupplierById}=new SupplierServices()
 
-
+q
   const getSupplierApi = async (id) => {
 
     const partInfo = await getSupplierById(id);
@@ -25,6 +29,11 @@ const SupplierContainer = ({ children, id }) => {
   useEffect(() => {
     getSupplierApi(id);
   }, [id])
+
+  useEffect(()=>{
+    let url = pathname.split('/')[1];
+    setActiveBtn(url);
+  })
 
   console.log(supplierInformation)
   // console.log(id)
@@ -61,13 +70,13 @@ const SupplierContainer = ({ children, id }) => {
           <div className={classes.tab_nav}>
 
             <div className={classes.tab_buttons}>
-              <button onClick={() => detailsHandler()} >Details</button>
-              <button onClick={() => referenceObjectHandler()} >Reference Object</button>
+              <button className={activeBtn == 'supplier-details' ? styleBtn.activeBtn : ''}  onClick={() => detailsHandler()} >Details</button>
+              <button className={activeBtn == 'reference-object' ? styleBtn.activeBtn : ''} onClick={() => referenceObjectHandler()} >Reference Object</button>
             
             </div>
 
             <div className={classes.linkarea}>
-              <Link className={classes.link} to='/part-table' style={{ width: "50px", border: "2px solid black", padding: "5px", backgroundColor: "lightgrey", color: "darkblue", borderStyle: "none" }}>Go to Action Page</Link>
+              <Link className={classes.link} to='/part-table' style={{ width: "50px", border: "2px solid black", padding: "5px", backgroundColor: "lightgrey", color: "darkblue", borderStyle: "none" }}> <HomeIcon/> </Link>
             </div>
 
           </div>
