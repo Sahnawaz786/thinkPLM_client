@@ -23,6 +23,7 @@ function App() {
           <Route path="/edit-supplier/:id" element={<></>} />
           <Route path="/supplier-details/:id" element={<></>} />
           <Route path="/reference-object/:id" element={<></>} />
+          <Route path="/supplier-documents" element={<></>} />
         </Routes>
       </Router>
     </div>

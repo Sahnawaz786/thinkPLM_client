@@ -206,7 +206,7 @@ const Tier1 = () => {
 
                   <div className={styles.formInput}>
               <strong htmlFor='text'>Contact No:</strong>
-              <input type='number' id='contact' name="contact" value={userData.contact} onChange={postUserData} />
+              <input type='text' id='contact' name="contact" value={userData.contact} onChange={postUserData} />
             </div>
 
             <div className={styles.formInput}>

@@ -103,7 +103,7 @@ const CustomSupplierBom = () => {
 
               <div className={classes.input}>
                 <label htmlFor='text'>Part Number*</label>
-                <input type='number'  name="part_number"  value={userData.part_number} onChange={postUserData} />
+                <input type='text'  name="part_number"  value={userData.part_number} onChange={postUserData} />
               </div>
 
               <div className={classes.input}>
@@ -178,7 +178,7 @@ const CustomSupplierBom = () => {
 
               <div className={classes.input}>
                 <label htmlFor='text'>MPN Number*</label>
-                <input type='number' name="mpn_number" value={userData.mpn_number} onChange={postUserData}/>
+                <input type='text' name="mpn_number" value={userData.mpn_number} onChange={postUserData}/>
               </div>
 
               <div className={classes.input}>

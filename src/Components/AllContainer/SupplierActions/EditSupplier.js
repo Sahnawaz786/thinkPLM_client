@@ -187,7 +187,7 @@ const EditSupplier = ({ id }) => {
       
                         <div className={styles.formInput}>
                     <strong htmlFor='text'>Contact No:</strong>
-                    <input type='number' id='contact' name="contact" value={supplierData.contact} onChange={(e)=>postUser(e)} />
+                    <input type='text' id='contact' name="contact" value={supplierData.contact} onChange={(e)=>postUser(e)} />
                   </div>
       
                   <div className={styles.formInput}>

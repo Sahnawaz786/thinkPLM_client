@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './PartAttribut.module.css';
+import styles from '../Parts/PartAttribut.module.css';
 import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
 import { Button } from 'react-bootstrap';
 import { useContext, useState, useEffect } from 'react';
@@ -7,11 +7,13 @@ import { categoryContext } from '../../../store/CategoryProvider';
 import { useNavigate } from 'react-router-dom';
 import spinnerStyle from '../../../style.module.css'
 import HashLoader from 'react-spinners/HashLoader';
+import SupplierDocumentPage from '../../Pages/SupplierDocumentPage';
 
-const StandardParts = () => {
+const CertificateOFInsurance = () => {
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState('');
+
   const handleChange = (e) => {
     console.log(e.target.value);
     setSelected(e.target.value);
@@ -31,6 +33,7 @@ const StandardParts = () => {
     return () => clearTimeout(timeout);
   }, [selected]);
 
+  
   const [userData, setUserData] = useState({
     part_number: '',
     part_name: '',
@@ -58,6 +61,21 @@ const StandardParts = () => {
   });
 
   let name, value;
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      // After the file is loaded, store the result (Base64 string) in the state
+      setUserData({ ...userData, document: reader.result });
+    };
+
+    // Read the file as a Data URL (Base64)
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
 
   const postUser = (event) => {
     name = event.target.name;
@@ -155,6 +173,7 @@ const StandardParts = () => {
             },
           ],
         });
+
         setTimer(true);
         setTimeout(() => {
           setTimer(false);
@@ -183,7 +202,7 @@ const StandardParts = () => {
                 </div>
                 <div className={styles.formContainer}>
                   <div className={styles.formInput}>
-                    <strong>Part Name:</strong>
+                    <strong>Document Name:</strong>
                     <input
                       type='text'
                       name='part_name'
@@ -193,13 +212,23 @@ const StandardParts = () => {
                     />
                   </div>
 
+                  <div className={styles.formInput}>
+                    <strong>Document Number:</strong>
+                    <input
+                      type='text'
+                      name='part_name'
+                      value={userData.part_name}
+                      onChange={(e) => postUser(e)}
+                      className={styles.partNumber}
+                    />
+                  </div>
+
                   <div
                     className={styles.formInput}
-                    style={{ marginTop: '10px' }}
                   >
-                    <strong>Part Number:</strong>
-                    <input
-                      className={styles.partNumber}
+                    <strong>Description:</strong>
+                    <textarea
+                      className={styles.partName}
                       name='part_number'
                       onChange={(e) => postUser(e)}
                       value={userData.part_number}
@@ -207,16 +236,6 @@ const StandardParts = () => {
                     />
                   </div>
 
-                  <div className={styles.formInput}>
-                    <strong>Description:</strong>
-                    <textarea
-                      type='text'
-                      name='description'
-                      value={userData.description}
-                      onChange={(e) => postUser(e)}
-                      className={styles.partName}
-                    />
-                  </div>
                 </div>
               </div>
             </div>
@@ -232,7 +251,7 @@ const StandardParts = () => {
                   {userData.parts.map((part, index) => (
                     <>
                       <div className={styles.formInput}>
-                        <strong>Select Supplier Category :</strong>
+                        <strong>Supplier Category :</strong>
                         <select
                           className={styles.selectFormInput}
                           name='supplier_category'
@@ -241,7 +260,7 @@ const StandardParts = () => {
                         >
                           <option className={styles.partName}>
                             {' '}
-                            Supplier Category{' '}
+                            Select Supplier Category{' '}
                           </option>
                           {categoryItemsCtx.category.map((item, ind) => {
                             return (
@@ -265,83 +284,65 @@ const StandardParts = () => {
 
                           {selected === 'manufacturer'
                             ? categoryItemsCtx.manufactureData.map(
-                                (item, ind) => {
-                                  return <option key={ind}>{item.name}</option>;
-                                }
-                              )
+                              (item, ind) => {
+                                return <option key={ind}>{item.name}</option>;
+                              }
+                            )
                             : ''}
 
                           {selected === 'vendor'
                             ? categoryItemsCtx.vendorData.map((item, ind) => {
-                                return <option key={ind}>{item.name}</option>;
-                              })
+                              return <option key={ind}>{item.name}</option>;
+                            })
                             : ''}
                           {selected === 'tier1'
                             ? categoryItemsCtx.tier1Data.map((item, ind) => {
-                                return <option key={ind}>{item.name}</option>;
-                              })
+                              return <option key={ind}>{item.name}</option>;
+                            })
                             : ''}
                           {selected === 'tier2'
                             ? categoryItemsCtx.tier2Data.map((item, ind) => {
-                                return <option key={ind}>{item.name}</option>;
-                              })
+                              return <option key={ind}>{item.name}</option>;
+                            })
                             : ''}
                         </select>
                       </div>
 
                       <div className={styles.formInput}>
-                        <strong>Material:</strong>
+                    <strong>Insured party:</strong>
+                    <input
+                      type='text'
+                      name='part_name'
+                      value={userData.part_name}
+                      onChange={(e) => postUser(e)}
+                      className={styles.partName}
+                    />
+                  </div>
+
+                  <div className={styles.formInput}>
+                        <strong>Policy Number:</strong>
                         <input
                           type='text'
-                          name='material'
-                          value={part.material}
-                          className={styles.partName}
+                          name='lead_date'
+                          value={part.lead_date}
+                          className={styles.partNumber}
                           onChange={(event) => postUserData(event, index)}
                         />
                       </div>
 
-                      <div className={styles.formInput}>
-                        <strong>MPN No:</strong>
-                        <input
-                          type='text'
-                          name='mpn_number'
-                          value={part.mpn_number}
-                          className={styles.partNumber}
-                          onChange={(event) => postUserData(event, index)}
-                        />
-                      </div>
-                      <div className={styles.formInput}>
-                        <strong>Weight:</strong>
-                        <input
-                          type='text'
-                          name='weight'
-                          value={part.weight}
-                          className={styles.partNumber}
-                          onChange={(event) => postUserData(event, index)}
-                        />
-                      </div>
-                      <div className={styles.formInput}>
-                        <strong>Dimension:</strong>
-                        <input
-                          type='text'
-                          name='dimension'
-                          value={part.dimension}
-                          className={styles.partNumber}
-                          onChange={(event) => postUserData(event, index)}
-                        />
-                      </div>
-                      <div className={styles.formInput}>
-                        <strong>Cost:</strong>
-                        <input
-                          type='text'
-                          name='cost'
-                          value={part.cost}
-                          className={styles.partNumber}
-                          onChange={(event) => postUserData(event, index)}
-                        />
-                      </div>
-                      <div className={styles.formInput}>
-                        <strong>Lead Date:</strong>
+                  <div className={styles.formInput}>
+                    <strong>Insurance Company:</strong>
+                    <input
+                      type='text'
+                      name='part_name'
+                      value={userData.part_name}
+                      onChange={(e) => postUser(e)}
+                      className={styles.partName}
+                    />
+                  </div>
+
+            <div className={styles.formInput}>
+                        <strong>Effective Date:</strong>
                         <input
                           type='date'
                           name='lead_date'
@@ -350,26 +351,29 @@ const StandardParts = () => {
                           onChange={(event) => postUserData(event, index)}
                         />
                       </div>
+
                       <div className={styles.formInput}>
-                        <strong>Quality Matrices:</strong>
+                        <strong>Expiration Date:</strong>
                         <input
-                          type='text'
-                          name='quality_matrices'
-                          value={part.quality_matrices}
-                          className={styles.partNumber}
-                          onChange={(event) => postUserData(event, index)}
-                        />
-                      </div>
-                      <div className={styles.formInput}>
-                        <strong>Compliance Information:</strong>
-                        <input
-                          type='text'
-                          name='compliance_information'
-                          value={part.compliance_information}
+                          type='date'
+                          name='lead_date'
+                          value={part.lead_date}
                           className={styles.partName}
                           onChange={(event) => postUserData(event, index)}
                         />
                       </div>
+
+                      <div className={styles.formInput}>
+              <strong htmlFor='document'>Insurance Company:</strong>
+              <input type='file' className={styles.partName}  id='document' name="document" onChange={handleFileUpload} />
+            </div>
+
+
+            <div className={styles.formInput}>
+              <strong htmlFor='document'>Insurance Coverage:</strong>
+              <input type='file' className={styles.partName}  id='document' name="document" onChange={handleFileUpload} />
+            </div>
+
                     </>
                   ))}
                 </div>
@@ -387,4 +391,4 @@ const StandardParts = () => {
   );
 };
 
-export default StandardParts;
+export default CertificateOFInsurance;
