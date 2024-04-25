@@ -206,7 +206,7 @@ const StandardParts = () => {
                       name='part_number'
                       onChange={(e) => postUser(e)}
                       value={userData.part_number}
-                      type='number'
+                      type='text'
                     />
                   </div>
 
@@ -306,7 +306,7 @@ const StandardParts = () => {
                       <div className={styles.formInput}>
                         <strong>MPN No:</strong>
                         <input
-                          type='number'
+                          type='text'
                           name='mpn_number'
                           value={part.mpn_number}
                           className={styles.partNumber}
@@ -316,7 +316,7 @@ const StandardParts = () => {
                       <div className={styles.formInput}>
                         <strong>Weight:</strong>
                         <input
-                          type='number'
+                          type='text'
                           name='weight'
                           value={part.weight}
                           className={styles.partNumber}
@@ -326,7 +326,7 @@ const StandardParts = () => {
                       <div className={styles.formInput}>
                         <strong>Dimension:</strong>
                         <input
-                          type='number'
+                          type='text'
                           name='dimension'
                           value={part.dimension}
                           className={styles.partNumber}
@@ -336,7 +336,7 @@ const StandardParts = () => {
                       <div className={styles.formInput}>
                         <strong>Cost:</strong>
                         <input
-                          type='number'
+                          type='text'
                           name='cost'
                           value={part.cost}
                           className={styles.partNumber}
@@ -356,7 +356,7 @@ const StandardParts = () => {
                       <div className={styles.formInput}>
                         <strong>Quality Matrices:</strong>
                         <input
-                          type='number'
+                          type='text'
                           name='quality_matrices'
                           value={part.quality_matrices}
                           className={styles.partNumber}

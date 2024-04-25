@@ -14,6 +14,8 @@ import PartManagementPage from './Pages/PartManagementPage';
 import SupplierPage from './Pages/SupplierPage';
 import PartTable from './PartTable';
 import EditSupplier from './AllContainer/SupplierActions/EditSupplier';
+import SupplierContract from './Form/SupplierDocument/SupplierContract';
+import SupplierDocumentPage from './Pages/SupplierDocumentPage';
 
 const RightBar = () => {
   let location = useLocation();
@@ -84,6 +86,9 @@ const RightBar = () => {
         componentToRender = <SupplierReferenceObject id={id} />;
       }
       break;
+    case '/supplier-documents':
+      componentToRender = <SupplierDocumentPage/>
+      break
 
     default:
       componentToRender = <PartTable />;
