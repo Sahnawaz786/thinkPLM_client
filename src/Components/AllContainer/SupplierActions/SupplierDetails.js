@@ -2,13 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import HashLoader from 'react-spinners/HashLoader';
 import SupplierServices from '../../../services/supplier.services';
 import { UserContext } from '../../../store/UserProvider';
-import styles from '../../../style.module.css';
 import DisplayAlert from '../../../utils/DisplayAlert';
-import classes from '../PartsAction/PartDetails.module.css';
+// import classes from '../PartsAction/PartDetails.module.css';
 import SupplierContainer from '../SupplierContainer/SupplierContainer';
 import styles from '../../../style.module.css';
 import classes from './Supplier.module.css';
-import HashLoader from 'react-spinners/HashLoader';
 import { useNavigate } from 'react-router-dom';
 
 const SupplierDetails = ({ id }) => {
@@ -62,7 +60,7 @@ return (
         width={30}
         height={30}
         alt=''
-        onClick={()=>navigate(/edit-supplier/${id})}
+        onClick={()=>navigate(`/edit-supplier/${id}`)}
 
       />
       <img
@@ -71,6 +69,7 @@ return (
         height={30}
         alt=''
         className={styles.deleteIcon}
+        onClick={(e)=>setShowAlert(true)}
       />
       
     </div>

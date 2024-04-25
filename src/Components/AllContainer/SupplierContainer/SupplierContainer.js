@@ -17,7 +17,7 @@ const SupplierContainer = ({ children, id }) => {
   const navigate = useNavigate();
   const {getSupplierById}=new SupplierServices()
 
-q
+
   const getSupplierApi = async (id) => {
 
     const partInfo = await getSupplierById(id);
