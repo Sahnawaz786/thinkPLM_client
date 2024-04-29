@@ -5,9 +5,10 @@ import HashLoader from 'react-spinners/HashLoader';
 import { categoryContext } from '../../../store/CategoryProvider';
 import spinnerStyle from '../../../style.module.css';
 import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
-import styles from './PartAttribut.module.css';
+import styles from '../../Form/Parts/PartAttribut.module.css';
 
-const CustomParts = () => {
+const CreateNewPart = () => {
+    
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState('');
@@ -389,4 +390,4 @@ const CustomParts = () => {
   );
 };
 
-export default CustomParts;
+export default CreateNewPart;
