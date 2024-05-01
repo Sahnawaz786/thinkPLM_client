@@ -1,13 +1,13 @@
 import React,{useState,useEffect} from 'react'
 import SupplierDocContainer from '../SupplierDocumentContainer/SupplierDocContainer';
-import DocumentServices from '../../../services/document.services';
 import DownloadIcon from '@mui/icons-material/Download';
+import SupplierServices from '../../../services/supplier.services';
 
+const {getSupplierById, getFileDownload}=new SupplierServices();
 
 const Attachment = ({id}) => {
   const [file,setFile]=useState([]);
   const [uid,setUid]=useState([])
-  const {getSupplierById,getFileDownload}=new SupplierServices();
 
   
   const getSupplier = async (id) => {

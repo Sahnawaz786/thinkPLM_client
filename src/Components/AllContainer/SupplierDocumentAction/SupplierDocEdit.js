@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import spinnerStyle from "../../../style.module.css";
 import { categoryContext } from "../../../store/CategoryProvider";
 import DocumentServices from '../../../services/document.services';
@@ -11,15 +11,13 @@ import classes from "../../Form/AllForm.module.css";
 const SupplierDocEdit = ({ id }) => {
 
     const { getDocumentById } = new DocumentServices();
-
+    const location = useLocation();
+    const editId = location?.pathname?.split('/').slice(-1).join();
+    console.log({location: location?.pathname?.split('/').slice(-1).join()})
     const categoryItemsCtx = useContext(categoryContext);
 
     const [timer, setTimer] = useState(false);
-
-
     const navigate = useNavigate();
-
-
     const [userData, setUserData] = useState({
         document_number: '',
         document_name: '',
@@ -58,23 +56,22 @@ const SupplierDocEdit = ({ id }) => {
     const getPartApiEdit = async (id) => {
         try {
             const mypartData = await getDocumentById(id);
+            console.log({mypartData});
             const newParts = (mypartData?.data[0]?.supplier_contract || []).sort((a, b) => b.id - a.id)?.[0];
-            const newPartsData = {...mypartData, supplier_contract: [{...newParts} || {}]}
+            const newPartsData = {...mypartData?.data?.[0], supplier_contract: [{...newParts} || {}]}
             setUserData(newPartsData);
-            console.log("DATAISTHE",userData,mypartData)
-
           } catch (error) {
             console.log(error);
           }
     };
 
-
     useEffect(() => {
-        getPartApiEdit(id);
-    }, [id]);
-
-
-
+       if (editId) {
+           getPartApiEdit(editId);
+           console.log({test: "HELLO"})
+       }
+    }, [editId])
+    console.log({userData})
     let name, value;
     const postUser = (event) => {
         const name = event.target.name;
@@ -98,7 +95,7 @@ const SupplierDocEdit = ({ id }) => {
 
     const submitHandler = async (event) => {
         event.preventDefault();
-        console.log("USER---DATA", { userData: { ...userData.data, supplier_contract: [{ ...userData?.supplier_contract[0] }] } })
+        console.log("USER---DATA", { sajjad: { ...userData, supplier_contract: [{ ...userData?.supplier_contract[0] }] } })
         // return;
         try {
             // `http://localhost:8181/SupplierMasterObject`
@@ -108,7 +105,7 @@ const SupplierDocEdit = ({ id }) => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ ...userData?.data[0]} )
+                body: JSON.stringify({ ...userData} )
             });
 
             // console.log({res});
@@ -142,7 +139,7 @@ const SupplierDocEdit = ({ id }) => {
                                             <input
                                                 type='text'
                                                 name='document_name'
-                                                value={userData?.data[0]?.document_name || ''}
+                                                value={userData?.document_name || ''}
                                                 // onChange={(e) => postUser(e)}
                                                 className={styles.partName}
                                                 readOnly
@@ -158,7 +155,7 @@ const SupplierDocEdit = ({ id }) => {
                                                 className={styles.partNumber}
                                                 name='document_number'
                                                 // onChange={(e) => postUser(e)}
-                                                value={userData?.data[0]?.document_number || ''}
+                                                value={userData?.document_number || ''}
                                                 type='text'
                                                 readOnly
                                             />
@@ -169,7 +166,7 @@ const SupplierDocEdit = ({ id }) => {
                                             <textarea
                                                 type='text'
                                                 name='description'
-                                                value={userData?.data[0]?.description || ''}
+                                                value={userData?.description || ''}
                                                 // onChange={(e) => postUser(e)}
                                                 className={styles.partName}
                                                 readOnly
