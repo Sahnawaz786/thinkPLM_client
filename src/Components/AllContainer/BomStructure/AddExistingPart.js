@@ -45,8 +45,8 @@ const AddExistingPart = ({modalHideHandler}) => {
     } else {
       //
     }
-    // modalHideHandler();
-    // window.location.reload();
+    modalHideHandler();
+    window.location.reload();
   };
 
   return (
