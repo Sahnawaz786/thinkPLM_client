@@ -71,7 +71,7 @@ const PartDetails = ({ id }) => {
 
                         <p>
                           <strong>Modified Date:</strong>{' '}
-                          {part?.data?.parts[0].modifiedDate}
+                          {part?.data?.parts[0]?.modifiedDate}
                         </p>
 
                         <p>

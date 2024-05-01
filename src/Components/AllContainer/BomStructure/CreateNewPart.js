@@ -1,21 +1,27 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import HashLoader from 'react-spinners/HashLoader';
 import { categoryContext } from '../../../store/CategoryProvider';
 import spinnerStyle from '../../../style.module.css';
 import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
-import styles from './PartAttribut.module.css';
+import styles from '../../Form/Parts/PartAttribut.module.css';
+import axios from 'axios';
+import { PartsContext } from '../../../store/PartsProvider';
+import BomServices from '../../../services/bom.services';
 
-const CustomParts = () => {
+const CreateNewPart = () => {
+    
   const navigate = useNavigate();
-
+  const location = useLocation();
   const [selected, setSelected] = useState('');
+  const { bomIds } = useContext(PartsContext);
 
   const handleChange = (e) => {
     console.log(e.target.value);
     setSelected(e.target.value);
   };
+  const { addBomPart } = new BomServices();
 
   const [timer, setTimer] = useState(true);
   const [currentDate, setCurrentDate] = useState(
@@ -134,7 +140,26 @@ const CustomParts = () => {
           ],
         }),
       });
+      console.log({res})
+      const { data } = await axios.get(`http://localhost:8181/SupplierMasterObject`);
+      const newParts = (data || [])?.sort((a, b) => b.id - a.id)?.[0];
+      console.log('====================================');
+      console.log({data, newParts});
+      console.log('====================================');
       if (res.ok) {
+        const parentId = Number(location?.pathname?.split('/').slice(-1).join());
+        const childId = newParts?.id;
+        console.log({childId, parentId: bomIds?.childId || parentId});
+        const payload = {
+          ida3a5: bomIds?.childId || parentId, // ====> partsId   (parent)   302
+          ida3b5: childId, //  ====> partsMasterId (child)  152
+        }
+        if (bomIds?.childId || parentId) {
+          await addBomPart(payload);
+          window.location.reload();
+        } else {
+          //
+        }
         setUserData({
           part_number: '',
           part_name: '',
@@ -157,13 +182,14 @@ const CustomParts = () => {
           ],
         });
 
-        setTimer(true);
-        setTimeout(() => {
-          setTimer(false);
-          navigate('/');
-        }, 1000);
-      }
-    } catch (error) {
+      //   setTimer(true);
+      //   setTimeout(() => {
+      //     setTimer(false);
+      //     navigate('/');
+      //   }, 1000);
+      // }
+    }
+   } catch (error) {
       console.log(error);
     }
   };
@@ -389,4 +415,4 @@ const CustomParts = () => {
   );
 };
 
-export default CustomParts;
+export default CreateNewPart;

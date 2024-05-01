@@ -10,13 +10,13 @@ import { PartsProvider } from './store/PartsProvider';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <CategoryProvider>
-      <UserProvider>
-        <PartsProvider>
-        <App />
-        </PartsProvider>
-      </UserProvider>
-    </CategoryProvider>
+    <PartsProvider>
+      <CategoryProvider>
+        <UserProvider>
+          <App />
+        </UserProvider>
+      </CategoryProvider>
+    </PartsProvider>
   </React.StrictMode>
 );
 
