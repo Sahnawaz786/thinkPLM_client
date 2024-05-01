@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import { ImCross } from 'react-icons/im';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SupplierServices from '../services/supplier.services';
 import styles from '../style.module.css';
 
 const LeftBar = () => {
-  const navigate = useNavigate();
-
   const {getSupplier} = new SupplierServices();
 
   const [data, setData] = useState([]);
+
+  const [isDataUpdated,setIsDataUpdated] = useState(false);
 
   const [display, setDisplay] = useState(true);
 
@@ -21,7 +21,7 @@ const LeftBar = () => {
   const handleNavToggle = (elem) => {
     setData((data) =>
       data.map((item) =>
-        item === elem ? { ...item, isVisible: !item.isVisible } : item
+        item === elem ? { ...item, isVisible: !item.isVisible } : {...item,isVisible:''}
       )
     );
   };
@@ -29,7 +29,7 @@ const LeftBar = () => {
   const handleAPI = async () => {
     const data = await getSupplier();
     const newData = data.data.map((elem) => ({ ...elem, isVisible: false }));
-    setData(newData);
+    setData(newData.reverse());
     console.log('suppliers', data);
 };
 

@@ -40,6 +40,7 @@
 
 .mainLeftbarContainer{
   margin-top: 8px;
+  /* width: 20vw; */
 }
 
 
@@ -51,13 +52,13 @@
   padding-left: 5px;
   height: 92vh;
   overflow-y: scroll;
-  width:18vw;
-
+  max-width: 18vw;
 }
 
 .leftbarParent{
   margin-left: 20px;
   margin-top: 20px;
+  margin-right: 20px;
 }
 
 .home{

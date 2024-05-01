@@ -74,6 +74,9 @@ const PartTable = () => {
             width={30}
             height={30}
             alt=''
+            onClick={()=>{
+              navigate('/supplier-documents')
+            }}
           />
           <img
             src='https://cdn-icons-png.freepik.com/512/5994/5994710.png'

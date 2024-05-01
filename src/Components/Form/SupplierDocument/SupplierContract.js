@@ -13,6 +13,22 @@ const SupplierContract = () => {
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState('');
+  const [attachments,setAttachments] = useState({
+    fileName: null,
+    fileType: null,
+    content: null,
+    pricingandPaymentTerms:"",
+    termandTermination: "",
+    goveringLawandJurisdication: "",
+    signatures: "",
+    itemizedCharges: null,
+    paymentInstructions: null,
+    insuranceCoverage: null,
+    authorizedSignature: null,
+    complianceStandard: null,
+    certifyingAuthority: null,
+    complianceStatement: null
+  });
  
 
   const handleChange = (e) => {
@@ -48,13 +64,26 @@ const SupplierContract = () => {
         effective_date: '',
         expiration_date: '',
         work_scope: '',
-        pricing_payment: '',
-        term_termination: '',
-        law_jursidiction: '',
-        signatures: '',
         iteration_info: 1,
         islatest_Iteration: 1,
-        attachment: []
+        attachment: [
+          {
+            fileName: null,
+            fileType: null,
+            content: null,
+            pricingandPaymentTerms:"",
+            termandTermination: "",
+            goveringLawandJurisdication: "",
+            signatures: "",
+            itemizedCharges: null,
+            paymentInstructions: null,
+            insuranceCoverage: null,
+            authorizedSignature: null,
+            complianceStandard: null,
+            certifyingAuthority: null,
+            complianceStatement: null
+          }
+        ]
       }
     ]
   });
@@ -74,9 +103,10 @@ const SupplierContract = () => {
         ...prevState,
         supplier_contract: prevState.supplier_contract.map(contract => ({
           ...contract,
-          [title]: reader.result
+          // [title]: reader.result
         }))
       }));
+      setAttachments({...attachments,[title]:reader.result});
     };
 
     // Read the file as a Data URL (Base64)
@@ -105,7 +135,7 @@ const SupplierContract = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    const {
+    let {
       document_number,
       document_name,
       description,
@@ -118,21 +148,19 @@ const SupplierContract = () => {
           effective_date,
           expiration_date,
           work_scope,
-          pricing_payment,
-          term_termination,
-          law_jursidiction,
-          signatures,
           iteration_info,
           islatest_Iteration,
           attachment
         }
       ]
     } = userData;
+
+   attachment = [attachments];
     
 
     try {
 
-      const res = await fetch(`http://localhost:8181/addSupplier_Contract `, {
+      const res = await fetch(`http://localhost:8181/SupplierMasterContractObject `, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -150,10 +178,6 @@ const SupplierContract = () => {
               effective_date,
               expiration_date,
               work_scope,
-              pricing_payment,
-              term_termination,
-              law_jursidiction,
-              signatures,
               iteration_info,
               islatest_Iteration,
               attachment
@@ -175,10 +199,6 @@ const SupplierContract = () => {
               effective_date: '',
               expiration_date: '',
               work_scope: '',
-              pricing_payment: '',
-              term_termination: '',
-              law_jursidiction: '',
-              signatures: '',
               iteration_info: 1,
               islatest_Iteration: 1,
               attachment: []
@@ -340,12 +360,12 @@ const SupplierContract = () => {
 
                         <div className={styles.formInput}>
                           <strong htmlFor='document'>Upload Contract Document:</strong>
-                          <input type='file' className={styles.partName} id='document' name="pricing_payment" onChange={handleFileUpload} />
+                          <input type='file' className={styles.partName} id='document' name="pricingandPaymentTerms" onChange={handleFileUpload} />
                         </div>
 
                         <div className={styles.formInput}>
                           <strong htmlFor='document'>Terms and Terminations:</strong>
-                          <input type='file' className={styles.partName} id='document' name="term_termination" onChange={handleFileUpload} />
+                          <input type='file' className={styles.partName} id='document' name="termandTermination" onChange={handleFileUpload} />
                         </div>
 
                         <div className={styles.formInput}>
@@ -372,7 +392,7 @@ const SupplierContract = () => {
 
                         <div className={styles.formInput}>
                           <strong htmlFor='document'>Governing Law and Jurisdiction:</strong>
-                          <input type='file' className={styles.partName} id='document' name="law_jursidiction" onChange={handleFileUpload} />
+                          <input type='file' className={styles.partName} id='document' name="goveringLawandJurisdication" onChange={handleFileUpload} />
                         </div>
 
 
