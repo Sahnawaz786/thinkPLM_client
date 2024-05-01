@@ -4,7 +4,11 @@ const PartsContext = createContext();
 
 const PartsProvider = ({ children }) => {
   const [partsHistory, setPartsHistory] = useState({});
-  const [initialBomData, setInitaialBomData] = useState({});
+  const [initialBomData, setInitialBomData] = useState({
+    topLevelParentId: '',
+    partDetailsList: []
+  });
+  const [selectedData, setSelectedData] = useState({});
   const [bomIds, setBomIds] = useState({
     parentId: "",
     childId: "",
@@ -16,9 +20,11 @@ const PartsProvider = ({ children }) => {
         partsHistory,
         setPartsHistory,
         initialBomData,
-        setInitaialBomData,
+        setInitialBomData,
         bomIds,
         setBomIds,
+        setSelectedData,
+        selectedData
       }}
     >
       {children}

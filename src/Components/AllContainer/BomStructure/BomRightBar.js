@@ -1,36 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import HashLoader from 'react-spinners/HashLoader';
-import SupplierServices from '../../../services/supplier.services';
-import { UserContext } from '../../../store/UserProvider';
 import styles from '../../../style.module.css';
 import DisplayAlert from '../../../utils/DisplayAlert';
 import classes from './BomRightBar.module.css';
+import { PartsContext } from '../../../store/PartsProvider';
 
-const BomRightBar = ({ id }) => {
+const BomRightBar = () => {
+  const { selectedData, initialBomData, setInitialBomData } = useContext(PartsContext);
 
- const[supplierDetails,setSupplierDetails]=useState([]);
-const {choice,showAlert,setShowAlert}=useContext(UserContext);
  const [timer,setTimer] = useState(true);
- const navigate=useNavigate()
-
-const {getSupplierById,deleteSupplier}=new SupplierServices();
-
-  const getSupplierApi = async (id) => {
-    const supplierInfo = await getSupplierById(id);
-    const supData = (supplierInfo?.data || [])
-    console.log('supplier info data', supData);
-    setSupplierDetails(supData)
-  };
 
   useEffect(() => {
-    getSupplierApi(id);
     setTimer(true);
     let timeOut = setTimeout(() => {
       setTimer(false);
     }, 1000);
     return(()=>timeOut)
-  },[id]);
+  },[]);
 
 
 return (
@@ -55,17 +41,17 @@ return (
                 </div>
                   <p  >
                     <strong>Number:</strong>{' '}
-                    {supplierDetails.category}
+                    {selectedData?.part_number}
                   </p>
 
                   <p >
                     <strong>Name:</strong>{' '}
-                    {supplierDetails.name}
+                    {selectedData?.part_name}
                   </p>
 
                   <p >
                     <strong>Version:</strong>{' '}
-                    {supplierDetails.pt}
+                    {selectedData?.iteration_info}
                   </p>
                   <p >
                     <strong>State:</strong>{""}
@@ -77,7 +63,7 @@ return (
                   </p>
                   <p >
                     <strong>Modified Date:</strong>{' '}
-                    {supplierDetails.modifiedDate}
+                    {selectedData?.modifiedDate}
                   </p>
       
               </div>
@@ -92,29 +78,29 @@ return (
               <p>Usage Attributes</p>
             </div>
             <p>
-              <strong>Quantity:</strong> {supplierDetails.email}
+              <strong>Quantity:</strong> {selectedData?.email}
             </p>
             <p>
-              <strong>Unit:</strong> {supplierDetails.contact}
+              <strong>Unit:</strong> {selectedData?.contact}
             </p>
             <p>
-              <strong>Trace Code:</strong> {supplierDetails.start_date}
+              <strong>Trace Code:</strong> {selectedData?.start_date}
             </p>
             <p>
-              <strong>Line Number:</strong> {supplierDetails.end_date}
+              <strong>Line Number:</strong> {selectedData?.end_date}
             </p>
             <p>
-              <strong>Find Number:</strong> {supplierDetails.state}
+              <strong>Find Number:</strong> {selectedData?.state}
             </p>
             <p>
-              <strong>Reference Designator:</strong>{supplierDetails.district}
+              <strong>Reference Designator:</strong>{selectedData?.district}
             </p>
            
           </div>
         </>
       </div>
     </div>
-    {showAlert && <DisplayAlert />}
+    {/* {showAlert && <DisplayAlert />} */}
     </div>
     </>
 

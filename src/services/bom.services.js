@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { v4 as uuidv4 } from "uuid";
+
 // const dotenv = require('dotenv');
 
 // dotenv.config({ path: '../.env' });
@@ -6,19 +8,27 @@ import axios from 'axios';
 // const baseURL = process.env.baseURL;
 
 const baseURL = 'http://localhost:8181';
-
+const uniqueIds = 1044646464646;
 class BomServices {
     constructor(baseURL) {
         this.baseURL = baseURL;
     }
-
+   
     async getBomById(id) {
         try {
             const response = await axios.get(`${baseURL}/getPartStructure/${id}`);
+            console.log('====================================');
+            console.log({response});
+            console.log('====================================');
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
-            return await response;
+            const tempData = response?.data?.partBomDetailsList?.map((elem, i) => {
+                return {...elem, uniqueId: uuidv4()}
+            })
+            const partBomDetailsList = { ...response?.data, partBomDetailsList: tempData}
+            console.log({sajjad: partBomDetailsList})
+            return partBomDetailsList ;
         } catch (error) {
             console.error('Error fetching parts:', error);
             return null;
@@ -83,19 +93,12 @@ class BomServices {
         }
     }
 
-    async addPart(partData) {
+    async addBomPart(payload) {
+        console.log({payload});
         try {
-            const response = await axios.post(`${this.baseURL}/SupplierMasterObject`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(partData)
-            });
-            if (response.status!=200) {
-                throw new Error(`Failed to add part: ${response.statusText}`);
-            }
-            return await response.json();
+            const response = await axios.post(`${baseURL}/createUsageLink`, payload);
+            console.log({response})
+            return response;
         } catch (error) {
             console.error('Error adding part:', error);
             return null;

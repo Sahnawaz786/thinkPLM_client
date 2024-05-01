@@ -2,17 +2,17 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HashLoader from 'react-spinners/HashLoader';
 import PartServices from "../../../services/parts.services";
-import { PartsContext } from '../../../store/PartsProvider';
+// import { PartsContext } from '../../../store/PartsProvider';
 import styles from '../../../style.module.css';
 import PartContainer from '../PartContainer/PartContainer';
-import tableStyle from '../../../style.module.css';
+// import tableStyle from '../../../style.module.css';
 
 const PartHistory = ({ id }) => {
   const [histories, setPartHistories] = useState([]);
   const [timer, setTimer] = useState(true);
   const { getPartHistoryById } = new PartServices();
 
-  const { setPartsHistory } = useContext(PartsContext);
+  // const { setPartsHistory } = useContext(PartsContext);
 
   const navigate = useNavigate();
   console.log({ 'ParanstestIDDD': id });
@@ -30,7 +30,7 @@ const PartHistory = ({ id }) => {
     // const newPartsData = {...partInfo, parts: newPartInfo}
     // console.log({newPartsData})
     setPartHistories(newPartInfo || []);
-    setPartsHistory(partInfo.data || {});
+    // setPartsHistory(partInfo.data || {});
 
   };
   useEffect(() => {
@@ -78,13 +78,13 @@ const PartHistory = ({ id }) => {
                   return (
 
                     <tr key={index}>
-                      <td>{part.part_name}</td>
-                      <td>{part.part_number}</td>
-                      <td>{part.iteration_info}</td>
+                      <td>{part?.part_name}</td>
+                      <td>{part?.part_number}</td>
+                      <td>{part?.iteration_info}</td>
                       <td>Open</td>
                       <td>Smith</td>
-                      <td>{part.createdDate}</td>
-                      <td>{part.modifiedDate}</td>
+                      <td>{part?.createdDate}</td>
+                      <td>{part?.modifiedDate}</td>
                       <td><button
                         onClick={() => {
                           InformationHistoryFun(part.id);
