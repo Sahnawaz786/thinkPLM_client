@@ -1,197 +1,138 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import HashLoader from 'react-spinners/HashLoader';
-import { categoryContext } from '../../../store/CategoryProvider';
-import spinnerStyle from '../../../style.module.css';
-import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
-import styles from './PartAttribut.module.css';
+import PartServices from '../../../services/parts.services';
+import { categoryContext } from "../../../store/CategoryProvider";
+import spinnerStyle from "../../../style.module.css";
+import styles from '../../Form/Parts/PartAttribut.module.css';
 
-const CustomParts = () => {
-  const navigate = useNavigate();
+const EditBomPart = ({id}) => {
 
-  const [selected, setSelected] = useState('');
+  const {getPartById} = new PartServices();
 
-  const handleChange = (e) => {
-    console.log(e.target.value);
-    setSelected(e.target.value);
-  };
-
-  const [timer, setTimer] = useState(true);
-  const [currentDate, setCurrentDate] = useState(
-    new Date().toJSON().slice(0, 10)
-  );
   const categoryItemsCtx = useContext(categoryContext);
 
-  useEffect(() => {
-    setTimer(true);
-    const timeout = setTimeout(() => {
-      setTimer(false);
-    }, 500);
-    return () => clearTimeout(timeout);
-  }, [selected]);
+  const [timer,setTimer] = useState(false);
 
-  
+
+  const navigate = useNavigate();
+
+
   const [userData, setUserData] = useState({
-    part_number: '',
-    part_name: '',
-    description: '',
-    createdDate: currentDate,
-    modifiedDate: currentDate,
+    part_number: "",
+    part_name: "",
+    description: "",
+    // createdDate: currentDate,
+    // modifiedDate: currentDate,
     parts: [
       {
-        supplier_category: '',
-        supplier_name: '',
-        material: '',
-        mpn_number: '',
-        weight: '',
-        dimension: '',
-        cost: '',
-        lead_date: '',
-        quality_matrices: '',
-        compliance_information: '',
-        createdDate: currentDate,
-        modifiedDate: currentDate,
+        supplier_category: "",
+        supplier_name: "",
+        material: "",
+        mpn_number: "",
+        weight: "",
+        dimension: "",
+        cost: "",
+        lead_date: "",
+        quality_matrices: "",
+        compliance_information: "",
+        modifiedDate:null,
         iteration_info: 1,
         islatest_Iteration: 1,
       },
     ],
   });
 
-  let name, value;
-
-  const postUser = (event) => {
-    name = event.target.name;
-    value = event.target.value;
-    setUserData({ ...userData, [name]: value });
-  };
-
-  const postUserData = (event, index) => {
-    const { name, value } = event.target;
-    setUserData((prevData) => {
-      const updatedParts = [...prevData.parts];
-      updatedParts[index] = { ...updatedParts[index], [name]: value };
-      return { ...prevData, parts: updatedParts };
-    });
-  };
-
-  const submitHandler = async (event) => {
-    event.preventDefault();
-    const {
-      part_number,
-      part_name,
-      description,
-      createdDate,
-      modifiedDate,
-      parts: [
-        {
-          supplier_category,
-          supplier_name,
-          material,
-          mpn_number,
-          weight,
-          dimension,
-          cost,
-          lead_date,
-          quality_matrices,
-          compliance_information,
-          iteration_info,
-          islatest_Iteration,
-        },
-      ],
-    } = userData;
+  const getPartApiEdit = async (id) => {
     try {
-      // `http://localhost:8181/SupplierMasterObject`
-
-      const res = await fetch(`http://localhost:8181/SupplierMasterObject`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          part_number,
-          part_name,
-          description,
-          createdDate,
-          modifiedDate,
-          parts: [
-            {
-              supplier_category,
-              supplier_name,
-              material,
-              mpn_number,
-              weight,
-              dimension,
-              cost,
-              lead_date,
-              quality_matrices,
-              compliance_information,
-              createdDate,
-              modifiedDate,
-              iteration_info,
-              islatest_Iteration,
-            },
-          ],
-        }),
-      });
-      if (res.ok) {
-        setUserData({
-          part_number: '',
-          part_name: '',
-          description: '',
-          createdDate: '',
-          modifiedDate: '',
-          parts: [
-            {
-              supplier_category: '',
-              supplier_name: '',
-              material: '',
-              mpn_number: '',
-              weight: '',
-              dimension: '',
-              cost: '',
-              lead_date: '',
-              quality_matrices: '',
-              compliance_information: '',
-            },
-          ],
-        });
-
-        setTimer(true);
-        setTimeout(() => {
-          setTimer(false);
-          navigate('/');
-        }, 1000);
-      }
+      const mypartData = await getPartById(id);
+      const newParts = (mypartData?.data.parts || []).sort((a, b) => b.id - a.id)?.[0];
+      const newPartsData = {...mypartData, parts: [{...newParts} || {}]}
+      setUserData(newPartsData);
     } catch (error) {
       console.log(error);
     }
   };
 
-  return (
+  useEffect(() => {
+      getPartApiEdit(id);
+  }, [id]);
+  
+  // console.log(id);
+  // console.log(userData);
+
+  // let name, value;
+  const postUser = (event) => {
+   const name = event.target.name;
+   const value = event.target.value;
+    setUserData(prevState => {
+      return { ...prevState, [name]: value }
+    })
+  };
+
+  const postUserData = (event, index) => {
+    const { name, value } = event.target;
+    const date=new Date().toJSON().slice(0, 10);
+    console.log(date)
+    setUserData((prevData) => {
+      const updatedParts = [...prevData.parts];
+      updatedParts[index] = { ...updatedParts[index], [name]: value ,modifiedDate:date};
+      return { ...prevData, parts: updatedParts };
+    });
+    console.log(userData)
+  };
+
+  const submitHandler = async (event) => {
+    event.preventDefault();
+    console.log("USER---DATA",{userData: {...userData.data, parts: [{ ...userData?.parts[0]}]}})
+    // return;
+    try {
+      // `http://localhost:8181/SupplierMasterObject`
+
+      const res = await fetch(`http://localhost:8181/SupplierMasterObject`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({...userData?.data, parts: [{ ...userData?.parts[0] }]}),
+      });
+
+      // console.log({res});
+      if (res.ok) {
+        navigate("/update");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+   };
+
+   return (
     timer ?  <div className={spinnerStyle.spinnerContainer}>
             {' '}
             <HashLoader color='#0E6EFD' />{' '}
           </div>
          :
     <div>
+      {/* <h3>Part Management</h3> */}
       <div className={styles.parentContainer}>
         <div className={styles.childContainer}>
           <div className={styles.systemAttribute}>
-            <div className={classes.part_container}>
+            <div className={styles.part_container}>
               <div className={styles.master_part}>
                 <div className={styles.masterpart_header}>
                   <p>System Attribute:-</p>
                 </div>
                 <div className={styles.formContainer}>
                   <div className={styles.formInput}>
-                    <strong>Part Name:</strong>
+                    <strong>Part Name(Non-Editable)</strong>
                     <input
                       type='text'
                       name='part_name'
-                      value={userData.part_name}
+                      value={userData?.data?.part_name}
                       onChange={(e) => postUser(e)}
                       className={styles.partName}
+                      readOnly
                     />
                   </div>
 
@@ -199,24 +140,26 @@ const CustomParts = () => {
                     className={styles.formInput}
                     style={{ marginTop: '10px' }}
                   >
-                    <strong>Part Number:</strong>
+                    <strong>Part Number(Non-Editable)</strong>
                     <input
                       className={styles.partNumber}
                       name='part_number'
                       onChange={(e) => postUser(e)}
-                      value={userData.part_number}
+                      value={userData?.data?.part_number}
                       type='text'
+                      readOnly
                     />
                   </div>
 
                   <div className={styles.formInput}>
-                    <strong>Description:</strong>
+                    <strong>Description(Non-Editable)</strong>
                     <textarea
                       type='text'
                       name='description'
-                      value={userData.description}
+                      value={userData?.data?.description}
                       onChange={(e) => postUser(e)}
                       className={styles.partName}
+                      readOnly
                     />
                   </div>
                 </div>
@@ -224,7 +167,7 @@ const CustomParts = () => {
             </div>
           </div>
           <div className={styles.bussinessAttribute}>
-            <div className={classes.part_container}>
+            <div className={styles.part_container}>
               <div className={styles.master_part}>
                 <div className={styles.masterpart_header}>
                   <p>Bussiness Attribute:-</p>
@@ -234,61 +177,14 @@ const CustomParts = () => {
                   {userData.parts.map((part, index) => (
                     <>
                       <div className={styles.formInput}>
-                        <strong>Select Supplier Category :</strong>
-                        <select
-                          className={styles.selectFormInput}
-                          name='supplier_category'
-                          value={selected}
-                          onChange={(e) => handleChange(e)}
-                        >
-                          <option className={styles.partName}>
-                            {' '}
-                            Supplier Category{' '}
-                          </option>
-                          {categoryItemsCtx.category.map((item, ind) => {
-                            return (
-                              <option className={styles.partName} key={ind}>
-                                {item.value}
-                              </option>
-                            );
-                          })}
-                        </select>
-                      </div>
-
-                      <div className={styles.formInput}>
-                        <strong>Supplier Name :</strong>
-                        <select
-                          className={styles.selectFormInput}
-                          name='supplier_name'
+                        <strong>Supplier Name(Non-Editable)</strong>
+                        <input
+                          type="text"
+                          name="supplier_name"
                           value={part.supplier_name}
                           onChange={(event) => postUserData(event, index)}
-                        >
-                          <option>Select Supplier Name</option>
-
-                          {selected === 'manufacturer'
-                            ? categoryItemsCtx.manufactureData.map(
-                              (item, ind) => {
-                                return <option key={ind}>{item.name}</option>;
-                              }
-                            )
-                            : ''}
-
-                          {selected === 'vendor'
-                            ? categoryItemsCtx.vendorData.map((item, ind) => {
-                              return <option key={ind}>{item.name}</option>;
-                            })
-                            : ''}
-                          {selected === 'tier1'
-                            ? categoryItemsCtx.tier1Data.map((item, ind) => {
-                              return <option key={ind}>{item.name}</option>;
-                            })
-                            : ''}
-                          {selected === 'tier2'
-                            ? categoryItemsCtx.tier2Data.map((item, ind) => {
-                              return <option key={ind}>{item.name}</option>;
-                            })
-                            : ''}
-                        </select>
+                          readOnly
+                        />
                       </div>
 
                       <div className={styles.formInput}>
@@ -389,4 +285,4 @@ const CustomParts = () => {
   );
 };
 
-export default CustomParts;
+export default EditBomPart;

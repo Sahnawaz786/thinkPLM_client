@@ -1,0 +1,103 @@
+.rightBar_bomContainer{
+    border:1px solid black;
+    width:55vw !important;
+    height:69.7vh !important;
+    margin: -5px;
+    position:relative;
+    bottom:-13px;
+}
+
+.detailContainer{
+    width: 52vw;
+    height: 68vh;
+    margin-left: 15px;
+    margin-top: 3rem;
+  }
+  
+  .part_container {
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    margin: 14px;
+    width: 90vw;
+  }
+  .master_part {
+    max-width: 85vw;
+    width: 53vw !important;
+    max-height: auto;
+    height: 13.5rem;
+    border: 1px solid black;
+    padding: 20px;
+    position: relative;
+    margin-left: 10px;
+  }
+  .masterpart_header {
+    position: absolute;
+    top: -23px; /* Adjust this value as needed */
+    left: 10px; /* Adjust this value as needed */
+    background-color: rgb(213, 210, 210);
+    padding: 0 5px;
+    /* border: 1px solid black; */
+    border-radius: 5px;
+  }
+  
+  .master_part .systemInfo{
+    margin-top: 20px;
+  }
+  
+  .masterpart_header p {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .master_part p {
+    margin: 5px;
+  }
+  
+  .child_part {
+    max-width: 85vw;
+    width: 53vw !important;
+    max-height: auto;
+    height: 13.5rem;
+    border: 1px solid black;
+    padding: 20px;
+    position: relative;
+    margin-left: 10px;
+    margin-top: 2rem;
+  }
+  .child_part p {
+    margin: 3px;
+  }
+  
+  .childpart_header {
+    position: absolute;
+    top: -21px; /* Adjust this value as needed */
+    left: 10px; /* Adjust this value as needed */
+    background-color: rgb(213, 210, 210);
+    padding: 0 5px;
+    /* border: 1px solid black; */
+    border-radius: 5px;
+  }
+  .childpart_header p {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .childpart_header p {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .part_details_paragrah .part_details_heading {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bolder;
+    text-decoration: underline;
+  }
+  
+  .editIcons{
+    display: flex;
+    justify-content: end;
+    gap: 5px;
+    margin-right: 25px;
+  }
+  
