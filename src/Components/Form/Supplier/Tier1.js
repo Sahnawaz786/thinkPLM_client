@@ -118,9 +118,10 @@ const Tier1 = () => {
         setTimer(true);
         setTimeout(() => {
           setTimer(false);
-          navigate('/');
+          window.location.reload();
         }, 1000);
       }
+      navigate('/');
     } catch (error) {
       console.log(error);
     }

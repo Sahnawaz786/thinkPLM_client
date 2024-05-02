@@ -4,9 +4,11 @@ import { ImCross } from 'react-icons/im';
 import { Link } from 'react-router-dom';
 import SupplierServices from '../services/supplier.services';
 import styles from '../style.module.css';
+import { useLocation } from 'react-router-dom';
 
 const LeftBar = () => {
   const {getSupplier} = new SupplierServices();
+  const {pathname} = useLocation();
 
   const [data, setData] = useState([]);
 

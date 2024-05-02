@@ -7,6 +7,8 @@ import styles from '../style.module.css';
 import DisplayAlert from '../utils/DisplayAlert';
 import { useLocation } from 'react-router-dom';
 import DocumentServices from '../services/document.services';
+import { Dropdown } from 'react-bootstrap';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 const PartTable = () => {
   const { getPart, deletePart } = new PartServices();
@@ -16,8 +18,15 @@ const PartTable = () => {
 
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
-
+  const [selectedId, setSelectedId] = useState(null);
   const [id, setId] = useState();
+  const [deleteid, setDeleteId] = useState();
+
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleCheckboxChange = (id) => {
+    setSelectedId(id);
+  };
 
   const navigate = useNavigate();
 
@@ -32,7 +41,7 @@ const PartTable = () => {
       setData(newData.data);
     }
     if (choice && pathname === '/document-table') {
-      await deleteDocument(id);
+      await deleteDocument(deleteid);
       const newData = await getAllDocuments();
       setData2(newData.data);
     }
@@ -85,37 +94,95 @@ const PartTable = () => {
     navigate('/part-details/' + id);
   };
 
+  console.log('DATA2', data2);
+
   return (
     <div>
       <div className={styles.rightBar}>
         <div className={styles.rightBarLogo}>
           <div title='Parts'>
-            <img
-              src='https://cdn-icons-png.freepik.com/512/10703/10703269.png'
-              width={30}
-              height={30}
-              alt='part'
-              id={styles.hoverButton}
-              className={styles.deleteIcon && pathname==='/' ? styles.activeBtn : ''}
-              onClick={() => {
-                handlePartClick();
+            <Dropdown
+              style={{
+                padding: '0px',
+                margin: '0px',
+                cursor: 'pointer',
               }}
-            />
+            >
+              <Dropdown.Toggle
+                style={{
+                  backgroundColor: 'transparent',
+                  padding: '0px',
+                  margin: '0px',
+                  border: 'none',
+                }}
+              >
+                <img
+                  src='https://cdn-icons-png.freepik.com/512/10703/10703269.png'
+                  width={30}
+                  height={30}
+                  alt='part'
+                  id={styles.hoverButton}
+                  className={
+                    styles.deleteIcon && pathname === '/'
+                      ? styles.activeBtn
+                      : ''
+                  }
+                  onClick={() => {
+                    handlePartClick();
+                  }}
+                />
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu style={{ backgroundColor: 'white' }}>
+                <Dropdown.Item
+                  className={styles.hoverText}
+                  onClick={() => navigate('/create-part')}
+                >
+                  Create Parts
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
 
-
           <div title='Document'>
-            <img
-              src='https://cdn-icons-png.freepik.com/512/7959/7959420.png'
-              width={30}
-              height={30}
-              alt=''
-              className={styles.deleteIcon && pathname!='/' ? styles.activeBtn : ''}
-
-              onClick={() => {
-                navigate('/document-table');
+            <Dropdown
+              style={{
+                padding: '0px',
+                margin: '0px',
+                cursor: 'pointer',
               }}
-            />
+            >
+              <Dropdown.Toggle
+                style={{
+                  backgroundColor: 'transparent',
+                  padding: '0px',
+                  margin: '0px',
+                  border: 'none',
+                }}
+              >
+                <img
+                  src='https://cdn-icons-png.freepik.com/512/7959/7959420.png'
+                  width={30}
+                  height={30}
+                  alt=''
+                  className={
+                    styles.deleteIcon && pathname != '/' ? styles.activeBtn : ''
+                  }
+                  onClick={() => {
+                    navigate('/document-table');
+                  }}
+                />
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu style={{ backgroundColor: 'white' }}>
+                <Dropdown.Item
+                  className={styles.hoverText}
+                  onClick={() => navigate('/supplier-documents')}
+                >
+                  Create Document
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
 
           <div title='Folder'>
@@ -180,7 +247,12 @@ const PartTable = () => {
             {data?.map((elem, index) => (
               <tr key={elem.id}>
                 <td>
-                  <input onClick={() => setId(elem.id)} type='checkbox' />
+                  <input
+                    checked={elem.id === selectedId}
+                    onChange={() => handleCheckboxChange(elem.id)}
+                    onClick={() => setId(elem.id)}
+                    type='checkbox'
+                  />
                 </td>
 
                 <td>{elem?.parts[0]?.supplier_name}</td>
@@ -188,15 +260,15 @@ const PartTable = () => {
                 <td>John</td>
 
                 <td>
-                <img
-              src='https://cdn-icons-png.freepik.com/512/10703/10703269.png'
-              width={30}
-              height={30}
-              alt='part'
-              className={styles.display_icon}
-            />
+                  <img
+                    src='https://cdn-icons-png.freepik.com/512/10703/10703269.png'
+                    width={30}
+                    height={30}
+                    alt='part'
+                    className={styles.display_icon}
+                  />
                   {elem?.part_name}
-                  </td>
+                </td>
                 <td>{elem?.part_number}</td>
 
                 <td className={styles.open}>
@@ -252,7 +324,12 @@ const PartTable = () => {
               <tr key={elem.id}>
                 <td>
                   <input
-                    onClick={() => setId(elem.document_number)}
+                    onClick={() => {
+                      setId(elem.document_number);
+                      setDeleteId(elem.id);
+                    }}
+                    checked={elem.id === selectedId}
+                    onChange={() => handleCheckboxChange(elem.id)}
                     type='checkbox'
                   />
                 </td>
@@ -262,15 +339,15 @@ const PartTable = () => {
                 <td>John</td>
 
                 <td>
-                <img
-              src='https://cdn-icons-png.freepik.com/512/7959/7959420.png'
-              width={30}
-              height={30}
-              alt='part'
-              className={styles.display_icon}
-            />
+                  <img
+                    src='https://cdn-icons-png.freepik.com/512/7959/7959420.png'
+                    width={30}
+                    height={30}
+                    alt='part'
+                    className={styles.display_icon}
+                  />
                   {elem?.document_name}
-                  </td>
+                </td>
                 <td>{elem?.document_number}</td>
 
                 <td className={styles.open}>
