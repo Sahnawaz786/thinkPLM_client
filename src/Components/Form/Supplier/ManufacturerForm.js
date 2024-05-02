@@ -37,7 +37,7 @@ const Test = () => {
    
     reader.onloadend = () => {
       // After the file is loaded, store the result (Base64 string) in the state
-      setUserData({ ...userData, document: {document:reader.result,fileType:file.name}});
+      setUserData({ ...userData, document: reader.result});
     };
 
    
@@ -125,10 +125,12 @@ const Test = () => {
         setTimer(true);
         setTimeout(() => {
           setTimer(false);
-      window.location.reload();
+          window.location.reload();
+
+
         }, 1000);
       }
-      navigate('/');
+      navigate('/')
     } catch (error) {
       console.log(error);
     }

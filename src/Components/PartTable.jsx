@@ -117,9 +117,9 @@ const PartTable = () => {
                 }}
               >
                 <img
-                  src='https://cdn-icons-png.freepik.com/512/10703/10703269.png'
-                  width={30}
-                  height={30}
+                  src='/images/parts.png'
+                  width={35}
+                  height={35}
                   alt='part'
                   id={styles.hoverButton}
                   className={
@@ -161,9 +161,9 @@ const PartTable = () => {
                 }}
               >
                 <img
-                  src='https://cdn-icons-png.freepik.com/512/7959/7959420.png'
-                  width={30}
-                  height={30}
+                  src='/images/document.png'
+                  width={35}
+                  height={35}
                   alt=''
                   className={
                     styles.deleteIcon && pathname != '/' ? styles.activeBtn : ''
@@ -261,9 +261,7 @@ const PartTable = () => {
 
                 <td>
                   <img
-                    src='https://cdn-icons-png.freepik.com/512/10703/10703269.png'
-                    width={30}
-                    height={30}
+                    src='/images/parts.png'
                     alt='part'
                     className={styles.display_icon}
                   />
@@ -340,9 +338,7 @@ const PartTable = () => {
 
                 <td>
                   <img
-                    src='https://cdn-icons-png.freepik.com/512/7959/7959420.png'
-                    width={30}
-                    height={30}
+                     src='/images/document.png'
                     alt='part'
                     className={styles.display_icon}
                   />

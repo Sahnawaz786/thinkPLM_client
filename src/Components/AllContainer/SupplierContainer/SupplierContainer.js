@@ -55,7 +55,7 @@ const SupplierContainer = ({ children, id }) => {
             <p className={classes.container_paragraph}> 
             <div className={styles.logoText} style={{ marginBottom: '10px' }}>
               <img
-                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbYXelNvTYzqH7ndMP0MZlMWQPiQJRhPFft33kyoiCGg&s'
+                src='/images/supplier.png'
                 alt='logo'
                 className={styles.imageIcon}
               />

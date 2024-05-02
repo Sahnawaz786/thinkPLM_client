@@ -49,7 +49,7 @@ const LeftBar = () => {
           >
             <div className={styles.logoText}>
               <img
-                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbYXelNvTYzqH7ndMP0MZlMWQPiQJRhPFft33kyoiCGg&s'
+                src='/images/supplier.png'
                 alt='logo'
                 className={styles.imageIcon}
               />
@@ -64,7 +64,7 @@ const LeftBar = () => {
           <div className={styles.leftbarParent}>
             <div className={styles.logoText} style={{ marginBottom: '10px' }}>
               <img
-                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbYXelNvTYzqH7ndMP0MZlMWQPiQJRhPFft33kyoiCGg&s'
+                src='/images/supplier.png'
                 alt='logo'
                 className={styles.imageIcon}
               />
@@ -82,7 +82,7 @@ const LeftBar = () => {
                   <div className={styles.leftbarChild}>
                     <div className={styles.logoText}>
                       <img
-                        src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbYXelNvTYzqH7ndMP0MZlMWQPiQJRhPFft33kyoiCGg&s'
+                        src='/images/supplier.png'
                         alt='logo'
                         className={styles.imageIcon}
                       />
