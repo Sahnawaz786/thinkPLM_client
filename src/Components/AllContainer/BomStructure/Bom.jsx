@@ -17,7 +17,7 @@ export default function BOM() {
     }
     let treeNode = {
       id: parent.data.id,
-      uniqueId: parent.uniqueId,
+      uniqueId: parent?.uniqueId || uuidv4(),
       data: parent.data,
       part_number: parent.data.part_number,
       part_name: parent.data.part_name,

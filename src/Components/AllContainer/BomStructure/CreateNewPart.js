@@ -156,7 +156,7 @@ const CreateNewPart = () => {
         }
         if (bomIds?.childId || parentId) {
           await addBomPart(payload);
-          window.location.reload();
+          // window.location.reload();
         } else {
           //
         }
@@ -181,7 +181,7 @@ const CreateNewPart = () => {
             },
           ],
         });
-
+        window.location.reload();
       //   setTimer(true);
       //   setTimeout(() => {
       //     setTimer(false);
