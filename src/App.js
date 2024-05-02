@@ -24,6 +24,11 @@ function App() {
           <Route path="/supplier-details/:id" element={<></>} />
           <Route path="/reference-object/:id" element={<></>} />
           <Route path="/supplier-documents" element={<></>} />
+          <Route path='/supplier-documents-details/:id' element={<></>}/>
+          <Route path='/supplier-documents-edit/:id' element={<></>}/>
+          <Route path='/attachment/:id' element={<></>} />
+          <Route path='/document-history/:id' element={<></>}/>
+          <Route path='/document-historyInfo/:pid/:cid' element={<></>}/>
         </Routes>
       </Router>
     </div>

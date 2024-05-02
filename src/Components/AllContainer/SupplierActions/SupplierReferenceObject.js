@@ -17,8 +17,8 @@ const SupplierReferenceObject = ({id}) => {
     console.log("checking....:",supplierInfo?.data?.document || [] )
     const newSupplier = (supplierInfo?.data || [])
     setUid(newSupplier?.document);
-
   }
+  
   console.log("outer uid is:",uid)
 
   const getFile = async (uid)=>{

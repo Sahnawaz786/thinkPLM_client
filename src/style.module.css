@@ -40,6 +40,7 @@
 
 .mainLeftbarContainer{
   margin-top: 8px;
+  /* width: 20vw; */
 }
 
 
@@ -51,13 +52,13 @@
   padding-left: 5px;
   height: 92vh;
   overflow-y: scroll;
-  width:18vw;
-
+  max-width: 18vw;
 }
 
 .leftbarParent{
   margin-left: 20px;
   margin-top: 20px;
+  margin-right: 20px;
 }
 
 .home{
@@ -159,4 +160,28 @@ th{
   padding: 20px;
   border-radius: 5px;
   display: flex;
+}
+
+
+
+
+.activeBtn{
+  background-color: rgb(188, 188, 228);
+  cursor: pointer;
+}
+
+.display_icon{
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+}
+/* dropdown  */
+
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown>.dropdown-toggle:active {
+  /*Without this, clicking will make it sticky*/
+    pointer-events: none;
 }

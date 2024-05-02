@@ -14,8 +14,12 @@ import PartManagementPage from './Pages/PartManagementPage';
 import SupplierPage from './Pages/SupplierPage';
 import PartTable from './PartTable';
 import EditSupplier from './AllContainer/SupplierActions/EditSupplier';
-import SupplierContract from './Form/SupplierDocument/SupplierContract';
 import SupplierDocumentPage from './Pages/SupplierDocumentPage';
+import SupplierDocDetails from './AllContainer/SupplierDocumentAction/SupplierDocDetails';
+import SupplierDocEdit from './AllContainer/SupplierDocumentAction/SupplierDocEdit';
+import Attachment from './AllContainer/SupplierDocumentAction/Attachment';
+import DocumentHistory from './AllContainer/SupplierDocumentAction/DocumentHistory';
+import DocumentHistoryInfo from './AllContainer/SupplierDocumentAction/DocumentHistoryInfo';
 
 const RightBar = () => {
   let location = useLocation();
@@ -89,6 +93,34 @@ const RightBar = () => {
     case '/supplier-documents':
       componentToRender = <SupplierDocumentPage/>
       break
+
+    case `/supplier-document-details/${id}`:
+      if(id){
+        componentToRender = <SupplierDocDetails id={id}/>
+      }
+      break;
+      case `/supplier-document-edit/${id}`:
+        if(id){
+          componentToRender = <SupplierDocEdit id={id}/>
+        }
+        break;
+        case `/attachment/${id}`:
+        if(id){
+          componentToRender = <Attachment id={id}/>
+        }
+        break;
+
+        case `/document-history/${id}`:
+        if(id){
+          componentToRender = <DocumentHistory id={id}/>
+        }
+        break;
+
+        case `/document-historyInfo/${pid}/${id}`:
+          if(id){
+            componentToRender = <DocumentHistoryInfo pid={pid} id={id} />
+          }
+          break;
 
     default:
       componentToRender = <PartTable />;
