@@ -9,10 +9,18 @@ export default function BOM() {
   const [treeStructure, setTreeStructure] = React.useState({});
   let { topLevelParentId, partBomDetailsList } = initialBomData || {};
 
-  function buildTree(data, parentId) {
+  const MAX_DEPTH = 100; // Set a maximum recursion depth to avoid infinite recursion
+
+  function buildTree(data, parentId, depth = 0) {
+    if (depth > MAX_DEPTH) {
+      console.error('Maximum recursion depth exceeded');
+      return null;
+    }
+
     const parent = data?.find((item) => item.data.id === parentId);
-    console.log({ parent });
+    console.log('Processing parent:', parent);
     if (!parent) {
+      console.log('Parent not found for id:', parentId);
       return null; // Return null if parent is not found
     }
     let treeNode = {
@@ -29,7 +37,7 @@ export default function BOM() {
     parent.replies.forEach((childIndex) => {
       const childData = data[childIndex];
       if (childData) {
-        const childNode = buildTree(data, childData.data.id);
+        const childNode = buildTree(data, childData.data.id, depth + 1);
         if (childNode) {
           treeNode.children.push(childNode);
         }
