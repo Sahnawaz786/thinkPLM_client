@@ -1,11 +1,10 @@
+import HomeIcon from '@mui/icons-material/Home';
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SupplierServices from '../../../services/supplier.services';
 import styles from '../../../style.module.css';
-import classes from './SupplierContainer.module.css';
-import { useLocation } from 'react-router-dom';
 import styleBtn from '../PartContainer/PartContainer.module.css';
-import HomeIcon from '@mui/icons-material/Home';
+import classes from './SupplierContainer.module.css';
 
 
 const SupplierContainer = ({ children, id }) => {
@@ -40,7 +39,7 @@ const SupplierContainer = ({ children, id }) => {
 
 
   const detailsHandler = () => {
-    navigate('/supplier-details/' + id)
+    navigate('/supplier-details/'+ id)
   }
 
   const referenceObjectHandler=()=>{
@@ -70,8 +69,8 @@ const SupplierContainer = ({ children, id }) => {
           <div className={classes.tab_nav}>
 
             <div className={classes.tab_buttons}>
-              <button className={activeBtn == 'supplier-details' ? styleBtn.activeBtn : ''}  onClick={() => detailsHandler()} >Details</button>
-              <button className={activeBtn == 'reference-object' ? styleBtn.activeBtn : ''} onClick={() => referenceObjectHandler()} >Reference Object</button>
+              <button className={activeBtn === 'supplier-details' ? styleBtn.activeBtn : ''}  onClick={() => detailsHandler()} >Details</button>
+              <button className={activeBtn === 'reference-object' ? styleBtn.activeBtn : ''} onClick={() => referenceObjectHandler()} >Attachments</button>
             
             </div>
 

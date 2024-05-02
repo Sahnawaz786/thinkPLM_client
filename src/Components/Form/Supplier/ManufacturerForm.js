@@ -32,18 +32,24 @@ const Test = () => {
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
+    console.log("filesssss",file)
     const reader = new FileReader();
-
+   
     reader.onloadend = () => {
       // After the file is loaded, store the result (Base64 string) in the state
-      setUserData({ ...userData, document: reader.result });
+      setUserData({ ...userData, document: {document:reader.result,fileType:file.name}});
     };
+
+   
 
     // Read the file as a Data URL (Base64)
     if (file) {
       reader.readAsDataURL(file);
     }
+
+  
   };
+
 
   let name, value;
   const postUserData = (event) => {
@@ -127,7 +133,7 @@ const Test = () => {
       console.log(error);
     }
   };
-
+   console.log("userData",userData)
   return (
     timer ?  <div className={spinnerStyle.spinnerContainer}>
     {' '}
