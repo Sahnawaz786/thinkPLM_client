@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import BomServices from "../../../services/bom.services";
-import classes from "./AddExistingPart.module.css";
 import { useLocation } from 'react-router-dom';
+import BomServices from "../../../services/bom.services";
 import { PartsContext } from '../../../store/PartsProvider';
+import classes from "./AddExistingPart.module.css";
 
 const { searchBomPart, addBomPart } = new BomServices();
 const AddExistingPart = ({modalHideHandler}) => {
@@ -65,13 +65,16 @@ const AddExistingPart = ({modalHideHandler}) => {
           </div>
         </div>
         <div className={classes.second_content_container}>
+
           <p>Number:</p>
+          <div>
           <input
             value={partNumber}
             onChange={(e) => setPartNumber(e.target.value)}
             //  onKeyPress={handleKeyPress}
             placeholder="search here..."></input>
           <button onClick={searchPart}>search</button>
+          </div>
         </div>
 
         <div className={classes.lowerBody_container}>

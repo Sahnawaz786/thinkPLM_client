@@ -17,8 +17,8 @@ const SupplierReferenceObject = ({id}) => {
     console.log("checking....:",supplierInfo?.data?.document || [] )
     const newSupplier = (supplierInfo?.data || [])
     setUid(newSupplier?.document);
+
   }
-  
   console.log("outer uid is:",uid)
 
   const getFile = async (uid)=>{
@@ -50,16 +50,25 @@ const SupplierReferenceObject = ({id}) => {
 
   return (
     <SupplierContainer id={id}>
-        <div>
-         <ul>
-        {file && (
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Supplier Document</th>
+            </tr>
+          </thead>
+          <tbody>
+          {file && (
+            <tr>
+              <DownloadIcon onClick={() => downloadFile(file)} />
+            </tr>
+          )}
+          </tbody>
+        </table>
 
-                      <li>Supplier Document :<DownloadIcon onClick={() => downloadFile(file)}/></li>
-                  )}
-       </ul>
-        </div>
+      </div>
     </SupplierContainer>
-  )
+  );
 }
 
 export default SupplierReferenceObject
