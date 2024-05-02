@@ -161,3 +161,27 @@ th{
   border-radius: 5px;
   display: flex;
 }
+
+
+
+
+.activeBtn{
+  background-color: rgb(188, 188, 228);
+  cursor: pointer;
+}
+
+.display_icon{
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+}
+/* dropdown  */
+
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown>.dropdown-toggle:active {
+  /*Without this, clicking will make it sticky*/
+    pointer-events: none;
+}

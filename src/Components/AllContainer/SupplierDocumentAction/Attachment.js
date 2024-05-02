@@ -1,39 +1,37 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import SupplierDocContainer from '../SupplierDocumentContainer/SupplierDocContainer';
 import DownloadIcon from '@mui/icons-material/Download';
 import SupplierServices from '../../../services/supplier.services';
+import DocumentServices from '../../../services/document.services';
 
-const {getSupplierById, getFileDownload}=new SupplierServices();
+const { getDocumentById, getFileDownload } = new DocumentServices();
 
-const Attachment = ({id}) => {
-  const [file,setFile]=useState([]);
-  const [uid,setUid]=useState([])
+const Attachment = ({ id }) => {
+  const [file, setFile] = useState([]);
+  const [uid, setUid] = useState([])
+  const [attachment, setAttachment] = useState([]);
 
-  
+
   const getSupplier = async (id) => {
-    
-    const supplierInfo=await getSupplierById(id);
-    console.log("new supplier info:",supplierInfo)
-    console.log("checking....:",supplierInfo?.data?.document || [] )
-    const newSupplier = (supplierInfo?.data || [])
-    setUid(newSupplier?.document);
+
+    const supplierInfo = await getDocumentById(id);
+    console.log("new supplier info:", supplierInfo)
+    setAttachment(supplierInfo?.data[0]?.supplier_contract[0]?.attachment);
+    console.log('ATTACHEMNTS', attachment);
+
+
+    // console.log("checking....:",supplierInfo?.data?.document || [] )
+    // const newSupplier = (supplierInfo?.data || [])
+    // setUid(newSupplier?.document);
 
   }
-  console.log("outer uid is:",uid)
 
-  const getFile = async (uid)=>{
-    const fileInfo = await getFileDownload(uid);
-    console.log("file download:",fileInfo)
-    const newFile = (fileInfo?.data?.document || [])
-    setFile(newFile);
-  }
 
   useEffect(() => {
     getSupplier(id);
-    getFile(uid)
-  }, [id,uid])
-  console.log("uid is:",uid)
-  console.log("file is:",file)
+  }, [id, uid])
+  console.log("uid is:", uid)
+  console.log("file is:", file)
 
   const downloadFile = (url) => {
     // Create a link element
@@ -49,15 +47,38 @@ const Attachment = ({id}) => {
   };
   return (
     <SupplierDocContainer id={id}>
-        <h1>Attachments</h1>
-        <div>
-         <ul>
-        {file && (
+      <h>Attachments</h>
+      <div>
+        <ul>
+          {file && (
+            <table>
+              <thead>
+                <tr>
+                  <th>GoveringLawandJurisdication</th>
+                  <th>PricingandPaymentTerms</th>
+                  <th>Signatures</th>
+                  <th>TermandTermination</th>
+                </tr>
+              </thead>
+              <tbody>
 
-                      <li>Supplier Document :<DownloadIcon onClick={() => downloadFile(file)}/></li>
-                  )}
-       </ul>
-        </div>
+
+                <tr>
+                  <td><DownloadIcon onClick={() => downloadFile(attachment[0].goveringLawandJurisdication)} /></td>
+
+                  <td><DownloadIcon onClick={() => downloadFile(attachment[0].pricingandPaymentTerms)} /></td>
+
+                  <td><DownloadIcon onClick={() => downloadFile(attachment[0].signatures)} /></td>
+
+                  <td><DownloadIcon onClick={() => downloadFile(attachment[0].termandTermination)} /></td>
+
+                </tr>
+              </tbody>
+            </table>
+
+          )}
+        </ul>
+      </div>
     </SupplierDocContainer>
   )
 }

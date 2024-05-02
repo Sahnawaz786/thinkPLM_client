@@ -14,6 +14,8 @@ const SupplierDocDetails = ({ id }) => {
  const[supplierDetails,setSupplierDetails]=useState([]);
 const {choice,showAlert,setShowAlert}=useContext(UserContext);
  const [timer,setTimer] = useState(true);
+const  [docsupplier,setDocSupplier] = useState([]);
+
  const navigate=useNavigate()
 
 const {getDocumentById,getAllDocuments,deleteDocument}=new DocumentServices();
@@ -22,11 +24,25 @@ const {getDocumentById,getAllDocuments,deleteDocument}=new DocumentServices();
     const partInfo = await getDocumentById(id);
     console.log("PARTINFO",partInfo);
     console.log('part info data', { partInfo });
-    const newParts = (partInfo?.data.supplier_contract || [])
+    const newParts = (partInfo?.data[0].supplier_contract || [])
       .map((elem) => {
         return { ...elem, createdDate: partInfo?.data?.createdDate };
       })
       .sort((a, b) => b.id - a.id)?.[0];
+
+    
+
+    let obj = partInfo?.data[0]?.supplier_contract;
+
+
+   let mainOBJ =  obj.map((elem)=>{
+      return {...elem}
+    }).sort((a,b)=>b.id-a.id)?.[0];
+
+    setDocSupplier([mainOBJ]);
+
+    console.log('OBJ',mainOBJ);
+
     console.log('NEWPARTS',newParts);
     const newPartsData = { ...partInfo, supplier_contract: [newParts || {}] };
     console.log("SupplierDetails",newPartsData);
@@ -117,7 +133,7 @@ return (
         
       </div>
       <div className={classes.bottomDetails}>
-      {supplierDetails[0]?.data[0]?.supplier_contract?.map((childParts, i) => {
+      {docsupplier.map((childParts, i) => {
               return (
         
           <div className={classes.child_part}>
