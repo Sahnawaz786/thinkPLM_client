@@ -11,7 +11,6 @@ const Attachment = ({ id }) => {
   const [uid, setUid] = useState([])
   const [attachment, setAttachment] = useState([]);
 
-
   const getSupplier = async (id) => {
 
     const supplierInfo = await getDocumentById(id);
@@ -26,9 +25,17 @@ const Attachment = ({ id }) => {
 
   }
 
+  const getFile = async (uid)=>{
+    const fileInfo = await getFileDownload(206);
+    console.log("file download:",fileInfo)
+    const newFile = (fileInfo?.data?.document || [])
+    setFile(newFile);
+  }
+
 
   useEffect(() => {
     getSupplier(id);
+    getFile();
   }, [id, uid])
   console.log("uid is:", uid)
   console.log("file is:", file)
@@ -45,6 +52,9 @@ const Attachment = ({ id }) => {
     // Clean up
     document.body.removeChild(link);
   };
+
+  console.log('ATTACHEMNTS', attachment);
+
   return (
     <SupplierDocContainer id={id}>
       <h>Attachments</h>
@@ -64,13 +74,13 @@ const Attachment = ({ id }) => {
 
 
                 <tr>
-                  <td><DownloadIcon onClick={() => downloadFile(attachment[0].goveringLawandJurisdication)} /></td>
+                  <td><DownloadIcon onClick={() => downloadFile(attachment[0]?.goveringLawandJurisdication)} /></td>
 
-                  <td><DownloadIcon onClick={() => downloadFile(attachment[0].pricingandPaymentTerms)} /></td>
+                  <td><DownloadIcon onClick={() => downloadFile(attachment[0]?.pricingandPaymentTerms)} /></td>
 
-                  <td><DownloadIcon onClick={() => downloadFile(attachment[0].signatures)} /></td>
+                  <td><DownloadIcon onClick={() => downloadFile(attachment[0]?.signatures)} /></td>
 
-                  <td><DownloadIcon onClick={() => downloadFile(attachment[0].termandTermination)} /></td>
+                  <td><DownloadIcon onClick={() => downloadFile(attachment[0]?.termandTermination)} /></td>
 
                 </tr>
               </tbody>

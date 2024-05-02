@@ -156,6 +156,7 @@ const CreateNewPart = () => {
         }
         if (bomIds?.childId || parentId) {
           await addBomPart(payload);
+          // window.location.reload();
         } else {
           //
         }

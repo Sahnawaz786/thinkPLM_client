@@ -101,7 +101,7 @@ const EditPart = ({id}) => {
 
       // console.log({res});
       if (res.ok) {
-        navigate("/update");
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
