@@ -47,7 +47,7 @@ const PartManagementPage = () => {
       <div className={classes.headerContainer}>
       <div>
      
-    <h3 className={classes.supplierHeading}>Create Parts</h3>
+    <h3 className={classes.supplierHeading}>Create Part</h3>
     </div>
 
     <div className={classes.labelContainer}>

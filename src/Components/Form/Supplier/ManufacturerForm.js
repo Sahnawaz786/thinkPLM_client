@@ -37,7 +37,7 @@ const Test = () => {
    
     reader.onloadend = () => {
       // After the file is loaded, store the result (Base64 string) in the state
-      setUserData({ ...userData, document: reader.result});
+      setUserData({ ...userData, document:reader.result,fileType:'hello'});
     };
 
    

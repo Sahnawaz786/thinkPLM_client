@@ -9,7 +9,7 @@ export default function BOM() {
   const [treeStructure, setTreeStructure] = React.useState({});
   let { topLevelParentId, partBomDetailsList } = initialBomData || {};
 
-  const MAX_DEPTH = 100; // Set a maximum recursion depth to avoid infinite recursion
+  const MAX_DEPTH = 100;
 
   function buildTree(data, parentId, depth = 0) {
     if (depth > MAX_DEPTH) {

@@ -22,8 +22,8 @@ const SupplierDocContainer = ({ children, id }) => {
 
     const partInfo = await getDocumentById(id);
     console.log("document container data:",  partInfo.data )
-    const newParts = (partInfo?.data || [])
-    setSupplierInformation(newParts[0]);
+    const newParts = (partInfo?.data || {})
+    setSupplierInformation(newParts);
     console.log({'info':supplierInformation});
 
   }
@@ -75,8 +75,7 @@ const SupplierDocContainer = ({ children, id }) => {
           <div className={classes.tab_nav}>
 
             <div className={classes.tab_buttons}>
-              <button className={activeBtn == 'supplier-document-details' ? styleBtn.activeBtn : ''}  onClick={() => detailsHandler()} >Details</button>
-              <button className={activeBtn == 'reference-object' ? styleBtn.activeBtn : ''} onClick={() => referenceObjectHandler()} >Structure</button>
+              <button className={activeBtn == 'supplier-document-details' || activeBtn=='document-historyInfo' ? styleBtn.activeBtn : ''}  onClick={() => detailsHandler()} >Details</button>
               <button className={activeBtn == 'document-history' ? styleBtn.activeBtn : ''} onClick={() => referenceObjectHandler()} >History</button>
               <button className={activeBtn == 'attachment' ? styleBtn.activeBtn : ''} onClick={() => handleAttachments()} >Attachments</button>
             
@@ -91,8 +90,6 @@ const SupplierDocContainer = ({ children, id }) => {
           {children}
         </div>
       </div>
-
-
     </>
   )
 }

@@ -142,16 +142,25 @@ th {
   background-color: #f2f2f2;
   font-weight: bold;
   color: #333;
+  /* word-wrap: break-word;
+  max-width: 20vw;
+  text-overflow: ellipsis;
+  white-space: nowrap; */
 }
 
 td{
   background-color: #f9f9f9;
-
+  
 }
 
 th{
   background-color: #45546c;
   color: white;
+  word-wrap: break-word;
+  max-width: 20vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 
@@ -183,4 +192,26 @@ th{
 
 .hoverText:hover{
   background-color: #01b0f1;
+}
+
+.display_supplier_icon{
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+.fileType{
+  color: white;
+  font-size: 10px;
+  margin-left: 10px;
+  color: #01b0f1;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.FileInput{
+  padding: 2px 8px;
+  font-weight: 700;
+  border: 1px solid black;
+  margin-right: 6px;
 }

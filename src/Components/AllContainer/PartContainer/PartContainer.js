@@ -73,7 +73,7 @@ const PartContainer = ({ children, id }) => {
         {(partInformation || [])?.map((part, index) => {
           return (
             <div className={classes.container} >
-              <p className={classes.container_paragraph}> <SettingsIcon />Part-{part?.data?.part_number},{part?.data?.part_name},{part?.data?.parts[0]?.iteration_info}</p>
+              <p className={classes.container_paragraph}> <img width={35} height={35} src='/images/parts.png' /> Part-{part?.data?.part_number},{part?.data?.part_name},{part?.data?.parts[0]?.iteration_info}</p>
             </div>
           )
         })}

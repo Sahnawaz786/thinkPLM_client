@@ -114,9 +114,9 @@ const Structure = ({ id }) => {
               <div className={classes.leftBox_content_top}>
                 <p>
                   <img
-                    src='https://cdn-icons-png.freepik.com/512/10703/10703269.png'
-                    width={30}
-                    height={30}
+                    src='/images/parts.png'
+                    width={35}
+                    height={35}
                     alt='part'
                     onClick={() => {
                       modalAddHandler();
@@ -156,9 +156,9 @@ const Structure = ({ id }) => {
               <div className={classes.leftBox_content_bottom}>
                 <p>
                   <img
-                    src='https://cdn-icons-png.freepik.com/512/10703/10703269.png'
-                    width={30}
-                    height={30}
+                    src='/images/parts.png'
+                    width={35}
+                    height={35}
                     alt='part'
                     onClick={() => {
                       createModalAddHandler();
