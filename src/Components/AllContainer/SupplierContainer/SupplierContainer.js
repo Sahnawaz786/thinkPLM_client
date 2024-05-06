@@ -53,7 +53,7 @@ const SupplierContainer = ({ children, id }) => {
      
             <div className={classes.container} >
             <p className={classes.container_paragraph}> 
-            <div className={styles.logoText} style={{ marginBottom: '10px' }}>
+            <div className={styles.logoText} >
               <img
                 src='/images/supplier.png'
                 alt='logo'
@@ -79,7 +79,6 @@ const SupplierContainer = ({ children, id }) => {
             </div>
 
           </div>
-
           {children}
         </div>
       </div>

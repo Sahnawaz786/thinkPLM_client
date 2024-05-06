@@ -76,8 +76,8 @@ const PartTable = () => {
       };
     });
 
-    setData(newPartsData);
-    setData2(newPartsData2);
+    setData(newPartsData.reverse());
+    setData2(newPartsData2.reverse());
     console.log('Parts', response.data);
     console.log('DATAIS', data2);
   };
@@ -255,7 +255,14 @@ const PartTable = () => {
                   />
                 </td>
 
-                <td>{elem?.parts[0]?.supplier_name}</td>
+                <td>
+                  <img
+                    src='/images/supplier.png'
+                    alt='part'
+                    className={styles.display_supplier_icon}
+                  />
+                  {elem?.parts[0]?.supplier_name}
+                </td>
 
                 <td>John</td>
 
@@ -271,11 +278,7 @@ const PartTable = () => {
 
                 <td className={styles.open}>
                   Open{' '}
-                  <img
-                    src='https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid'
-                    width={20}
-                    height={20}
-                  />
+                  
                 </td>
 
                 <td>A</td>
@@ -323,7 +326,7 @@ const PartTable = () => {
                 <td>
                   <input
                     onClick={() => {
-                      setId(elem.document_number);
+                      setId(elem.id);
                       setDeleteId(elem.id);
                     }}
                     checked={elem.id === selectedId}
@@ -332,13 +335,20 @@ const PartTable = () => {
                   />
                 </td>
 
-                <td>{elem?.supplier_contract[0]?.supplier_name}</td>
+                <td>
+                  <img
+                    src='/images/supplier.png'
+                    alt='part'
+                    className={styles.display_supplier_icon}
+                  />
+                  {elem?.supplier_contract[0]?.supplier_name}
+                </td>
 
                 <td>John</td>
 
                 <td>
                   <img
-                     src='/images/document.png'
+                    src='/images/document.png'
                     alt='part'
                     className={styles.display_icon}
                   />
@@ -348,11 +358,7 @@ const PartTable = () => {
 
                 <td className={styles.open}>
                   Open{' '}
-                  <img
-                    src='https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid'
-                    width={20}
-                    height={20}
-                  />
+                 
                 </td>
 
                 <td>A</td>
@@ -370,7 +376,7 @@ const PartTable = () => {
                     height={20}
                     onClick={() => {
                       navigate(
-                        `/supplier-document-details/${elem.document_number}`
+                        `/supplier-document-details/${elem.id}`
                       );
                     }}
                   />

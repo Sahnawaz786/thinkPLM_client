@@ -41,7 +41,20 @@ class DocumentServices {
 
     async getDocumentById(id) {
         try {
-            const response = await axios.get(`${baseURL}/Supplier_MasterContractObjectBypart_number/${id}`);
+            const response = await axios.get(`${baseURL}/getSupplierMasterContractById/${id}`);
+            if (response.status!==200) {
+                throw new Error(`Failed to fetch parts: ${response.statusText}`);
+            }
+            return await response;
+        } catch (error) {
+            console.error('Error fetching parts:', error);
+            return null;
+        }
+    }
+
+    async getDocumentHistoryById(id) {
+        try {
+            const response = await axios.get(`${baseURL}/SupplierMasterContractObject/${id}`);
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }

@@ -13,23 +13,8 @@ const SupplierContract = () => {
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState('');
-  const [attachments,setAttachments] = useState({
-    fileName: null,
-    fileType: null,
-    content: null,
-    pricingandPaymentTerms:"",
-    termandTermination: "",
-    goveringLawandJurisdication: "",
-    signatures: "",
-    itemizedCharges: null,
-    paymentInstructions: null,
-    insuranceCoverage: null,
-    authorizedSignature: null,
-    complianceStandard: null,
-    certifyingAuthority: null,
-    complianceStatement: null
-  });
- 
+  const [attachments, setAttachments] = useState([]);
+
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -68,20 +53,12 @@ const SupplierContract = () => {
         islatest_Iteration: 1,
         attachment: [
           {
-            fileName: null,
-            fileType: null,
-            content: null,
-            pricingandPaymentTerms:"",
-            termandTermination: "",
-            goveringLawandJurisdication: "",
-            signatures: "",
-            itemizedCharges: null,
-            paymentInstructions: null,
-            insuranceCoverage: null,
-            authorizedSignature: null,
-            complianceStandard: null,
-            certifyingAuthority: null,
-            complianceStatement: null
+
+            fileName: '',
+            fileType: '',
+            content: '',
+            attachment_type: ''
+
           }
         ]
       }
@@ -92,10 +69,11 @@ const SupplierContract = () => {
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
+    console.log('FILE', file);
     const reader = new FileReader();
     const title = event.target.name;
 
-    // 
+    //
 
     reader.onloadend = () => {
       // After the file is loaded, store the result (Base64 string) in the state
@@ -106,7 +84,7 @@ const SupplierContract = () => {
           // [title]: reader.result
         }))
       }));
-      setAttachments({...attachments,[title]:reader.result});
+      setAttachments([...attachments,{fileName:file.name,fileType:file.type,content:reader.result,attachmentType:title}]);
     };
 
     // Read the file as a Data URL (Base64)
@@ -126,9 +104,9 @@ const SupplierContract = () => {
     const { name, value } = event.target;
     setUserData((prevData) => {
       const updatedSupplierContract = [...prevData.supplier_contract];
-      console.log('Updated:',updatedSupplierContract)
+      console.log('Updated:', updatedSupplierContract)
       updatedSupplierContract[index] = { ...updatedSupplierContract[index], [name]: value };
-      console.log('SecondUpdated:',{ ...prevData, supplier_contract: updatedSupplierContract });
+      console.log('SecondUpdated:', { ...prevData, supplier_contract: updatedSupplierContract });
       return { ...prevData, supplier_contract: updatedSupplierContract };
     });
   };
@@ -155,8 +133,8 @@ const SupplierContract = () => {
       ]
     } = userData;
 
-   attachment = [attachments];
-    
+    attachment = attachments;
+
 
     try {
 
@@ -360,7 +338,7 @@ const SupplierContract = () => {
 
                         <div className={styles.formInput}>
                           <strong htmlFor='document'>Upload Contract Document:</strong>
-                          <input type='file' className={styles.partName} id='document' name="pricingandPaymentTerms" onChange={handleFileUpload} />
+                          <input type='file' className={styles.partName} id='document' name="contractDocument" onChange={handleFileUpload} />
                         </div>
 
                         <div className={styles.formInput}>

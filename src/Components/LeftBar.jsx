@@ -45,7 +45,7 @@ const LeftBar = () => {
         <>
           <div
             className={styles.mainLeftbarContainer}
-            style={{ display: 'flex', justifyContent: 'space-between' }}
+            // style={{ display: 'flex', justifyContent: 'space-between' }}
           >
             <div className={styles.logoText}>
               <img
@@ -87,7 +87,7 @@ const LeftBar = () => {
                         className={styles.imageIcon}
                       />
 
-                      <span onClick={() => handleNavToggle(elem)}>
+                      <span title={elem.category} onClick={() => handleNavToggle(elem)}>
                         {elem.name}
                       </span>
                     </div>

@@ -55,10 +55,10 @@ const PartHistory = ({ id }) => {
       <HashLoader color='#0E6EFD' />{' '}
     </div> :
       <PartContainer id={id}>
-        <div style={{ marginTop: "30px" }}>
+        <div style={{ marginTop: "15px" }}>
          
 
-          <div className="container mt-5" style={{ maxWidth: "100%" }}>
+          <div className="container" style={{ maxWidth: "100%" }}>
             <table>
               <thead>
                 <tr>

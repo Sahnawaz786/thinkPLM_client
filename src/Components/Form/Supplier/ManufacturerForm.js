@@ -27,7 +27,7 @@ const Test = () => {
     location: '',
     start_date: '',
     end_date: '',
-    document: null,
+    document: [{}],
   });
 
   const handleFileUpload = (event) => {
@@ -37,16 +37,13 @@ const Test = () => {
    
     reader.onloadend = () => {
       // After the file is loaded, store the result (Base64 string) in the state
-      setUserData({ ...userData, document: reader.result});
+      setUserData({ ...userData, document:[{fileName:file.name,fileType:file.type,document:reader.result}]});
     };
-
-   
 
     // Read the file as a Data URL (Base64)
     if (file) {
       reader.readAsDataURL(file);
     }
-
   
   };
 

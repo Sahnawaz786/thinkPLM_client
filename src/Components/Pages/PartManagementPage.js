@@ -47,13 +47,13 @@ const PartManagementPage = () => {
       <div className={classes.headerContainer}>
       <div>
      
-    <h3 className={classes.supplierHeading}>Create Parts</h3>
+    <h3 className={classes.supplierHeading}>Create Part</h3>
     </div>
 
     <div className={classes.labelContainer}>
     <div className={classes.supplier_label}>
             <select
-              style={{ height: "25px", width: "10.5rem", borderRadius: "5px", borderStyle: "none" }}
+              style={{ width: "9.5rem", borderRadius: "3px", borderStyle: "none", background: "rgba(183, 184, 192, 0.955)", outline: 'none', padding: "3px 4px 4px 3px", fontSize: "small", cursor: "pointer" }}
               value={selected} onChange={(e) => handleChange(e)}>
               <option>Create part</option>
               {categoryItemsCtx.partCategories.map((item, ind) => {

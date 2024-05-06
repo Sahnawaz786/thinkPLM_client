@@ -7,17 +7,19 @@ import styles from '../../Form/Parts/PartAttribut.module.css';
 import HashLoader from 'react-spinners/HashLoader';
 import { Button } from 'react-bootstrap';
 import classes from "../../Form/AllForm.module.css";
+import FileInput from '../../../utils/FileInput';
 
 const SupplierDocEdit = ({ id }) => {
 
     const { getDocumentById } = new DocumentServices();
     const location = useLocation();
     const editId = location?.pathname?.split('/').slice(-1).join();
-    console.log({location: location?.pathname?.split('/').slice(-1).join()})
+    console.log({ location: location?.pathname?.split('/').slice(-1).join() })
     const categoryItemsCtx = useContext(categoryContext);
 
     const [timer, setTimer] = useState(false);
     const navigate = useNavigate();
+    const [attachments, setAttachments] = useState([]);
     const [userData, setUserData] = useState({
         document_number: '',
         document_name: '',
@@ -36,17 +38,7 @@ const SupplierDocEdit = ({ id }) => {
                         fileName: null,
                         fileType: null,
                         content: null,
-                        pricingandPaymentTerms: "",
-                        termandTermination: "",
-                        goveringLawandJurisdication: "",
-                        signatures: "",
-                        itemizedCharges: null,
-                        paymentInstructions: null,
-                        insuranceCoverage: null,
-                        authorizedSignature: null,
-                        complianceStandard: null,
-                        certifyingAuthority: null,
-                        complianceStatement: null
+                        attachmentType: ''
                     }
                 ]
             }
@@ -56,22 +48,72 @@ const SupplierDocEdit = ({ id }) => {
     const getPartApiEdit = async (id) => {
         try {
             const mypartData = await getDocumentById(id);
-            console.log({mypartData});
-            const newParts = (mypartData?.data[0]?.supplier_contract || []).sort((a, b) => b.id - a.id)?.[0];
-            const newPartsData = {...mypartData?.data?.[0], supplier_contract: [{...newParts} || {}]}
+            console.log({ mypartData });
+            const newParts = (mypartData?.data?.supplier_contract || []).sort((a, b) => b.id - a.id)?.[0];
+            const newPartsData = { ...mypartData?.data, supplier_contract: [{ ...newParts } || {}] }
             setUserData(newPartsData);
-          } catch (error) {
+            setAttachments(newPartsData?.supplier_contract[0]?.attachment);
+        } catch (error) {
             console.log(error);
-          }
+        }
+    };
+
+    console.log("USERDATA", { userData });
+    console.log("ATTACHMENTS", { attachments });
+
+
+    const handleFileUpload = (event, fileObj) => {
+        const file = event.target.files[0];
+        console.log('FILE', file);
+        const reader = new FileReader();
+        const title = event.target.name;
+
+        console.log('Event', { title }, "fileObj", { fileObj });
+
+        //
+
+
+
+        reader.onloadend = () => {
+            // After the file is loaded, store the result (Base64 string) in the state
+            // setUserData(prevState => ({
+            //     ...prevState,
+            //     supplier_contract: prevState.supplier_contract.map(contract => ({
+            //         ...contract,
+            //     }))
+            // }));
+            const modifiedAttachment = attachments?.map((elem) => {
+                if (elem?.id === fileObj?.id) {
+                    return { ...elem, fileName: file.name, fileType: file.type, content: reader.result }
+                }
+                return elem;
+            })
+            console.log("MODIFIED", { modifiedAttachment });
+            setAttachments(modifiedAttachment);
+            //    setUserData((prevState)=>{
+            //     return {
+            //         ...prevState,
+            //         supplier_contract:[{...prevState.supplier_contract?.[0],attachment:modifiedAttachment}]
+            //     }
+            //    })
+        };
+
+
+        console.log("USERDETAILS7", userData);
+
+        // Read the file as a Data URL (Base64)
+        if (file) {
+            reader.readAsDataURL(file);
+        }
     };
 
     useEffect(() => {
-       if (editId) {
-           getPartApiEdit(editId);
-           console.log({test: "HELLO"})
-       }
+        if (editId) {
+            getPartApiEdit(editId);
+            console.log({ test: "HELLO" })
+        }
     }, [editId])
-    console.log({userData})
+    console.log("DATAIS", userData)
     let name, value;
     const postUser = (event) => {
         const name = event.target.name;
@@ -83,20 +125,22 @@ const SupplierDocEdit = ({ id }) => {
 
     const postUserData = (event, index) => {
         const { name, value } = event.target;
-        const date=new Date().toJSON().slice(0, 10);
+        const date = new Date().toJSON().slice(0, 10);
         console.log(date);
         setUserData((prevData) => {
-          const updatedParts = [...prevData.supplier_contract];
-          updatedParts[index] = { ...updatedParts[index], [name]: value ,modifiedDate:date};
-          return { ...prevData, supplier_contract: updatedParts };
+            console.log("PREVDATA", prevData);
+            const updatedParts = [...prevData.supplier_contract];
+            console.log("UPDATE", updatedParts)
+            updatedParts[index] = { ...updatedParts[index], [name]: value, modifiedDate: date };
+            return { ...prevData, supplier_contract: updatedParts };
         });
-        console.log("DATAISTHE",userData)
-      };
+        console.log("DATAISTHE", userData)
+    };
 
     const submitHandler = async (event) => {
         event.preventDefault();
-        console.log("USER---DATA", { sajjad: { ...userData, supplier_contract: [{ ...userData?.supplier_contract[0] }] } })
-        // return;
+        console.log("USER---DATA", { sajjad: { ...userData, supplier_contract: [{ ...userData?.supplier_contract[0], attachment: attachments }] } })
+
         try {
             // `http://localhost:8181/SupplierMasterObject`
 
@@ -105,7 +149,9 @@ const SupplierDocEdit = ({ id }) => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ ...userData} )
+                body: JSON.stringify(
+                    { ...userData, supplier_contract: [{ ...userData?.supplier_contract[0], attachment: attachments }] }
+                )
             });
 
             // console.log({res});
@@ -116,6 +162,20 @@ const SupplierDocEdit = ({ id }) => {
             console.log(error);
         }
     };
+
+    let obj = {
+        "termandTermination": attachments?.find((elem) => elem.attachmentType == "termandTermination"),
+        "goveringLawandJurisdication": attachments?.find((elem) => elem.attachmentType == "goveringLawandJurisdication"),
+        "signatures": attachments?.find((elem) => elem.attachmentType == "signatures"),
+        "contractDocument": attachments?.find((elem) => elem.attachmentType == "contractDocument"),
+    }
+
+    // useEffect(()=>{
+    //   setAttachments(userData?.supplier_contract[0]?.attachment);
+    //   console.log('ATTACK',userData?.supplier_contract[0]);
+    // },[])
+
+    console.log("OBJ", { obj });
 
     return (
         timer ? <div className={spinnerStyle.spinnerContainer}>
@@ -184,50 +244,78 @@ const SupplierDocEdit = ({ id }) => {
                                     </div>
 
                                     <div className={styles.formContainer}>
-                                            <>
-                                                <div className={styles.formInput}>
-                                                    <strong>Supplier Name(Non-Editable)</strong>
-                                                    <input
-                                                        type="text"
-                                                        name="supplier_name"
-                                                        value={userData?.supplier_contract[0]?.supplier_name || ''}
-                                                        onChange={(event) => postUserData(event)}
-                                                        readOnly
-                                                    />
-                                                </div>
+                                        <>
+                                            <div className={styles.formInput}>
+                                                <strong>Supplier Name(Non-Editable)</strong>
+                                                <input
+                                                    type="text"
+                                                    name="supplier_name"
+                                                    value={userData?.supplier_contract[0]?.supplier_name || ''}
+                                                    onChange={(event) => postUserData(event, 0)}
+                                                    readOnly
+                                                />
+                                            </div>
 
-                                                <div className={styles.formInput}>
-                                                    <strong>Scope of Work:</strong>
-                                                    <input
-                                                        type='text'
-                                                        name='work_scope'
-                                                        value={userData?.supplier_contract[0]?.work_scope || ''}
-                                                        className={styles.partName}
-                                                        onChange={(event) => postUserData(event, 0)}
-                                                    />
-                                                </div>
-                                                <div className={styles.formInput}>
-                                                    <strong>Effective Date:</strong>
-                                                    <input
-                                                        type='date'
-                                                        name='effective_date'
-                                                        value={userData?.supplier_contract[0]?.effective_date || ''}
-                                                        className={styles.partName}
-                                                        onChange={(event) => postUserData(event, 0)}
-                                                    />
-                                                </div>
-                                                <div className={styles.formInput}>
-                                                    <strong>Expiration Date:</strong>
-                                                    <input
-                                                        type='date'
-                                                        name='expiration_date'
-                                                        value={userData?.supplier_contract[0]?.expiration_date || ''}
-                                                        className={styles.partName}
-                                                        onChange={(event) => postUserData(event, 0)}
-                                                    />
-                                                </div>
+                                            <div className={styles.formInput}>
+                                                <strong>Scope of Work:</strong>
+                                                <input
+                                                    type='text'
+                                                    name='work_scope'
+                                                    value={userData?.supplier_contract[0]?.work_scope || ''}
+                                                    className={styles.partName}
+                                                    onChange={(event) => postUserData(event, 0)}
+                                                />
+                                            </div>
+                                            <div className={styles.formInput}>
+                                                <strong htmlFor='document'>Upload Contract Details:</strong>
 
-                                            </>
+                                                <FileInput fileName={obj["contractDocument"]} setFileName={handleFileUpload} />
+
+                                            </div>
+
+
+
+                                            <div className={styles.formInput}>
+                                                <strong htmlFor='document'>Terms and Terminations:</strong>
+                                                <FileInput fileName={obj["termandTermination"]} setFileName={handleFileUpload} />
+
+                                            </div>
+
+
+
+
+                                            <div className={styles.formInput}>
+                                                <strong>Effective Date:</strong>
+                                                <input
+                                                    type='date'
+                                                    name='effective_date'
+                                                    value={userData?.supplier_contract[0]?.effective_date || ''}
+                                                    className={styles.partName}
+                                                    onChange={(event) => postUserData(event, 0)}
+                                                />
+                                            </div>
+                                            <div className={styles.formInput}>
+                                                <strong>Expiration Date:</strong>
+                                                <input
+                                                    type='date'
+                                                    name='expiration_date'
+                                                    value={userData?.supplier_contract[0]?.expiration_date || ''}
+                                                    className={styles.partName}
+                                                    onChange={(event) => postUserData(event, 0)}
+                                                />
+                                            </div>
+                                            <div className={styles.formInput}>
+                                                <strong htmlFor='document'>Governing law and Jurisdiction:</strong>
+                                                <FileInput fileName={obj["goveringLawandJurisdication"]} setFileName={handleFileUpload} />
+
+                                            </div>
+                                            <div className={styles.formInput}>
+                                                <strong htmlFor='document'>Signature:</strong>
+                                                <FileInput fileName={obj["signatures"]} setFileName={handleFileUpload} />
+
+                                            </div>
+
+                                        </>
                                     </div>
                                 </div>
                             </div>

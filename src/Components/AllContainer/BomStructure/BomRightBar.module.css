@@ -1,7 +1,7 @@
 .rightBar_bomContainer{
     border:1px solid black;
-    width:55vw !important;
-    height:69.7vh !important;
+    width:56vw !important;
+    height:69vh !important;
     margin: -5px;
     position:relative;
     bottom:-13px;
@@ -33,9 +33,10 @@
   }
   .masterpart_header {
     position: absolute;
-    top: -23px; /* Adjust this value as needed */
+    top: -18px; /* Adjust this value as needed */
     left: 10px; /* Adjust this value as needed */
-    background-color: rgb(213, 210, 210);
+    /* background-color: rgb(213, 210, 210); */
+    background-color: white;
     padding: 0 5px;
     /* border: 1px solid black; */
     border-radius: 5px;
@@ -46,7 +47,7 @@
   }
   
   .masterpart_header p {
-    font-size: 20px;
+    font-size: 15px;
     font-weight: bold;
   }
   .master_part p {
@@ -70,20 +71,21 @@
   
   .childpart_header {
     position: absolute;
-    top: -21px; /* Adjust this value as needed */
+    top: -16px; /* Adjust this value as needed */
     left: 10px; /* Adjust this value as needed */
-    background-color: rgb(213, 210, 210);
+    /* background-color: rgb(213, 210, 210); */
+    background-color: white;
     padding: 0 5px;
     /* border: 1px solid black; */
     border-radius: 5px;
   }
   .childpart_header p {
-    font-size: 20px;
+    font-size: 15px;
     font-weight: bold;
   }
   
   .childpart_header p {
-    font-size: 20px;
+    font-size: 15px;
     font-weight: bold;
   }
   

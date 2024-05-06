@@ -70,9 +70,9 @@ const SupplierPage = () => {
       </div>
 
       <div className={classes.labelContainer}>
-      <div className={classes.supplier_label}>
+      <div className={classes.supplier_label_2}>
               <select
-                style={{ height: "25px", width: "10.5rem", borderRadius: "5px", borderStyle: "none" }}
+                style={{ width: "9.5rem", borderRadius: "3px", borderStyle: "none", background: "rgba(183, 184, 192, 0.955)", outline: 'none', padding: "3px 4px 4px 3px", fontSize: "small", cursor: "pointer" }}
                 value={selected} onChange={(e) => handleChange(e)}>
                 <option>Create Supplier</option>
                 {categoryItemsCtx.category.map((item, ind) => {
