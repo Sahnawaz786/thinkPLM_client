@@ -11,7 +11,7 @@ import SupplierDocContainer from '../SupplierDocumentContainer/SupplierDocContai
 const DocumentHistory = ({ id }) => {
   const [histories, setPartHistories] = useState([]);
   const [timer, setTimer] = useState(true);
-  const { getDocumentById } = new DocumentServices();
+  const { getDocumentById,getDocumentHistoryById } = new DocumentServices();
 
   const { setPartsHistory } = useContext(PartsContext);
 
@@ -21,13 +21,13 @@ const DocumentHistory = ({ id }) => {
   const getPartApi = async (id) => {
     console.log({ 'testIDDD': id });
 
-    const partInfo = await getDocumentById(id);
-    console.log({ partInfo })
+    const partInfo = await getDocumentHistoryById(id);
+    console.log("DATAIS",{ partInfo })
 
-    const newPartInfo = (partInfo?.data[0]?.supplier_contract || []).map(elem => {
-      return { ...elem, document_name: partInfo?.data[0].document_name, document_number: partInfo?.data[0]?.document_number, createdDate: partInfo.data[0].createdDate,modifiedDate:partInfo.data[0].modifiedDate }
+    const newPartInfo = (partInfo?.data?.supplier_contract || []).map(elem => {
+      return { ...elem, document_name: partInfo?.data.document_name, document_number: partInfo?.data?.document_number, createdDate: partInfo?.data?.createdDate,modifiedDate:partInfo?.data?.modifiedDate }
     }).sort((a, b) => b.iteration_info - a.iteration_info);
-    console.log({ partInfo, newPartInfo });
+    console.log("HELLO:",{ partInfo, newPartInfo });
     setPartHistories(newPartInfo || []);
     setPartsHistory(partInfo.data || {});
 
@@ -54,10 +54,9 @@ const DocumentHistory = ({ id }) => {
       <HashLoader color='#0E6EFD' />{' '}
     </div> :
       <SupplierDocContainer id={id}>
-        <div style={{ marginTop: "30px" }}>
-         
+        <div style={{ marginTop: "15px" }}>
 
-          <div className="container mt-5" style={{ maxWidth: "100%" }}>
+          <div className="container" style={{ maxWidth: "100%" }}>
             <table>
               <thead>
                 <tr>

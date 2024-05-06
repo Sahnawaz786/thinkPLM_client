@@ -87,7 +87,7 @@ const LeftBar = () => {
                         className={styles.imageIcon}
                       />
 
-                      <span onClick={() => handleNavToggle(elem)}>
+                      <span title={elem.category} onClick={() => handleNavToggle(elem)}>
                         {elem.name}
                       </span>
                     </div>

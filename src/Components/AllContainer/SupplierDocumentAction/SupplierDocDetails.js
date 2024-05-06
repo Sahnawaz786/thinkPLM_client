@@ -24,7 +24,7 @@ const {getDocumentById,getAllDocuments,deleteDocument}=new DocumentServices();
     const partInfo = await getDocumentById(id);
     console.log("PARTINFO",partInfo);
     console.log('part info data', { partInfo });
-    const newParts = (partInfo?.data[0].supplier_contract || [])
+    const newParts = (partInfo?.data?.supplier_contract || [])
       .map((elem) => {
         return { ...elem, createdDate: partInfo?.data?.createdDate };
       })
@@ -32,7 +32,7 @@ const {getDocumentById,getAllDocuments,deleteDocument}=new DocumentServices();
 
     
 
-    let obj = partInfo?.data[0]?.supplier_contract;
+    let obj = partInfo?.data?.supplier_contract;
 
 
    let mainOBJ =  obj.map((elem)=>{
@@ -46,7 +46,7 @@ const {getDocumentById,getAllDocuments,deleteDocument}=new DocumentServices();
     console.log('NEWPARTS',newParts);
     const newPartsData = { ...partInfo, supplier_contract: [newParts || {}] };
     console.log("SupplierDetails",newPartsData);
-    setSupplierDetails([newPartsData || {}]);
+    setSupplierDetails(newPartsData || {});
   };
 
   useEffect(() => {
@@ -110,21 +110,21 @@ return (
                 {/* <div className={classes.systemInfo}> */}
                   <p  >
                     <strong>Document Name:</strong>{' '}
-                    {supplierDetails[0]?.data[0]?.document_name}
+                    {supplierDetails?.data?.document_name}
                   </p>
 
                   <p >
                     <strong>Document Number:</strong>{' '}
-                    {supplierDetails[0]?.data[0]?.document_number}
+                    {supplierDetails?.data?.document_number}
                   </p>
 
                   <p >
                     <strong>Document Type:</strong>{' '}
-                    {supplierDetails[0]?.data[0]?.documenttype}
+                    {supplierDetails?.data?.documenttype}
                   </p>
                   <p >
                     <strong>Description:</strong>{' '}
-                    {supplierDetails[0]?.data[0]?.description}
+                    {supplierDetails?.data?.description}
                   </p>
                 {/* </div> */}
               </div>
