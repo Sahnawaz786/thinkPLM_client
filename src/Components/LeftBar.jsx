@@ -45,7 +45,7 @@ const LeftBar = () => {
         <>
           <div
             className={styles.mainLeftbarContainer}
-            style={{ display: 'flex', justifyContent: 'space-between' }}
+            // style={{ display: 'flex', justifyContent: 'space-between' }}
           >
             <div className={styles.logoText}>
               <img
