@@ -31,7 +31,7 @@ const EditSupplier = ({ id }) => {
         location:'',
         start_date:'',
         end_date:'',
-        document:''
+        document:[]
     });
 
     const handleFileUpload = (event) => {
@@ -40,7 +40,8 @@ const EditSupplier = ({ id }) => {
     
         reader.onloadend = () => {
           // After the file is loaded, store the result (Base64 string) in the state
-          setSupplierData({ ...supplierData, document: reader.result });
+          setSupplierData({ ...supplierData, document:[{...supplierData.document[0],fileName:file.name,fileType:file.type,document:reader.result}]});
+
         };
     
         // Read the file as a Data URL (Base64)
