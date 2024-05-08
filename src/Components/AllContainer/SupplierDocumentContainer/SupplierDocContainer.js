@@ -8,7 +8,7 @@ import styleBtn from '../PartContainer/PartContainer.module.css';
 import HomeIcon from '@mui/icons-material/Home';
 
 
-const SupplierDocContainer = ({ children, id }) => {
+const SupplierDocContainer = ({ children, id,iteration_info }) => {
 
   const [supplierInformation, setSupplierInformation] = useState([]);
   const [activeBtn,setActiveBtn] = useState('');
@@ -61,11 +61,11 @@ const SupplierDocContainer = ({ children, id }) => {
             <p className={classes.container_paragraph}> 
             <div className={styles.logoText} style={{ marginBottom: '10px' }}>
               <img
-                src='/images/supplier.png'
+                src='/images/document.png'
                 alt='logo'
                 className={styles.imageIcon}
               />
-              Supplier-{supplierInformation?.document_name},{supplierInformation?.id}
+              Document-{supplierInformation?.document_name},{iteration_info}
               </div>
               </p>
             </div>

@@ -61,6 +61,8 @@ return (
         height={30}
         alt=''
         onClick={()=>navigate(`/edit-supplier/${id}`)}
+        className={styles.icon_pointer}
+
 
       />
       <img

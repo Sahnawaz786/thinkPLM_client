@@ -44,7 +44,7 @@ const DocumentHistoryInfo = ({ pid, id }) => {
       {' '}
       <HashLoader color='#0E6EFD' />{' '}
     </div> :
-      <SupplierDocContainer id={pid}>
+      <SupplierDocContainer id={pid} iteration_info={partInformation?.supplier_contract[0]?.iteration_info} >
         <div className={classes.detailContainer}>
 
           <div className={classes.profile_section}>

@@ -26,6 +26,9 @@ const PartDetails = ({ id }) => {
     const newPartsData = { ...partInfo, parts: [newParts || {}] };
     setPartInformation([newPartsData || {}]);
   };
+
+  console.log('AAAA',partInformation);
+
   useEffect(() => {
     getPartApi(id);
   }, [id]);
@@ -45,7 +48,7 @@ const PartDetails = ({ id }) => {
   ) : (
     <>
       {/* here */}
-      <PartContainer id={id}>
+      <PartContainer id={id} iteration_info={partInformation[0]?.parts[0]?.iteration_info}>
         <div className={classes.detailContainer}>
           <div className={classes.part_details_paragrah}>
             <div className={classes.image_part}>
