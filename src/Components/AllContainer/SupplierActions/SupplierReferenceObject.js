@@ -67,10 +67,10 @@ const SupplierReferenceObject = ({id}) => {
           <tbody>
           {file && (
             <tr>
-              <td>
-                    <DownloadIcon onClick={() => downloadFile(attachment[0]?.document)} />
+              <td className={styles.icon_pointer} >
+                    <DownloadIcon  onClick={() => downloadFile(attachment[0]?.document)}   />
                     <span className={styles.fileType}>{attachment[0]?.fileName}</span>
-                    </td>
+              </td>
             </tr>
           )}
           </tbody>

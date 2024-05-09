@@ -77,7 +77,7 @@ return (
     <div className={styles.spinnerContainer}>
       <HashLoader color='#0E6EFD' />{' '}
     </div>
-  ) : <SupplierDocContainer id={id}>
+  ) : <SupplierDocContainer id={id} iteration_info={supplierDetails?.data?.supplier_contract[0]?.iteration_info}>
 
     <div className={classes.editIcons}>
     <img

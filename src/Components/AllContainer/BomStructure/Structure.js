@@ -115,6 +115,7 @@ const Structure = ({ id }) => {
                 <p>
                   <img
                     src='/images/parts.png'
+                    className={styles.icon_pointer}
                     width={35}
                     height={35}
                     alt='part'
@@ -131,8 +132,9 @@ const Structure = ({ id }) => {
                       <p>Insert Existing</p>
                       <p>
                         <CloseIcon
-                          className={classes.close}
+                          className={classes.close && styles.icon_pointer}
                           onClick={modalHideHandler}
+
                         />
                       </p>
                     </div>
@@ -147,8 +149,9 @@ const Structure = ({ id }) => {
                     width={30}
                     height={30}
                     alt=''
-                    className={styles.deleteIcon}
+                    className={styles.deleteIcon && styles.icon_pointer}
                     onClick={(e) => setShowAlert(true)}
+
                   />
                   Remove Part
                 </p>
@@ -163,6 +166,8 @@ const Structure = ({ id }) => {
                     onClick={() => {
                       createModalAddHandler();
                     }}
+                    className={styles.icon_pointer}
+
                   />
                   Create New Part
                 </p>
@@ -170,11 +175,12 @@ const Structure = ({ id }) => {
                   <CreateModal show={createModalShown}>
                     <div className={classes.modal_container}>
                       <p>Create Part</p>
-                      <p>
+                      <p className={styles.icon_pointer}>
                         <CloseIcon
                           className={classes.close}
                           onClick={createModalHideHandler}
                         />
+
                       </p>
                     </div>
 
@@ -191,6 +197,8 @@ const Structure = ({ id }) => {
                     onClick={() => {
                       editModalAddHandler();
                     }}
+                    className={styles.icon_pointer}
+
                   />
                   Edit Part
                 </p>
@@ -200,8 +208,9 @@ const Structure = ({ id }) => {
                       <p>Edit Part</p>
                       <p>
                         <CloseIcon
-                          className={classes.close}
+                          className={classes.close && styles.icon_pointer}
                           onClick={editModalHideHandler}
+
                         />
                       </p>
                     </div>

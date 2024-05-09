@@ -248,6 +248,7 @@ const PartTable = () => {
               <tr key={elem.id}>
                 <td>
                   <input
+                    className={styles.icon_pointer}
                     checked={elem.id === selectedId}
                     onChange={() => handleCheckboxChange(elem.id)}
                     onClick={() => setId(elem.id)}
@@ -291,6 +292,8 @@ const PartTable = () => {
 
                 <td>
                   <img
+                    className={styles.icon_pointer}
+
                     src='https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid'
                     width={20}
                     height={20}

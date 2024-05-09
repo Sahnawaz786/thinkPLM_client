@@ -51,7 +51,7 @@ const Attachment = ({ id }) => {
   console.log('ATTACHEMNTS', attachment);
 
   return (
-    <SupplierDocContainer id={id}>
+    <SupplierDocContainer id={id} >
       <div>
         {/* <ul> */}
           {file && (

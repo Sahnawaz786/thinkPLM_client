@@ -31,6 +31,7 @@
     position: relative;
     margin-left: 10px;
   }
+  
   .masterpart_header {
     position: absolute;
     top: -18px; /* Adjust this value as needed */

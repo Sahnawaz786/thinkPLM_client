@@ -53,7 +53,7 @@ const DocumentHistory = ({ id }) => {
       {' '}
       <HashLoader color='#0E6EFD' />{' '}
     </div> :
-      <SupplierDocContainer id={id}>
+      <SupplierDocContainer id={id}  >
         <div style={{ marginTop: "15px" }}>
 
           <div className="container" style={{ maxWidth: "100%" }}>

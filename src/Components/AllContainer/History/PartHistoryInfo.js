@@ -58,7 +58,7 @@ const PartHistoryInfo = ({ pid, id }) => {
     {' '}
     <HashLoader color='#0E6EFD' />{' '}
   </div> :
-      <PartContainer id={pid}>
+      <PartContainer id={pid} iteration_info={partInformation[0]?.parts[0]?.iteration_info}>
         <div className={classes.detailContainer}>
 
         <div className={classes.profile_section}>
