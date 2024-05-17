@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import CategoryProvider from './store/CategoryProvider';
 import { UserProvider } from './store/UserProvider';
 import { PartsProvider } from './store/PartsProvider';
+import { DocsProvider } from './store/DocsProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,7 +14,9 @@ root.render(
     <PartsProvider>
       <CategoryProvider>
         <UserProvider>
+          <DocsProvider>
           <App />
+          </DocsProvider>
         </UserProvider>
       </CategoryProvider>
     </PartsProvider>
