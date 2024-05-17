@@ -7,6 +7,7 @@ import CategoryProvider from './store/CategoryProvider';
 import { PartsProvider } from './store/PartsProvider';
 import { UserProvider } from './store/UserProvider';
 
+import { DocsProvider } from './store/DocsProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,7 +15,9 @@ root.render(
     <PartsProvider>
       <CategoryProvider>
         <UserProvider>
+          <DocsProvider>
           <App />
+          </DocsProvider>
         </UserProvider>
       </CategoryProvider>
     </PartsProvider>

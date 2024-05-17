@@ -9,18 +9,38 @@ import styles from '../style.module.css';
 import DisplayAlert from '../utils/DisplayAlert';
 import message from '../utils/message';
 // import 'bootstrap/dist/css/bootstrap.min.css';
+import ComplianceServices from '../services/compliance.services';
+import InvoiceServices from '../services/invoice.services';
+import CertificateServices from '../services/certificate.services';
+
+const { getPart, deletePart } = new PartServices();
+const { getAllDocuments, deleteDocument } = new DocumentServices();
+const { getAllComplianceDocuments, deleteComplianceDocumentById } =
+  new ComplianceServices();
+const {
+  getAllInvoiceDocuments,
+  editInvoiceDocumentById,
+  deleteInvoiceDocumentById,
+} = new InvoiceServices();
+const { getAllCertificateDocuments, deleteCertificateDocumentById } =
+  new CertificateServices();
 
 const PartTable = () => {
-  const { getPart, deletePart } = new PartServices();
-  const { getAllDocuments, deleteDocument } = new DocumentServices();
-
   const { choice, showAlert, setShowAlert } = useContext(UserContext);
 
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
+  const [complianceData, setComplianceData] = useState([]);
+  const [invoiceData, setInvoiceData] = useState([]);
+  const [certificateData, setCertificateData] = useState([]);
+  const [search, setSearch] = useState('');
+  const [searchtext, setSearchText] = useState('');
+
   const [selectedId, setSelectedId] = useState(null);
   const [id, setId] = useState();
   const [deleteid, setDeleteId] = useState();
+  const [documentType, setDocumentType] = useState('');
+
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleCheckboxChange = (id) => {
@@ -35,26 +55,46 @@ const PartTable = () => {
 
   const handleDeleteBtn = async () => {
     try {
-      if (choice && pathname === '/') {
-        await deletePart(id);
-        const newData = await getPart();
-        console.log("datas checking.........",{newData})
-        setData(newData.data);
-      }
-      if (choice && pathname === '/document-table') {
-        await deleteDocument(deleteid);
-        const newData = await getAllDocuments();
-        setData2(newData.data);
-      }
-    } catch (error) {
-      console.log({error})
-      message('error', error?.response?.data);
+    if (choice && pathname === '/document-table') {
+      await deleteDocument(deleteid);
+      const newData = await getAllDocuments();
+      setData2(newData.data);
     }
-  };
+    if (choice && pathname === '/') {
+      await deletePart(id);
+      const newData = await getPart();
+      setData(newData.data);
+    } else if (choice && documentType === 'Supplier Contract') {
+      await deleteDocument(deleteid);
+      const newData = await getAllDocuments();
+      setData2(newData.data);
+    } else if (choice && documentType === 'Complaince Certificate') {
+      await deleteComplianceDocumentById(deleteid);
+      const newData = await getAllComplianceDocuments();
+      setComplianceData(newData.data);
+    } else if (choice && documentType === 'Invoice') {
+      await deleteInvoiceDocumentById(deleteid);
+      const newData = await getAllInvoiceDocuments();
+      setInvoiceData(newData.data);
+    } else if (choice && documentType === 'Certification_of_Insurance') {
+      await deleteCertificateDocumentById(deleteid);
+      const newData = await getAllCertificateDocuments();
+      setCertificateData(newData.data);
+    }
+    
+  } catch (error) {
+    console.log({error})
+    message('error', error?.response?.data);
+  }};
 
   const handlePartEditBtn = async () => {
     if (pathname === '/') navigate(`/edit-part/${id}`);
-    else navigate(`/supplier-document-edit/${id}`);
+    else if (documentType == 'Supplier Contract')
+      navigate(`/supplier-document-edit/${id}`);
+    else if (documentType == 'Complaince Certificate')
+      navigate(`/compliance-document-edit/${id}`);
+    else if (documentType == 'Invoice')
+      navigate(`/invoice-document-edit/${id}`);
   };
 
   useEffect(() => {
@@ -64,13 +104,22 @@ const PartTable = () => {
   const handleAPI = async () => {
     const response = await getPart();
     const response2 = await getAllDocuments();
+    const compliance_Response = await getAllComplianceDocuments();
+    const invoice_Response = await getAllInvoiceDocuments();
+    const certificate_Response = await getAllCertificateDocuments();
 
-    const newPartsData = response?.data.map((elem) => {
-      return {
-        ...elem,
-        parts: [elem?.parts?.sort((a, b) => b.id - a.id)?.[0]],
-      };
-    });
+    let newPartsData;
+
+    searchtext
+      ? (newPartsData = response?.data?.filter((elem) =>
+          elem.part_number.includes(searchtext)
+        ))
+      : (newPartsData = response?.data.map((elem) => {
+          return {
+            ...elem,
+            parts: [elem?.parts?.sort((a, b) => b.id - a.id)?.[0]],
+          };
+        }));
 
     const newPartsData2 = response2?.data.map((elem) => {
       return {
@@ -81,15 +130,41 @@ const PartTable = () => {
       };
     });
 
+    const complianceData = compliance_Response?.data.map((elem) => {
+      return {
+        ...elem,
+        docs: [elem?.docs?.sort((a, b) => b.id - a.id)?.[0]],
+      };
+    });
+
+    const InvoiceData = invoice_Response?.data.map((elem) => {
+      return {
+        ...elem,
+        invoice_Doc: [elem?.invoice_Doc?.sort((a, b) => b.id - a.id)?.[0]],
+      };
+    });
+
+    const CertificateData = certificate_Response?.data.map((elem) => {
+      return {
+        ...elem,
+        docs: [elem?.docs?.sort((a, b) => b.id - a.id)?.[0]],
+      };
+    });
+
     setData(newPartsData.reverse());
     setData2(newPartsData2.reverse());
+    setComplianceData(complianceData.reverse());
+    setInvoiceData(InvoiceData.reverse());
+    setCertificateData(CertificateData.reverse());
+    console.log('PARTSDATA', newPartsData);
     console.log('Parts', response.data);
     console.log('DATAIS', data2);
+    console.log('Compliance', complianceData);
   };
 
   useEffect(() => {
     handleAPI();
-  }, []);
+  }, [searchtext]);
 
   const handlePartClick = () => {
     navigate('/');
@@ -227,8 +302,15 @@ const PartTable = () => {
         </div>
 
         <div className={styles.searchSection}>
+          <input
+            type='text'
+            onChange={(e) => setSearchText(e.target.value)}
+            name=''
+            width={300}
+            height={300}
+            id=''
+          />
           <FaSearch />
-          <input type='text' name='' width={300} height={300} id='' />
         </div>
       </div>
       {pathname === '/' ? (
@@ -282,10 +364,7 @@ const PartTable = () => {
                 </td>
                 <td>{elem?.part_number}</td>
 
-                <td className={styles.open}>
-                  Open{' '}
-                  
-                </td>
+                <td className={styles.open}>Open </td>
 
                 <td>A</td>
 
@@ -298,7 +377,6 @@ const PartTable = () => {
                 <td>
                   <img
                     className={styles.icon_pointer}
-
                     src='https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid'
                     width={20}
                     height={20}
@@ -317,6 +395,7 @@ const PartTable = () => {
             <tr>
               <th></th>
               <th>Supplier Name</th>
+              <th>Supplier Type</th>
               <th>Created By</th>
               <th> Name</th>
               <th> Number</th>
@@ -336,9 +415,10 @@ const PartTable = () => {
                     onClick={() => {
                       setId(elem.id);
                       setDeleteId(elem.id);
+                      setDocumentType(elem.documenttype);
                     }}
-                    checked={elem.id === selectedId}
-                    onChange={() => handleCheckboxChange(elem.id)}
+                    // checked={elem.id === selectedId}
+                    // onChange={() => handleCheckboxChange(elem.id)}
                     type='checkbox'
                   />
                 </td>
@@ -352,6 +432,8 @@ const PartTable = () => {
                   {elem?.supplier_contract[0]?.supplier_name}
                 </td>
 
+                <td>{elem?.documenttype}</td>
+
                 <td>John</td>
 
                 <td>
@@ -364,10 +446,7 @@ const PartTable = () => {
                 </td>
                 <td>{elem?.document_number}</td>
 
-                <td className={styles.open}>
-                  Open{' '}
-                 
-                </td>
+                <td className={styles.open}>Open </td>
 
                 <td>A</td>
 
@@ -382,10 +461,195 @@ const PartTable = () => {
                     src='https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid'
                     width={20}
                     height={20}
+                    className={styles.icon_pointer}
                     onClick={() => {
-                      navigate(
-                        `/supplier-document-details/${elem.id}`
-                      );
+                      navigate(`/supplier-document-details/${elem.id}`);
+                    }}
+                  />
+                </td>
+              </tr>
+            ))}
+
+            {complianceData?.map((elem, index) => (
+              <tr key={elem.id}>
+                <td>
+                  <input
+                    onClick={() => {
+                      setId(elem.id);
+                      setDeleteId(elem.id);
+                      setDocumentType(elem.documenttype);
+                    }}
+                    // checked={elem.id === selectedId}
+                    // onChange={() => handleCheckboxChange(elem.id)}
+                    type='checkbox'
+                  />
+                </td>
+
+                <td>
+                  <img
+                    src='/images/supplier.png'
+                    alt='part'
+                    className={styles.display_supplier_icon}
+                  />
+                  {elem?.docs[0]?.supplier_name}
+                </td>
+
+                <td>{elem?.documenttype}</td>
+
+                <td>John</td>
+
+                <td>
+                  <img
+                    src='/images/document.png'
+                    alt='part'
+                    className={styles.display_icon}
+                  />
+                  {elem?.document_name}
+                </td>
+                <td>{elem?.document_number}</td>
+
+                <td className={styles.open}>Open </td>
+
+                <td>A</td>
+
+                <td>{elem?.docs[0]?.iteration_info}</td>
+
+                <td>{elem?.createdDate}</td>
+
+                <td>{elem?.modifiedDate}</td>
+
+                <td>
+                  <img
+                    src='https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid'
+                    width={20}
+                    height={20}
+                    className={styles.icon_pointer}
+                    onClick={() => {
+                      navigate(`/compliance-documents-details/${elem.id}`);
+                    }}
+                  />
+                </td>
+              </tr>
+            ))}
+
+            {invoiceData?.map((elem, index) => (
+              <tr key={elem.id}>
+                <td>
+                  <input
+                    onClick={() => {
+                      setId(elem.id);
+                      setDeleteId(elem.id);
+                      setDocumentType(elem.documenttype);
+                    }}
+                    // checked={elem.id === selectedId}
+                    // onChange={() => handleCheckboxChange(elem.id)}
+                    type='checkbox'
+                  />
+                </td>
+
+                <td>
+                  <img
+                    src='/images/supplier.png'
+                    alt='part'
+                    className={styles.display_supplier_icon}
+                  />
+                  {elem?.invoice_Doc[0]?.supplier_name}
+                </td>
+
+                <td>{elem?.documenttype}</td>
+
+                <td>John</td>
+
+                <td>
+                  <img
+                    src='/images/document.png'
+                    alt='part'
+                    className={styles.display_icon}
+                  />
+                  {elem?.invoice_name}
+                </td>
+                <td>{elem?.invoice_number}</td>
+
+                <td className={styles.open}>Open </td>
+
+                <td>A</td>
+
+                <td>{elem?.invoice_Doc[0]?.iteration_info}</td>
+
+                <td>{elem?.createdDate}</td>
+
+                <td>{elem?.modifiedDate}</td>
+
+                <td>
+                  <img
+                    src='https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid'
+                    width={20}
+                    height={20}
+                    className={styles.icon_pointer}
+                    onClick={() => {
+                      navigate(`/invoice-documents-details/${elem.id}`);
+                    }}
+                  />
+                </td>
+              </tr>
+            ))}
+
+            {certificateData?.map((elem, index) => (
+              <tr key={elem.id}>
+                <td>
+                  <input
+                    onClick={() => {
+                      setId(elem.id);
+                      setDeleteId(elem.id);
+                      setDocumentType(elem.documenttype);
+                    }}
+                    // checked={elem.id === selectedId}
+                    // onChange={() => handleCheckboxChange(elem.id)}
+                    type='checkbox'
+                  />
+                </td>
+
+                <td>
+                  <img
+                    src='/images/supplier.png'
+                    alt='part'
+                    className={styles.display_supplier_icon}
+                  />
+                  {elem?.docs[0]?.supplier_name}
+                </td>
+
+                <td>{elem?.documenttype}</td>
+
+                <td>John</td>
+
+                <td>
+                  <img
+                    src='/images/document.png'
+                    alt='part'
+                    className={styles.display_icon}
+                  />
+                  {elem?.document_name}
+                </td>
+                <td>{elem?.document_number}</td>
+
+                <td className={styles.open}>Open </td>
+
+                <td>A</td>
+
+                <td>{elem?.docs[0]?.iteration_info}</td>
+
+                <td>{elem?.createdDate}</td>
+
+                <td>{elem?.modifiedDate}</td>
+
+                <td>
+                  <img
+                    src='https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid'
+                    width={20}
+                    height={20}
+                    className={styles.icon_pointer}
+                    onClick={() => {
+                      navigate(`/certificate-documents-details/${elem.id}`);
                     }}
                   />
                 </td>

@@ -2,39 +2,38 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HashLoader from 'react-spinners/HashLoader';
 import { PartsContext } from '../../../store/PartsProvider';
-import DocumentServices from '../../../services/document.services';
 import styles from '../../../style.module.css';
-import ComplianceServices from '../../../services/compliance.services';
-import SupplierDocContainer from '../SupplierDocumentContainer/SupplierDocContainer';
-import { DocsContext } from '../../../store/DocsProvider';
+import PartContainer from '../PartContainer/PartContainer';
+import tableStyle from '../../../style.module.css';
+import InvoiceDocContainer from '../SupplierDocumentContainer/InvoiceDocContainer';
+import InvoiceServices from '../../../services/invoice.services';
 
-const DocumentHistory = ({ id }) => {
-  console.log("DocumentTYpe", id);
-  const { type } = useContext(DocsContext);
+const  { getInvoiceDocumentHistoryById} = new InvoiceServices();
+
+const InvoiceDocumentHistory = ({ id }) => {
   const [histories, setPartHistories] = useState([]);
   const [timer, setTimer] = useState(true);
-  const { getDocumentById, getDocumentHistoryById } = new DocumentServices();
-  const { getComplianceDocumentHistoryById } = new ComplianceServices();
-
   const { setPartsHistory } = useContext(PartsContext);
+
+
 
   const navigate = useNavigate();
   console.log({ 'ParanstestIDDD': id });
 
   const getPartApi = async (id) => {
     console.log({ 'testIDDD': id });
-    const partInfo = await getDocumentHistoryById(id);
-    console.log("DATAIS", { partInfo })
 
-    const newPartInfo = (partInfo?.data?.supplier_contract || []).map(elem => {
-      return { ...elem, document_name: partInfo?.data.document_name, document_number: partInfo?.data?.document_number, createdDate: partInfo?.data?.createdDate, modifiedDate: partInfo?.data?.modifiedDate }
+    const partInfo = await getInvoiceDocumentHistoryById(id);
+    console.log("DATAIS",{ partInfo })
+
+    const newPartInfo = (partInfo?.data?.invoice_Doc || []).map(elem => {
+      return { ...elem, invoice_name: partInfo?.data.invoice_name, invoice_number: partInfo?.data?.invoice_number, createdDate: partInfo?.data?.createdDate,modifiedDate:partInfo?.data?.modifiedDate }
     }).sort((a, b) => b.iteration_info - a.iteration_info);
-    console.log("HELLO:", { partInfo, newPartInfo });
+    console.log("HELLO:",{ partInfo, newPartInfo });
     setPartHistories(newPartInfo || []);
     setPartsHistory(partInfo.data || {});
 
   };
-
   useEffect(() => {
     getPartApi(id);
   }, []);
@@ -45,10 +44,10 @@ const DocumentHistory = ({ id }) => {
     }, 1000)
   })
 
-  console.log("HISTORY", histories);
+  console.log("HISTORY",histories);
 
   const InformationHistoryFun = (childId) => {
-    navigate(`/document-historyInfo/${id}/${childId}`);
+    navigate(`/invoice-document-historyInfo/${id}/${childId}`);
   };
 
   return (
@@ -56,7 +55,7 @@ const DocumentHistory = ({ id }) => {
       {' '}
       <HashLoader color='#0E6EFD' />{' '}
     </div> :
-      <SupplierDocContainer id={id} iteration_info={histories[0]?.iteration_info}>
+      <InvoiceDocContainer id={id} iteration_info={histories[0]?.iteration_info}>
         <div style={{ marginTop: "15px" }}>
 
           <div className="container" style={{ maxWidth: "100%" }}>
@@ -79,8 +78,8 @@ const DocumentHistory = ({ id }) => {
                   return (
 
                     <tr key={index}>
-                      <td>{part.document_name}</td>
-                      <td>{part.document_number}</td>
+                      <td>{part.invoice_name}</td>
+                      <td>{part.invoice_number}</td>
                       <td>{part.iteration_info}</td>
                       <td>Open</td>
                       <td>Smith</td>
@@ -91,7 +90,7 @@ const DocumentHistory = ({ id }) => {
                           InformationHistoryFun(part.id);
                         }}
                         style={{
-                          border: 'none'
+                          border:'none'
                         }}
                       >
                         <img
@@ -107,8 +106,8 @@ const DocumentHistory = ({ id }) => {
             </table>
           </div>
         </div>
-      </SupplierDocContainer>
+      </InvoiceDocContainer>
   );
 };
 
-export default DocumentHistory;
+export default InvoiceDocumentHistory;

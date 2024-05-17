@@ -31,6 +31,29 @@ function App() {
           <Route path='/attachment/:id' element={<></>} />
           <Route path='/document-history/:id' element={<></>}/>
           <Route path='/document-historyInfo/:pid/:cid' element={<></>}/>
+          <Route path='/compliance-documents-details/:id' element={<></>}/>
+          <Route path='/compliance-document-history/:id' element={<></>}/>
+          <Route path='/compliance-document-historyInfo/:pid/:cid' element={<></>}/>
+          <Route path='/compliance-attachment/:id' element={<></>} />
+          <Route path='/compliance-documents-edit/:id' element={<></>}/>
+
+          <Route path='/invoice-documents-details/:id' element={<></>}/>
+          <Route path='/invoice-document-history/:id' element={<></>}/>
+          <Route path='/invoice-document-historyInfo/:pid/:cid' element={<></>}/>
+          <Route path='/invoice-attachment/:id' element={<></>} />
+          <Route path='/invoice-documents-edit/:id' element={<></>}/>
+
+          <Route path='/certificate-documents-details/:id' element={<></>}/>
+          <Route path='/certificate-document-history/:id' element={<></>}/>
+          <Route path='/certificate-document-historyInfo/:pid/:cid' element={<></>}/>
+          <Route path='/certificate-attachment/:id' element={<></>} />
+          <Route path='/certificate-documents-edit/:id' element={<></>}/>
+
+          
+
+
+
+
         </Routes>
       </Router>
       <Toaster richColors/>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from '../style.module.css';
 import Structure from './AllContainer/BomStructure/Structure';
@@ -22,8 +22,26 @@ import SupplierDocumentPage from './Pages/SupplierDocumentPage';
 import SupplierPage from './Pages/SupplierPage';
 import PartTable from './PartTable';
 
+import ComplianceDocDetails from './AllContainer/ComplianceCertificateActions/ComplianceDocDetails';
+import { DocsContext } from '../store/DocsProvider';
+import ComplianceDocumentHistory from './AllContainer/ComplianceCertificateActions/ComplianceDocumentHistory';
+import ComplianceAttachment from './AllContainer/ComplianceCertificateActions/ComplianceAttachment';
+import ComplianceDocumentHistoryInfo from './AllContainer/ComplianceCertificateActions/ComplianceDocumentHistoryInfo';
+import ComplianceDocEdit from './AllContainer/ComplianceCertificateActions/ComplianceDocEdit';
+import InvoiceDocDetails from './AllContainer/InvoiceActions/InvoiceDocDetails';
+import InvoiceDocumentHistory from './AllContainer/InvoiceActions/InvoiceDocumentHistory';
+import InvoiceAttachment from './AllContainer/InvoiceActions/InvoiceAttachment';
+import InvoiceDocumentHistoryInfo from './AllContainer/InvoiceActions/InvoiceDocumentHistoryInfo';
+import InvoiceDocEdit from './AllContainer/InvoiceActions/InvoiceDocEdit';
+import CertificateDocDetails from './AllContainer/CertificateOfInsuranceActions/CertificateDocDetails';
+import CertificateDocumentHistory from './AllContainer/CertificateOfInsuranceActions/CertificateDocumentHistory';
+import CertificateAttachment from './AllContainer/CertificateOfInsuranceActions/CertificateAttachment';
+import CertificateDocumentHistoryInfo from './AllContainer/CertificateOfInsuranceActions/CertificateDocumentHistoryInfo';
+import CertificateDocEdit from './AllContainer/CertificateOfInsuranceActions/CertificateDocEdit';
 
 const RightBar = () => {
+  const { type } = useContext(DocsContext);
+  console.log('TYPE', type);
   let location = useLocation();
   let id = location.pathname.split('/').slice(-1)[0];
   let pid = location.pathname.split('/').slice(-2)[0];
@@ -93,39 +111,118 @@ const RightBar = () => {
       }
       break;
     case '/supplier-documents':
-      componentToRender = <SupplierDocumentPage/>
-      break
+      componentToRender = <SupplierDocumentPage />;
+      break;
 
     case `/supplier-document-details/${id}`:
-      if(id){
-        componentToRender = <SupplierDocDetails id={id}/>
+      if (id) {
+        componentToRender = <SupplierDocDetails id={id} />;
       }
       break;
-      case `/supplier-document-edit/${id}`:
-        if(id){
-          componentToRender = <SupplierDocEdit id={id}/>
+    case `/supplier-document-edit/${id}`:
+      if (id) {
+        componentToRender = <SupplierDocEdit id={id} document_type='He' />;
+      }
+      break;
+    case `/attachment/${id}`:
+      if (id) {
+        componentToRender = <Attachment id={id} />;
+      }
+      break;
+
+    case `/document-history/${id}`:
+      if (id) {
+        componentToRender = <DocumentHistory id={id} />;
+      }
+      break;
+
+    case `/document-historyInfo/${pid}/${id}`:
+      if (id) {
+        componentToRender = <DocumentHistoryInfo pid={pid} id={id} />;
+      }
+      break;
+
+    case `/compliance-documents-details/${id}`:
+      if (id) {
+        componentToRender = <ComplianceDocDetails id={id} />;
+      }
+      break;
+    case `/compliance-document-history/${id}`:
+      if (id) {
+        componentToRender = <ComplianceDocumentHistory id={id} />;
+      }
+      break;
+    case `/compliance-attachment/${id}`:
+      if (id) {
+        componentToRender = <ComplianceAttachment id={id} />;
+      }
+      break;
+    case `/compliance-document-historyInfo/${pid}/${id}`:
+      if (id) {
+        componentToRender = <ComplianceDocumentHistoryInfo id={id} pid={pid} />;
+      }
+      break;
+      case `/compliance-document-edit/${id}`:
+      if (id) {
+        componentToRender = <ComplianceDocEdit id={id} />;
+      }
+      break;
+
+      case `/invoice-documents-details/${id}`:
+        if (id) {
+          componentToRender = <InvoiceDocDetails id={id} />;
         }
         break;
-        case `/attachment/${id}`:
-        if(id){
-          componentToRender = <Attachment id={id}/>
+      case `/invoice-document-history/${id}`:
+        if (id) {
+          componentToRender = <InvoiceDocumentHistory id={id} />;
+        }
+        break;
+      case `/invoice-attachment/${id}`:
+        if (id) {
+          componentToRender = <InvoiceAttachment id={id} />;
+        }
+        break;
+      case `/invoice-document-historyInfo/${pid}/${id}`:
+        if (id) {
+          componentToRender = <InvoiceDocumentHistoryInfo id={id} pid={pid} />;
+        }
+        break;
+        case `/invoice-document-edit/${id}`:
+        if (id) {
+          componentToRender = <InvoiceDocEdit id={id} />;
         }
         break;
 
-        case `/document-history/${id}`:
-        if(id){
-          componentToRender = <DocumentHistory id={id}/>
+        case `/certificate-documents-details/${id}`:
+        if (id) {
+          componentToRender = <CertificateDocDetails id={id} />;
+        }
+        break;
+      case `/certificate-document-history/${id}`:
+        if (id) {
+          componentToRender = <CertificateDocumentHistory id={id} />;
+        }
+        break;
+      case `/certificate-attachment/${id}`:
+        if (id) {
+          componentToRender = <CertificateAttachment id={id} />;
+        }
+        break;
+      case `/certificate-document-historyInfo/${pid}/${id}`:
+        if (id) {
+          componentToRender = <CertificateDocumentHistoryInfo id={id} pid={pid} />;
+        }
+        break;
+        case `/certificate-document-edit/${id}`:
+        if (id) {
+          componentToRender = <CertificateDocEdit id={id} />;
         }
         break;
 
-        case `/document-historyInfo/${pid}/${id}`:
-          if(id){
-            componentToRender = <DocumentHistoryInfo pid={pid} id={id} />
-          }
-          break;
-          case '/search-supplier':
-      componentToRender = <SupplierSearch/>;
-      break; 
+        case '/search-supplier':
+          componentToRender = <SupplierSearch/>;
+          break; 
 
     default:
       componentToRender = <PartTable />;

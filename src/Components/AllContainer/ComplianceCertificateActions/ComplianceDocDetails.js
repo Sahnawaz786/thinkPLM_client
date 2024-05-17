@@ -1,15 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import HashLoader from 'react-spinners/HashLoader';
 import SupplierServices from '../../../services/supplier.services';
-import DocumentServices from '../../../services/document.services';
+import ComplianceServices from '../../../services/compliance.services';
 import { UserContext } from '../../../store/UserProvider';
 import DisplayAlert from '../../../utils/DisplayAlert';
 import SupplierDocContainer from '../SupplierDocumentContainer/SupplierDocContainer';
 import styles from '../../../style.module.css';
 import classes from '../SupplierActions/Supplier.module.css';
 import { useNavigate } from 'react-router-dom';
+import ComplianceCertificate from '../SupplierDocumentContainer/ComplianceCertificate';
 
-const SupplierDocDetails = ({ id }) => {
+const { deleteComplianceDocumentById } =new ComplianceServices();
+
+const ComplianceDocDetails = ({ id }) => {
 
  const[supplierDetails,setSupplierDetails]=useState([]);
 const {choice,showAlert,setShowAlert}=useContext(UserContext);
@@ -18,13 +21,13 @@ const  [docsupplier,setDocSupplier] = useState([]);
 
  const navigate=useNavigate()
 
-const {getDocumentById,getAllDocuments,deleteDocument}=new DocumentServices();
+const {getComplianceDocumentById,getAllDocuments,deleteDocument}=new ComplianceServices();
 
   const getSupplierApi = async (id) => {
-    const partInfo = await getDocumentById(id);
+    const partInfo = await getComplianceDocumentById(id);
     console.log("PARTINFO",partInfo);
     console.log('part info data', { partInfo });
-    const newParts = (partInfo?.data?.supplier_contract || [])
+    const newParts = (partInfo?.data?.docs || [])
       .map((elem) => {
         return { ...elem, createdDate: partInfo?.data?.createdDate };
       })
@@ -32,7 +35,7 @@ const {getDocumentById,getAllDocuments,deleteDocument}=new DocumentServices();
 
     
 
-    let obj = partInfo?.data?.supplier_contract;
+    let obj = partInfo?.data?.docs;
 
 
    let mainOBJ =  obj.map((elem)=>{
@@ -44,7 +47,7 @@ const {getDocumentById,getAllDocuments,deleteDocument}=new DocumentServices();
     console.log('OBJ',mainOBJ);
 
     console.log('NEWPARTS',newParts);
-    const newPartsData = { ...partInfo, supplier_contract: [newParts || {}] };
+    const newPartsData = { ...partInfo, docs: [newParts || {}] };
     console.log("SupplierDetails",newPartsData);
     setSupplierDetails(newPartsData || {});
   };
@@ -61,7 +64,7 @@ const {getDocumentById,getAllDocuments,deleteDocument}=new DocumentServices();
   const DeleteFun = async(id) => {
     if (choice) {
       console.log("choice is:",choice)
-      const supplierInfo = await deleteDocument(id);
+      const supplierInfo = await deleteComplianceDocumentById(id);
       navigate('/part-table')
   };
 }
@@ -77,7 +80,7 @@ return (
     <div className={styles.spinnerContainer}>
       <HashLoader color='#0E6EFD' />{' '}
     </div>
-  ) : <SupplierDocContainer id={id} iteration_info={supplierDetails?.data?.supplier_contract[0]?.iteration_info} >
+  ) : <ComplianceCertificate id={id} document_type={supplierDetails?.data?.documenttype} iteration_info={supplierDetails?.data?.docs[0]?.iteration_info}>
 
     <div className={classes.editIcons}>
     <img
@@ -85,7 +88,7 @@ return (
         width={30}
         height={30}
         alt=''
-        onClick={()=>navigate(`/supplier-document-edit/${id}`)}
+        onClick={()=>navigate(`/compliance-document-edit/${id}`)}
 
       />
       <img
@@ -124,7 +127,7 @@ return (
                   </p>
                   <p >
                     <strong>Description:</strong>{' '}
-                    {supplierDetails?.data?.description}
+                    {supplierDetails?.data?.document_description}
                   </p>
                 {/* </div> */}
               </div>
@@ -141,10 +144,10 @@ return (
               <p>Business:-</p>
             </div>
             <p>
-              <strong>Scope of Work:</strong> {childParts?.work_scope}
+              <strong>Certification Number:</strong> {childParts?.certification_number}
             </p>
             <p>
-              <strong>Effective Date:</strong> {childParts?.effective_date}
+              <strong>Certification Date:</strong> {childParts?.certification_date}
             </p>
             <p>
               <strong>Expiration Date:</strong> {childParts?.expiration_date}
@@ -155,8 +158,8 @@ return (
       </div>
     </div>
     {showAlert && <DisplayAlert />}
-  </SupplierDocContainer>
+  </ComplianceCertificate>
 )
 }
 
-export default SupplierDocDetails;
+export default ComplianceDocDetails;

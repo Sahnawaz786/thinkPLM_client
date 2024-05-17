@@ -1,25 +1,26 @@
-import React, { useEffect, useState,useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from '../../../style.module.css';
-import DocumentServices from '../../../services/document.services';
 import classes from './SupplierDoc.module.css';
 import { useLocation } from 'react-router-dom';
 import styleBtn from '../PartContainer/PartContainer.module.css';
 import HomeIcon from '@mui/icons-material/Home';
+import InvoiceServices from '../../../services/invoice.services';
 
+const { getInvoiceDocumentById } = new InvoiceServices();
 
-const SupplierDocContainer = ({ children, id,iteration_info }) => {
+const InvoiceDocContainer = ({ children, id,iteration_info }) => {
 
   const [supplierInformation, setSupplierInformation] = useState([]);
   const [activeBtn,setActiveBtn] = useState('');
   const {pathname} = useLocation();
 
   const navigate = useNavigate();
-  const {getDocumentById}=new DocumentServices();
 
 
   const getSupplierApi = async (id) => {
-      const partInfo = await getDocumentById(id);
+
+    const partInfo = await getInvoiceDocumentById(id);
     console.log("document container data:",  partInfo.data )
     const newParts = (partInfo?.data || {})
     setSupplierInformation(newParts);
@@ -35,19 +36,20 @@ const SupplierDocContainer = ({ children, id,iteration_info }) => {
     setActiveBtn(url);
   })
 
+  console.log(supplierInformation)
+  console.log("ACTIVEBTN",activeBtn);
 
 
   const detailsHandler = () => {
-    navigate('/supplier-document-details/' + id)
+    navigate('/invoice-documents-details/' + id)
   }
 
   const referenceObjectHandler=()=>{
-    navigate('/document-history/'+id)
-
+    navigate('/invoice-document-history/'+id)
   }
 
   const handleAttachments=()=>{
-    navigate('/attachment/'+id);
+    navigate('/invoice-attachment/'+id);
   }
 
 
@@ -63,7 +65,7 @@ const SupplierDocContainer = ({ children, id,iteration_info }) => {
                 alt='logo'
                 className={styles.imageIcon}
               />
-              Document-{supplierInformation?.document_name},{iteration_info || id}
+              Document-{supplierInformation?.invoice_name},{iteration_info || id}
               </div>
               </p>
             </div>
@@ -73,10 +75,10 @@ const SupplierDocContainer = ({ children, id,iteration_info }) => {
           <div className={classes.tab_nav}>
 
             <div className={classes.tab_buttons}>
-              <button className={activeBtn == 'supplier-document-details' || activeBtn=='document-historyInfo' ? styleBtn.activeBtn : ''}  onClick={() => detailsHandler()} >Details</button>
-              <button className={activeBtn == 'document-history' ? styleBtn.activeBtn : ''} onClick={() => referenceObjectHandler()} >History</button>
-              <button className={activeBtn == 'attachment' ? styleBtn.activeBtn : ''} onClick={() => handleAttachments()} >Attachments</button>
-          
+              <button className={activeBtn == 'invoice-documents-details' || activeBtn=='invoice-document-historyInfo' ? styleBtn.activeBtn : ''}  onClick={() => detailsHandler()} >Details</button>
+              <button className={activeBtn == 'invoice-document-history' ? styleBtn.activeBtn : ''} onClick={() => referenceObjectHandler()} >History</button>
+              <button className={activeBtn == 'invoice-attachment' ? styleBtn.activeBtn : ''} onClick={() => handleAttachments()} >Attachments</button>
+            
             </div>
 
             <div className={classes.linkarea}>
@@ -92,4 +94,4 @@ const SupplierDocContainer = ({ children, id,iteration_info }) => {
   )
 }
 
-export default SupplierDocContainer;
+export default InvoiceDocContainer;
