@@ -12,22 +12,7 @@ const SupplierContract = () => {
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState('');
-  const [attachments, setAttachments] = useState({
-    fileName: null,
-    fileType: null,
-    content: null,
-    pricingandPaymentTerms: null,
-    termandTermination: null,
-    goveringLawandJurisdication: null,
-    signatures: null,
-    itemizedCharges: "",
-    paymentInstructions: "",
-    insuranceCoverage: null,
-    authorizedSignature: null,
-    complianceStandard: null,
-    certifyingAuthority: null,
-    complianceStatement: null
-  });
+  const [attachments, setAttachments] = useState([]);
 
 
   const handleChange = (e) => {
@@ -66,25 +51,14 @@ const SupplierContract = () => {
         invoice_date: "",
         due_date: "",
         amount_due: "",
-
         iteration_info: 1,
         islatest_Iteration: 1,
         attachment: [
           {
-            fileName: null,
-            fileType: null,
-            content: null,
-            pricingandPaymentTerms: null,
-            termandTermination: null,
-            goveringLawandJurisdication: null,
-            signatures: null,
-            itemizedCharges: "",
-            paymentInstructions: "",
-            insuranceCoverage: null,
-            authorizedSignature: null,
-            complianceStandard: null,
-            certifyingAuthority: null,
-            complianceStatement: null
+            fileName: '',
+            fileType: '',
+            content: '',
+            attachment_type: ''
           }
         ]
 
@@ -97,21 +71,22 @@ const SupplierContract = () => {
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
+    console.log('FILE', file);
     const reader = new FileReader();
     const title = event.target.name;
 
-    // 
+    //
 
     reader.onloadend = () => {
       // After the file is loaded, store the result (Base64 string) in the state
       setUserData(prevState => ({
         ...prevState,
-        supplier_contract: prevState.supplier_contract.map(contract => ({
+        invoice_Doc: prevState.invoice_Doc.map(contract => ({
           ...contract,
           // [title]: reader.result
         }))
       }));
-      setAttachments({ ...attachments, [title]: reader.result });
+      setAttachments([...attachments, { fileName: file.name, fileType: file.type, content: reader.result, attachmentType: title }]);
     };
 
     // Read the file as a Data URL (Base64)
@@ -159,12 +134,12 @@ const SupplierContract = () => {
       ]
     } = userData;
 
-    attachment = [attachments];
+    attachment = attachments;
 
 
     try {
 
-      const res = await fetch(`http://localhost:8181/SupplierMasterContractObject `, {
+      const res = await fetch(`http://localhost:8181/InvoiceMasterObject`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -378,7 +353,7 @@ const SupplierContract = () => {
 
                         <div className={styles.formInput}>
                           <strong htmlFor='document'>Total Amount Due:</strong>
-                          <input type='file' className={styles.partName} id='document' name="tot" onChange={handleFileUpload} />
+                          <input type='file' className={styles.partName} id='document' name="totalAmountDue" onChange={handleFileUpload} />
                         </div>
 
                         <div className={styles.formInput}>
