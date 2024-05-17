@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import HashLoader from 'react-spinners/HashLoader';
 import { categoryContext } from '../../../store/CategoryProvider';
 import spinnerStyle from '../../../style.module.css';
+import message from '../../../utils/message';
 import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
 import styles from './PartAttribut.module.css';
 
@@ -11,6 +12,7 @@ const CustomParts = () => {
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState('');
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -76,7 +78,9 @@ const CustomParts = () => {
   };
 
   const submitHandler = async (event) => {
+
     event.preventDefault();
+    setIsButtonDisabled(true);
     const {
       part_number,
       part_name,
@@ -134,6 +138,7 @@ const CustomParts = () => {
           ],
         }),
       });
+      console.log("validationssss",res.message)
       if (res.ok) {
         setUserData({
           part_number: '',
@@ -163,8 +168,16 @@ const CustomParts = () => {
           navigate('/');
         }, 1000);
       }
+      else{
+        const data=await res.json();
+        console.log("...........",data.message)
+        message('error',data.message)
+       }
     } catch (error) {
       console.log(error);
+    }
+    finally{
+      setIsButtonDisabled(false)
     }
   };
 
@@ -378,7 +391,7 @@ const CustomParts = () => {
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'right' }}>
-              <Button variant='primary' onClick={(e) => submitHandler(e)}>
+              <Button variant='primary' onClick={(e) => submitHandler(e)} disabled={isButtonDisabled}>
                 Submit
               </Button>{' '}
             </div>

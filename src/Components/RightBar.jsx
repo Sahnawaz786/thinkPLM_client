@@ -6,20 +6,22 @@ import PartHistory from './AllContainer/History/PartHistory';
 import PartHistoryInfo from './AllContainer/History/PartHistoryInfo';
 import EditPart from './AllContainer/PartsAction/EditPart';
 import PartDetails from './AllContainer/PartsAction/PartDetails';
+import EditSupplier from './AllContainer/SupplierActions/EditSupplier';
 import SupplierDetails from './AllContainer/SupplierActions/SupplierDetails';
 import SupplierReferenceObject from './AllContainer/SupplierActions/SupplierReferenceObject';
-import Contract from './Contract';
-import OnBoard from './OnBoard';
-import PartManagementPage from './Pages/PartManagementPage';
-import SupplierPage from './Pages/SupplierPage';
-import PartTable from './PartTable';
-import EditSupplier from './AllContainer/SupplierActions/EditSupplier';
-import SupplierDocumentPage from './Pages/SupplierDocumentPage';
-import SupplierDocDetails from './AllContainer/SupplierDocumentAction/SupplierDocDetails';
-import SupplierDocEdit from './AllContainer/SupplierDocumentAction/SupplierDocEdit';
+import SupplierSearch from './AllContainer/SupplierActions/SupplierSearch';
 import Attachment from './AllContainer/SupplierDocumentAction/Attachment';
 import DocumentHistory from './AllContainer/SupplierDocumentAction/DocumentHistory';
 import DocumentHistoryInfo from './AllContainer/SupplierDocumentAction/DocumentHistoryInfo';
+import SupplierDocDetails from './AllContainer/SupplierDocumentAction/SupplierDocDetails';
+import SupplierDocEdit from './AllContainer/SupplierDocumentAction/SupplierDocEdit';
+import Contract from './Contract';
+import OnBoard from './OnBoard';
+import PartManagementPage from './Pages/PartManagementPage';
+import SupplierDocumentPage from './Pages/SupplierDocumentPage';
+import SupplierPage from './Pages/SupplierPage';
+import PartTable from './PartTable';
+
 import ComplianceDocDetails from './AllContainer/ComplianceCertificateActions/ComplianceDocDetails';
 import { DocsContext } from '../store/DocsProvider';
 import ComplianceDocumentHistory from './AllContainer/ComplianceCertificateActions/ComplianceDocumentHistory';
@@ -217,9 +219,10 @@ const RightBar = () => {
           componentToRender = <CertificateDocEdit id={id} />;
         }
         break;
-  
-  
 
+        case '/search-supplier':
+          componentToRender = <SupplierSearch/>;
+          break; 
 
     default:
       componentToRender = <PartTable />;

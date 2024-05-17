@@ -8,6 +8,7 @@ const { searchBomPart, addBomPart } = new BomServices();
 const AddExistingPart = ({modalHideHandler}) => {
   const [partNumber, setPartNumber] = useState('');
   const [searchPartDetails, setSearchPartDetails] = useState([]);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const location = useLocation();
   const { bomIds } = useContext(PartsContext);
 
@@ -32,6 +33,7 @@ const AddExistingPart = ({modalHideHandler}) => {
   //   }
 
   const handleAddExistingPartsClick = async () => {
+    setIsButtonDisabled(true)
     console.log({ searchPartDetails, location: location?.pathname?.split('/').slice(-1).join() });
     const parentId = Number(location?.pathname?.split('/').slice(-1).join());
     const childId = Number(searchPartDetails?.[0]?.id);
@@ -102,7 +104,7 @@ const AddExistingPart = ({modalHideHandler}) => {
             </table>
           </div>
         </div>
-        <button onClick={handleAddExistingPartsClick} className={classes.buttons}>Ok</button>
+        <button onClick={handleAddExistingPartsClick} className={classes.buttons} disabled={isButtonDisabled}>Ok</button>
       </div>
     </div>
   );

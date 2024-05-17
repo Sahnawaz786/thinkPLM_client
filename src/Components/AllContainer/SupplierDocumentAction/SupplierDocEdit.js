@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import spinnerStyle from "../../../style.module.css";
-import { categoryContext } from "../../../store/CategoryProvider";
-import DocumentServices from '../../../services/document.services';
-import styles from '../../Form/Parts/PartAttribut.module.css';
-import HashLoader from 'react-spinners/HashLoader';
 import { Button } from 'react-bootstrap';
-import classes from "../../Form/AllForm.module.css";
+import { useLocation, useNavigate } from "react-router-dom";
+import HashLoader from 'react-spinners/HashLoader';
+import DocumentServices from '../../../services/document.services';
+import { categoryContext } from "../../../store/CategoryProvider";
+import spinnerStyle from "../../../style.module.css";
 import FileInput from '../../../utils/FileInput';
+import styles from '../../Form/Parts/PartAttribut.module.css';
 
 const SupplierDocEdit = ({ id }) => {
 
     const { getDocumentById } = new DocumentServices();
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const location = useLocation();
     const editId = location?.pathname?.split('/').slice(-1).join();
     console.log({ location: location?.pathname?.split('/').slice(-1).join() })
@@ -139,6 +139,7 @@ const SupplierDocEdit = ({ id }) => {
 
     const submitHandler = async (event) => {
         event.preventDefault();
+        setIsButtonDisabled(true)
         console.log("USER---DATA", { sajjad: { ...userData, supplier_contract: [{ ...userData?.supplier_contract[0], attachment: attachments }] } })
 
         try {
@@ -320,7 +321,7 @@ const SupplierDocEdit = ({ id }) => {
                                 </div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'right' }}>
-                                <Button variant='primary' onClick={(e) => submitHandler(e)}>
+                                <Button variant='primary' onClick={(e) => submitHandler(e)} disabled={isButtonDisabled}>
                                     Submit
                                 </Button>{' '}
                             </div>

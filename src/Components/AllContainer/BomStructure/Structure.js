@@ -1,11 +1,13 @@
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import HashLoader from 'react-spinners/HashLoader';
 import CreateModal from '../../../UI/CreateModal';
-import EditModal from '../../../UI/EditModal';
 import Modal from '../../../UI/Modal';
 import BomServices from '../../../services/bom.services';
+import PartServices from '../../../services/parts.services';
+import { PartsContext } from '../../../store/PartsProvider';
+import { UserContext } from '../../../store/UserProvider';
 import styles from '../../../style.module.css';
 import DisplayAlert from '../../../utils/DisplayAlert';
 import PartContainer from '../PartContainer/PartContainer';
@@ -13,11 +15,7 @@ import AddExistingPart from './AddExistingPart';
 import BOM from './Bom';
 import BomRightBar from './BomRightBar';
 import CreateNewPart from './CreateNewPart';
-import EditBomPart from './EditBomPart';
 import classes from './Structure.module.css';
-import { UserContext } from '../../../store/UserProvider';
-import { PartsContext } from '../../../store/PartsProvider';
-import PartServices from '../../../services/parts.services';
 const bomServices = new BomServices();
 const Structure = ({ id }) => {
   const [timer, setTimer] = useState(true);
@@ -187,7 +185,7 @@ const Structure = ({ id }) => {
                     <CreateNewPart />
                   </CreateModal>
                 )}
-
+{/* 
                 <p>
                   <img
                     src='https://cdn-icons-png.freepik.com/512/3425/3425921.png'
@@ -217,7 +215,7 @@ const Structure = ({ id }) => {
 
                     <EditBomPart />
                   </EditModal>
-                )}
+                )} */}
               </div>
             </div>
 

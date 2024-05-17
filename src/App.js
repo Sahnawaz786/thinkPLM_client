@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Toaster } from 'sonner';
 import Container from './Components/Container';
 
 
@@ -10,6 +11,7 @@ function App() {
        <Container/>
         <Routes>
           <Route path="/part-table" element={<></>} />
+          <Route path="/search-supplier" element={<></>} />
           <Route path="/create-supplier" element={<></>} />
           <Route path="/onboard-status" element={<></>} />
           <Route path="/contract-details" element={<></>} />
@@ -54,6 +56,7 @@ function App() {
 
         </Routes>
       </Router>
+      <Toaster richColors/>
     </div>
   );
 }

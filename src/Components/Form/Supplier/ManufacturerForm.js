@@ -12,6 +12,7 @@ const Test = () => {
   let supplier_type = localStorage.getItem('manufacturer');
 
   const [timer, setTimer] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const [userData, setUserData] = useState({
     category: supplier_type,
@@ -30,6 +31,7 @@ const Test = () => {
     document: [{}],
   });
 
+  
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     console.log("filesssss",file)
@@ -57,9 +59,8 @@ const Test = () => {
 
   const submitHandler = async (event) => {
 
-    
-
     event.preventDefault();
+    setIsButtonDisabled(true);
     const {
       category,
       name,
@@ -545,7 +546,7 @@ const Test = () => {
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'right' }}>
-              <Button variant='primary' onClick={(e) => submitHandler(e)}>
+              <Button variant='primary' onClick={(e) => submitHandler(e)} disabled={isButtonDisabled}>
                 Submit
               </Button>{' '}
             </div>

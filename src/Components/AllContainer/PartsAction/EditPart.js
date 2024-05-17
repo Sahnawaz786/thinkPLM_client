@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import spinnerStyle from "../../../style.module.css";
-import { categoryContext } from "../../../store/CategoryProvider";
-import PartServices from '../../../services/parts.services';
-import styles from '../../Form/Parts/PartAttribut.module.css';
-import HashLoader from 'react-spinners/HashLoader';
 import { Button } from 'react-bootstrap';
-import classes from "../../Form/AllForm.module.css";
+import { useNavigate } from "react-router-dom";
+import HashLoader from 'react-spinners/HashLoader';
+import PartServices from '../../../services/parts.services';
+import { categoryContext } from "../../../store/CategoryProvider";
+import spinnerStyle from "../../../style.module.css";
+import message from "../../../utils/message";
+import styles from '../../Form/Parts/PartAttribut.module.css';
 
 const EditPart = ({id}) => {
 
@@ -15,6 +15,7 @@ const EditPart = ({id}) => {
   const categoryItemsCtx = useContext(categoryContext);
 
   const [timer,setTimer] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
 
   const navigate = useNavigate();
@@ -86,6 +87,7 @@ const EditPart = ({id}) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    setIsButtonDisabled(true)
     console.log("USER---DATA",{userData: {...userData.data, parts: [{ ...userData?.parts[0]}]}})
     // return;
     try {
@@ -103,6 +105,11 @@ const EditPart = ({id}) => {
       if (res.ok) {
         navigate("/");
       }
+      else{
+        const data=await res.json();
+        console.log("...........",data.message)
+        message('error',data.message)
+       }
     } catch (error) {
       console.log(error);
     }
@@ -275,7 +282,7 @@ const EditPart = ({id}) => {
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'right' }}>
-              <Button variant='primary' onClick={(e) => submitHandler(e)}>
+              <Button variant='primary' onClick={(e) => submitHandler(e)} disabled={isButtonDisabled}>
                 Submit
               </Button>{' '}
             </div>
