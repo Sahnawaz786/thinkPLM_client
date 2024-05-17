@@ -4,8 +4,9 @@ import App from './App';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import CategoryProvider from './store/CategoryProvider';
-import { UserProvider } from './store/UserProvider';
 import { PartsProvider } from './store/PartsProvider';
+import { UserProvider } from './store/UserProvider';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

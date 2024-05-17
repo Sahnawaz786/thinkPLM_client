@@ -14,7 +14,7 @@
 .leftBox_content_top{
     display: flex;
     justify-content:center;
-    margin-top:20px;
+    margin-top:10px;
     align-items: center;
     margin-left: 30px;
 }
@@ -27,7 +27,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 30px;
+    margin-left: -15px;
 }
 
 .leftBox_content_bottom p{

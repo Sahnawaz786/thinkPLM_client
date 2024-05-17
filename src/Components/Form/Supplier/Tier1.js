@@ -12,6 +12,7 @@ const Tier1 = () => {
   let supplier_type = localStorage.getItem('tier1');
 
   const [timer, setTimer] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const [userData, setUserData] = useState({
     category: supplier_type,
@@ -57,6 +58,7 @@ const Tier1 = () => {
 
     const date=new Date().toJSON().slice(0, 10);
     event.preventDefault();
+    setIsButtonDisabled(true);
     const {
       category,
       name,
@@ -540,7 +542,7 @@ const Tier1 = () => {
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'right' }}>
-              <Button variant='primary' onClick={(e) => submitHandler(e)}>
+              <Button variant='primary' onClick={(e) => submitHandler(e)} disabled={isButtonDisabled}>
                 Submit
               </Button>{' '}
             </div>

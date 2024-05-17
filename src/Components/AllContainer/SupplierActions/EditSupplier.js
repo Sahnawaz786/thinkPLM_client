@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import spinnerStyle from "../../../style.module.css";
-import SupplierServices from '../../../services/supplier.services';
-import styles from '../../Form/Parts/PartAttribut.module.css';
-import HashLoader from 'react-spinners/HashLoader';
+import React, { useEffect, useState } from "react";
 import { Button } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
+import HashLoader from 'react-spinners/HashLoader';
+import SupplierServices from '../../../services/supplier.services';
+import spinnerStyle from "../../../style.module.css";
 import classes from "../../Form/AllForm.module.css";
+import styles from '../../Form/Parts/PartAttribut.module.css';
 
 const EditSupplier = ({ id }) => {
 
@@ -13,7 +13,7 @@ const EditSupplier = ({ id }) => {
 
 
     const [timer, setTimer] = useState(false);
-
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     const navigate = useNavigate();
 
@@ -85,6 +85,7 @@ const EditSupplier = ({ id }) => {
 
     const submitHandler = async (event) => {
         event.preventDefault();
+        setIsButtonDisabled(true)
         // return;
         try {
             // `http://localhost:8181/SupplierMasterObject`
@@ -516,7 +517,7 @@ const EditSupplier = ({ id }) => {
                     </div>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'right' }}>
-                    <Button variant='primary' onClick={(e) => submitHandler(e)}>
+                    <Button variant='primary' onClick={(e) => submitHandler(e)} disabled={isButtonDisabled}>
                       Submit
                     </Button>{' '}
                   </div>

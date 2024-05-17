@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Dropdown } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import DocumentServices from '../services/document.services';
 import PartServices from '../services/parts.services';
 import { UserContext } from '../store/UserProvider';
 import styles from '../style.module.css';
 import DisplayAlert from '../utils/DisplayAlert';
-import { useLocation } from 'react-router-dom';
-import DocumentServices from '../services/document.services';
-import { Dropdown } from 'react-bootstrap';
+import message from '../utils/message';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 const PartTable = () => {
@@ -21,7 +21,6 @@ const PartTable = () => {
   const [selectedId, setSelectedId] = useState(null);
   const [id, setId] = useState();
   const [deleteid, setDeleteId] = useState();
-
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleCheckboxChange = (id) => {
@@ -35,15 +34,21 @@ const PartTable = () => {
   console.log('PATHNAME', pathname);
 
   const handleDeleteBtn = async () => {
-    if (choice && pathname === '/') {
-      await deletePart(id);
-      const newData = await getPart();
-      setData(newData.data);
-    }
-    if (choice && pathname === '/document-table') {
-      await deleteDocument(deleteid);
-      const newData = await getAllDocuments();
-      setData2(newData.data);
+    try {
+      if (choice && pathname === '/') {
+        await deletePart(id);
+        const newData = await getPart();
+        console.log("datas checking.........",{newData})
+        setData(newData.data);
+      }
+      if (choice && pathname === '/document-table') {
+        await deleteDocument(deleteid);
+        const newData = await getAllDocuments();
+        setData2(newData.data);
+      }
+    } catch (error) {
+      console.log({error})
+      message('error', error?.response?.data);
     }
   };
 

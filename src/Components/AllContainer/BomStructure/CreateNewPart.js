@@ -1,14 +1,15 @@
+import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import HashLoader from 'react-spinners/HashLoader';
+import BomServices from '../../../services/bom.services';
 import { categoryContext } from '../../../store/CategoryProvider';
+import { PartsContext } from '../../../store/PartsProvider';
 import spinnerStyle from '../../../style.module.css';
+import message from '../../../utils/message';
 import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
 import styles from '../../Form/Parts/PartAttribut.module.css';
-import axios from 'axios';
-import { PartsContext } from '../../../store/PartsProvider';
-import BomServices from '../../../services/bom.services';
 
 const CreateNewPart = () => {
     
@@ -16,6 +17,7 @@ const CreateNewPart = () => {
   const location = useLocation();
   const [selected, setSelected] = useState('');
   const { bomIds } = useContext(PartsContext);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -83,6 +85,7 @@ const CreateNewPart = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    setIsButtonDisabled(true)
     const {
       part_number,
       part_name,
@@ -157,9 +160,11 @@ const CreateNewPart = () => {
         if (bomIds?.childId || parentId) {
           await addBomPart(payload);
           // window.location.reload();
-        } else {
-          //
-        }
+        } else{
+          const data=await res.json();
+          console.log("...........",data.message)
+          message('error',data.message)
+         }
         setUserData({
           part_number: '',
           part_name: '',
@@ -189,8 +194,16 @@ const CreateNewPart = () => {
       //   }, 1000);
       // }
     }
+    else{
+      const data=await res.json();
+      console.log("...........",data.message)
+      message('error',data.message)
+     }
    } catch (error) {
       console.log(error);
+    }
+    finally{
+      setIsButtonDisabled(false)
     }
   };
 
@@ -404,7 +417,7 @@ const CreateNewPart = () => {
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'right' }}>
-              <Button variant='primary' onClick={(e) => submitHandler(e)}>
+              <Button variant='primary' onClick={(e) => submitHandler(e)} disabled={isButtonDisabled}>
                 Submit
               </Button>{' '}
             </div>

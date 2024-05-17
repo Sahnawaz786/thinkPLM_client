@@ -1,16 +1,16 @@
-import React from 'react';
-import styles from './PartAttribut.module.css';
-import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { useContext, useState, useEffect } from 'react';
-import { categoryContext } from '../../../store/CategoryProvider';
 import { useNavigate } from 'react-router-dom';
-import spinnerStyle from '../../../style.module.css'
 import HashLoader from 'react-spinners/HashLoader';
+import { categoryContext } from '../../../store/CategoryProvider';
+import spinnerStyle from '../../../style.module.css';
+import message from '../../../utils/message';
+import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
+import styles from './PartAttribut.module.css';
 
 const StandardParts = () => {
   const navigate = useNavigate();
-
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [selected, setSelected] = useState('');
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -76,6 +76,8 @@ const StandardParts = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+
+    setIsButtonDisabled(true)
     const {
       part_number,
       part_name,
@@ -133,7 +135,9 @@ const StandardParts = () => {
           ],
         }),
       });
+     
       if (res.ok) {
+       
         setUserData({
           part_number: '',
           part_name: '',
@@ -161,8 +165,17 @@ const StandardParts = () => {
           navigate('/');
         }, 1000);
       }
+     else{
+      const data=await res.json();
+      console.log("...........",data.message)
+      message('error',data.message)
+     }
+    
     } catch (error) {
-      console.log(error);
+      console.log("errorsssssss",error);
+    }
+    finally{
+      setIsButtonDisabled(false)
     }
   };
 
@@ -376,13 +389,14 @@ const StandardParts = () => {
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'right' }}>
-              <Button variant='primary' onClick={(e) => submitHandler(e)}>
+              <Button variant='primary' onClick={(e) => submitHandler(e)} disabled={isButtonDisabled}>
                 Submit
               </Button>{' '}
             </div>
           </div>
         </div>
       </div>
+
     </div>
   );
 };

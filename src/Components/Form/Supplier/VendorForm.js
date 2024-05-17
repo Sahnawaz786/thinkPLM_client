@@ -12,6 +12,7 @@ const VendorForm = () => {
   let supplier_type = localStorage.getItem('vendor');
 
   const [timer, setTimer] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const [userData, setUserData] = useState({
     category: supplier_type,
@@ -55,6 +56,7 @@ const VendorForm = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    setIsButtonDisabled(true)
     const date=new Date().toJSON().slice(0, 10);
     const {
       category,
@@ -533,13 +535,11 @@ const VendorForm = () => {
             </div>
 
 
-
-
                 </div>
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'right' }}>
-              <Button variant='primary' onClick={(e) => submitHandler(e)}>
+              <Button variant='primary' onClick={(e) => submitHandler(e)} disabled={isButtonDisabled}>
                 Submit
               </Button>{' '}
             </div>

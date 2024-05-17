@@ -79,7 +79,7 @@ class PartServices {
             return await response;
         } catch (error) {
             console.error('Error fetching parts:', error);
-            return null;
+            return Promise.reject(error);
         }
     }
 
