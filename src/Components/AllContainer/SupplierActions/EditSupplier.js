@@ -11,7 +11,9 @@ const EditSupplier = ({ id }) => {
 
     const { getSupplierById, updateSupplier } = new SupplierServices();
 
-
+    const [currentDate, setCurrentDate] = useState(
+      new Date().toJSON().slice(0, 10)
+    );
     const [timer, setTimer] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
@@ -19,19 +21,21 @@ const EditSupplier = ({ id }) => {
 
 
     const [supplierData, setSupplierData] = useState({
-        category:"",
-        id:id,
-        name:'',
-        pt:'',
-        email:'',
-        contact:'',
-        country:'',
-        state:'',
-        district:'',
-        location:'',
-        start_date:'',
-        end_date:'',
-        document:[]
+      category:'',
+      name: '',
+      description:'',
+      supplier:[{
+        email: '',
+        contact: '',
+        pt: '',
+        country: '',
+        state: '',
+        district: '',
+        location: '',
+        start_date: '',
+        end_date: '',
+        document: [{}],
+      }]
     });
 
     const handleFileUpload = (event) => {
@@ -39,8 +43,13 @@ const EditSupplier = ({ id }) => {
         const reader = new FileReader();
     
         reader.onloadend = () => {
-          // After the file is loaded, store the result (Base64 string) in the state
-          setSupplierData({ ...supplierData, document:[{...supplierData.document[0],fileName:file.name,fileType:file.type,document:reader.result}]});
+          setSupplierData(prevState => ({
+            ...prevState,
+            supplier: prevState.supplier.map(suppliers => ({
+              ...suppliers,document:[{fileName:file.name,fileType:file.type,document:reader.result,id:suppliers?.documentId}]
+             
+            }))
+          }));
 
         };
     
@@ -69,17 +78,19 @@ const EditSupplier = ({ id }) => {
     const postUser = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        const date = new Date().toJSON().slice(0, 10);
+    
         setSupplierData(prevState => {
-            return { ...prevState, [name]: value,modifiedDate:date}
+            return { ...prevState, [name]: value,modifiedDate:currentDate}
         })
     };
 
-    const postUserData = (event) => {
+    const postUserData = (event,index) => {
         const { name, value } = event.target;
         const date = new Date().toJSON().slice(0, 10);
         setSupplierData((prevData) => {
-            return { ...prevData, modifiedDate: date};
+          const updatedSupplier = [...prevData.supplier];
+          updatedSupplier[index] = { ...updatedSupplier[index], [name]: value , modifiedDate: date};
+            return { ...prevData,supplier:updatedSupplier};
         });
     };
 
@@ -90,7 +101,7 @@ const EditSupplier = ({ id }) => {
         try {
             // `http://localhost:8181/SupplierMasterObject`
 
-            const res = await fetch(`http://localhost:8181/updatesuppliers`, {
+            const res = await fetch(`http://localhost:8181/KKHSupplierMasterObject`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -103,6 +114,9 @@ const EditSupplier = ({ id }) => {
             }
         } catch (error) {
             console.log(error);
+        }
+        finally{
+          setIsButtonDisabled(false)
         }
     };
 
@@ -131,34 +145,29 @@ const EditSupplier = ({ id }) => {
                             type='text'
                             name='category'
                             className={styles.partName}
-                            value={supplierData.category}
+                            value={supplierData?.category}
                             readOnly
                           />
                         </div>
       
                         <div className={styles.formInput}>
-                          <strong>Manufacturer Name(Non-Editable)</strong>
+                          <strong>Supplier Name(Non-Editable)</strong>
                           <input
                             type='text'
                             name='name'
-                            value={supplierData.name}
-                            onChange={(e) => postUserData(e)}
+                            value={supplierData?.name}
                             className={styles.partName}
                             readOnly
                           />
                         </div>
-      
-                        
-      
+
                         <div className={styles.formInput}>
-                          <strong htmlFor='text'>Product Type(Non-Editable)</strong>
+                          <strong>Description(Non-Editable)</strong>
                           <input
                             type='text'
-                            id='pt'
+                            name='name'
+                            value={supplierData?.description}
                             className={styles.partName}
-                            name='pt'
-                            value={supplierData.pt}
-                            onChange={(e)=>postUserData}
                             readOnly
                           />
                         </div>
@@ -174,6 +183,17 @@ const EditSupplier = ({ id }) => {
                       </div>
       
                       <div className={styles.formContainer}>
+                      <div className={styles.formInput}>
+                          <strong htmlFor='text'>Product Type</strong>
+                          <input
+                            type='text'
+                            id='pt'
+                            className={styles.partName}
+                            name='pt'
+                            value={supplierData?.supplier[0]?.pt}
+                            onChange={(event)=>postUserData(event,0)}
+                          />
+                        </div>
       
                         <div className={styles.formInput}>
                           <strong htmlFor='text'>Email ID:</strong>
@@ -182,21 +202,21 @@ const EditSupplier = ({ id }) => {
                             id='email'
                             name='email'
                             className={styles.partName}
-                            value={supplierData.email}
-                            onChange={(e)=>postUser(e)}
+                            value={supplierData?.supplier[0]?.email}
+                            onChange={(event)=>postUserData(event,0)}
                           />
                         </div>
       
                         <div className={styles.formInput}>
                     <strong htmlFor='text'>Contact No:</strong>
-                    <input type='text' id='contact' name="contact" value={supplierData.contact} onChange={(e)=>postUser(e)} />
+                    <input type='text' id='contact' name="contact" value={supplierData?.supplier[0]?.contact} onChange={(event)=>postUserData(event,0)} />
                   </div>
       
                   <div className={styles.formInput}>
                     <strong>Country:</strong>
                     <select
                       className={styles.partName}
-                      name="country" value={supplierData.country} onChange={(e)=>postUser(e)}>
+                      name="country" value={supplierData?.supplier[0]?.country} onChange={(event)=>postUserData(event,0)}>
                       <option value="">Select Country</option>
                       <option value="Afghanistan">Afghanistan</option>
                       <option value="Åland Islands">Åland Islands</option>
@@ -450,7 +470,7 @@ const EditSupplier = ({ id }) => {
                     <strong>State:</strong>
                     <select
                       className={styles.partName}
-                      name="state" value={supplierData.state} onChange={(e)=>postUser(e)}>
+                      name="state" value={supplierData?.supplier[0]?.state} onChange={(event)=>postUserData(event,0)}>
                       <option value="">Select State</option>
                       <option value="Andhra Pradesh">Andhra Pradesh</option>
                       <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -493,21 +513,21 @@ const EditSupplier = ({ id }) => {
       
                   <div className={styles.formInput}>
                     <strong htmlFor='text'>District:</strong>
-                    <input type='text' className={styles.partName} id='district' name="district" value={supplierData.district} onChange={(e)=>postUser(e)} />
+                    <input type='text' className={styles.partName} id='district' name="district" value={supplierData?.supplier[0]?.district} onChange={(event)=>postUserData(event,0)} />
                   </div>
       
                   <div className={styles.formInput}>
                     <strong htmlFor='text'>Location/Address:</strong>
-                    <input type='text' className={styles.partName} id='location' name="location" value={supplierData.location} onChange={(e)=>postUser(e)} />
+                    <input type='text' className={styles.partName} id='location' name="location" value={supplierData?.supplier[0]?.location} onChange={(event)=>postUserData(event,0)} />
                   </div>
       
                   <div className={styles.formInput}>
                     <strong htmlFor='text'>Contract Start Date:</strong>
-                    <input type='date' className={styles.partName} id='sdate' name="start_date" value={supplierData.start_date} onChange={(e)=>postUser(e)} />
+                    <input type='date' className={styles.partName} id='sdate' name="start_date" value={supplierData?.supplier[0]?.start_date} onChange={(event)=>postUserData(event)} />
                   </div>
                   <div className={styles.formInput}>
                     <strong htmlFor='text'>Contract End Date:</strong>
-                    <input type='date' className={styles.partName} id='location' name="end_date" value={supplierData.end_date} onChange={(e)=>postUser(e)} />
+                    <input type='date' className={styles.partName} id='location' name="end_date" value={supplierData?.supplier[0]?.end_date} onChange={(event)=>postUserData(event,0)} />
                   </div>
                   <div className={styles.formInput}>
                     <strong htmlFor='document'>Upload Contract Document:</strong>

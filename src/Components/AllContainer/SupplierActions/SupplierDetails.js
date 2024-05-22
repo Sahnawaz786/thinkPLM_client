@@ -4,10 +4,10 @@ import SupplierServices from '../../../services/supplier.services';
 import { UserContext } from '../../../store/UserProvider';
 import DisplayAlert from '../../../utils/DisplayAlert';
 // import classes from '../PartsAction/PartDetails.module.css';
-import SupplierContainer from '../SupplierContainer/SupplierContainer';
-import styles from '../../../style.module.css';
-import classes from './Supplier.module.css';
 import { useNavigate } from 'react-router-dom';
+import styles from '../../../style.module.css';
+import SupplierContainer from '../SupplierContainer/SupplierContainer';
+import classes from './Supplier.module.css';
 
 const SupplierDetails = ({ id }) => {
 
@@ -20,9 +20,13 @@ const {getSupplierById,deleteSupplier}=new SupplierServices();
 
   const getSupplierApi = async (id) => {
     const supplierInfo = await getSupplierById(id);
-    const supData = (supplierInfo?.data || [])
-    console.log('supplier info data', supData);
-    setSupplierDetails(supData)
+    const supData = (supplierInfo?.data.supplier || [])
+    .map((elem) => {
+      return { ...elem, createdDate: supplierInfo?.data?.createdDate };
+    })
+    .sort((a, b) => b.id - a.id)?.[0];
+    const newSuppliersData = { ...supplierInfo, supplier: [supData || {}] };
+    setSupplierDetails([newSuppliersData || {}]);
   };
 
   useEffect(() => {
@@ -39,6 +43,7 @@ const {getSupplierById,deleteSupplier}=new SupplierServices();
     if (choice) {
       console.log("choice is:",choice)
       const supplierInfo = await deleteSupplier(id);
+      window.location.reload();
       navigate('/part-table')
   };
 }
@@ -47,6 +52,7 @@ useEffect(()=>{
   DeleteFun(id)
 },[choice])
 
+console.log("******",supplierDetails)
 return (
   timer ? (
     <div className={styles.spinnerContainer}>
@@ -78,65 +84,87 @@ return (
 
     <div className={classes.detailContainer}>
       <div className={classes.part_details_paragrah}>
-
+          {supplierDetails.map((supplierMaster,i)=>{
+        return (
+          <>
+          
             {/* <div className={classes.part_container}> */}
-              <div className={classes.master_part}>
+            <div className={classes.master_part} key={i}>
                 <div className={classes.masterpart_header}>
                   <p>System:-</p>
                 </div>
                 {/* <div className={classes.systemInfo}> */}
                   <p  >
                     <strong>Supplier Category:</strong>{' '}
-                    {supplierDetails.category}
+                    {supplierMaster?.data?.category}
                   </p>
 
                   <p >
                     <strong>Supplier Name:</strong>{' '}
-                    {supplierDetails.name}
+                    {supplierMaster?.data?.name}
                   </p>
 
                   <p >
-                    <strong>Product Id:</strong>{' '}
-                    {supplierDetails.pt}
+                    <strong>Description:</strong>{' '}
+                    {supplierMaster?.data?.description}
+                  </p>
+                  
+                  <p >
+                    <strong>Created Date:</strong>{' '}
+                    {supplierMaster?.data?.createdDate}
+                  </p>
+                  
+                  <p >
+                    <strong>Modified Date:</strong>{' '}
+                    {supplierMaster?.data?.modifiedDate}
                   </p>
                 {/* </div> */}
               </div>
             {/* </div> */}
 
+          
+          </>
+        )
+      })}
         
       </div>
       <div className={classes.bottomDetails}>
-        <>
-          <div className={classes.child_part}>
+        {supplierDetails[0]?.supplier?.map((childSupplier,i)=>{
+          return (<>
+                <div className={classes.child_part} key={i}>
             <div className={classes.childpart_header}>
               <p>Business:-</p>
             </div>
             <p>
-              <strong>Email:</strong> {supplierDetails.email}
+              <strong>Email:</strong> {childSupplier?.email}
             </p>
             <p>
-              <strong>Contact:</strong> {supplierDetails.contact}
+              <strong>Contact:</strong> {childSupplier?.contact}
             </p>
             <p>
-              <strong>Start Date:</strong> {supplierDetails.start_date}
+              <strong>Start Date:</strong> {childSupplier?.start_date}
             </p>
             <p>
-              <strong>End Date:</strong> {supplierDetails.end_date}
+              <strong>End Date:</strong> {childSupplier?.end_date}
             </p>
             <p>
-              <strong>State:</strong> {supplierDetails.state}
+              <strong>State:</strong> {childSupplier?.state}
             </p>
             <p>
-              <strong>District:</strong>{supplierDetails.district}
+              <strong>District:</strong>{childSupplier?.district}
             </p>
             <p>
-              <strong>Country:</strong> {supplierDetails.country}
+              <strong>Country:</strong> {childSupplier?.country}
             </p>
             <p>
               <strong>Location:</strong>{' '}
-              {supplierDetails.location}
+              {childSupplier?.location}
             </p>
           </div>
+          </>)
+        })}
+        <>
+         
         </>
       </div>
     </div>

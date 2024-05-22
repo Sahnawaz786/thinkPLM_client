@@ -22,22 +22,24 @@ import SupplierDocumentPage from './Pages/SupplierDocumentPage';
 import SupplierPage from './Pages/SupplierPage';
 import PartTable from './PartTable';
 
-import ComplianceDocDetails from './AllContainer/ComplianceCertificateActions/ComplianceDocDetails';
 import { DocsContext } from '../store/DocsProvider';
-import ComplianceDocumentHistory from './AllContainer/ComplianceCertificateActions/ComplianceDocumentHistory';
-import ComplianceAttachment from './AllContainer/ComplianceCertificateActions/ComplianceAttachment';
-import ComplianceDocumentHistoryInfo from './AllContainer/ComplianceCertificateActions/ComplianceDocumentHistoryInfo';
-import ComplianceDocEdit from './AllContainer/ComplianceCertificateActions/ComplianceDocEdit';
-import InvoiceDocDetails from './AllContainer/InvoiceActions/InvoiceDocDetails';
-import InvoiceDocumentHistory from './AllContainer/InvoiceActions/InvoiceDocumentHistory';
-import InvoiceAttachment from './AllContainer/InvoiceActions/InvoiceAttachment';
-import InvoiceDocumentHistoryInfo from './AllContainer/InvoiceActions/InvoiceDocumentHistoryInfo';
-import InvoiceDocEdit from './AllContainer/InvoiceActions/InvoiceDocEdit';
-import CertificateDocDetails from './AllContainer/CertificateOfInsuranceActions/CertificateDocDetails';
-import CertificateDocumentHistory from './AllContainer/CertificateOfInsuranceActions/CertificateDocumentHistory';
 import CertificateAttachment from './AllContainer/CertificateOfInsuranceActions/CertificateAttachment';
-import CertificateDocumentHistoryInfo from './AllContainer/CertificateOfInsuranceActions/CertificateDocumentHistoryInfo';
+import CertificateDocDetails from './AllContainer/CertificateOfInsuranceActions/CertificateDocDetails';
 import CertificateDocEdit from './AllContainer/CertificateOfInsuranceActions/CertificateDocEdit';
+import CertificateDocumentHistory from './AllContainer/CertificateOfInsuranceActions/CertificateDocumentHistory';
+import CertificateDocumentHistoryInfo from './AllContainer/CertificateOfInsuranceActions/CertificateDocumentHistoryInfo';
+import ComplianceAttachment from './AllContainer/ComplianceCertificateActions/ComplianceAttachment';
+import ComplianceDocDetails from './AllContainer/ComplianceCertificateActions/ComplianceDocDetails';
+import ComplianceDocEdit from './AllContainer/ComplianceCertificateActions/ComplianceDocEdit';
+import ComplianceDocumentHistory from './AllContainer/ComplianceCertificateActions/ComplianceDocumentHistory';
+import ComplianceDocumentHistoryInfo from './AllContainer/ComplianceCertificateActions/ComplianceDocumentHistoryInfo';
+import InvoiceAttachment from './AllContainer/InvoiceActions/InvoiceAttachment';
+import InvoiceDocDetails from './AllContainer/InvoiceActions/InvoiceDocDetails';
+import InvoiceDocEdit from './AllContainer/InvoiceActions/InvoiceDocEdit';
+import InvoiceDocumentHistory from './AllContainer/InvoiceActions/InvoiceDocumentHistory';
+import InvoiceDocumentHistoryInfo from './AllContainer/InvoiceActions/InvoiceDocumentHistoryInfo';
+import SupplierHistory from './AllContainer/SupplierActions/SupplierHistory';
+import SupplierHistoryInfo from './AllContainer/SupplierActions/SupplierHistoryInfo';
 
 const RightBar = () => {
   const { type } = useContext(DocsContext);
@@ -104,6 +106,18 @@ const RightBar = () => {
         componentToRender = <SupplierDetails id={id} />;
       }
       break;
+
+      case `/supplier-history/${id}`:
+      if (id) {
+        componentToRender = <SupplierHistory id={id} />;
+      }
+      break;
+
+      case `/supplier-historyInfo/${pid}/${id}`:
+        if (id) {
+          componentToRender = <SupplierHistoryInfo pid={pid} id={id} />;
+        }
+        break;
 
     case `/reference-object/${id}`:
       if (id) {

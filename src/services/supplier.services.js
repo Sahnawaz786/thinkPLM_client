@@ -9,7 +9,7 @@ class SupplierServices {
 
     async getSupplier() {
         try {
-            const response = await axios.get(`${baseURL}/getsuppliers`);
+            const response = await axios.get(`${baseURL}/KKHSupplierMasterObject`);
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
@@ -22,7 +22,7 @@ class SupplierServices {
 
     async getSupplierById(id) {
         try {
-            const response = await axios.get(`${baseURL}/getIdsuppliers/${id}`);
+            const response = await axios.get(`${baseURL}/KKHSupplierMasterObject/${id}`);
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
@@ -35,7 +35,7 @@ class SupplierServices {
 
     async deleteSupplier(id) {
         try {
-            const response = await axios.delete(`${baseURL}/deletesuppliers/${id}`);
+            const response = await axios.delete(`${baseURL}/KKHSupplierMasterObject/${id}`);
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }

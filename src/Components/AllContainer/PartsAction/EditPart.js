@@ -16,7 +16,9 @@ const EditPart = ({id}) => {
 
   const [timer,setTimer] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
+  const [currentDate, setCurrentDate] = useState(
+    new Date().toJSON().slice(0, 10)
+  );
 
   const navigate = useNavigate();
 
@@ -25,8 +27,7 @@ const EditPart = ({id}) => {
     part_number: "",
     part_name: "",
     description: "",
-    // createdDate: currentDate,
-    // modifiedDate: currentDate,
+    
     parts: [
       {
         supplier_category: "",
@@ -75,11 +76,11 @@ const EditPart = ({id}) => {
 
   const postUserData = (event, index) => {
     const { name, value } = event.target;
-    const date=new Date().toJSON().slice(0, 10);
-    console.log(date)
+  
+  
     setUserData((prevData) => {
       const updatedParts = [...prevData.parts];
-      updatedParts[index] = { ...updatedParts[index], [name]: value ,modifiedDate:date};
+      updatedParts[index] = { ...updatedParts[index], [name]: value ,modifiedDate:currentDate};
       return { ...prevData, parts: updatedParts };
     });
     console.log(userData)

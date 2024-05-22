@@ -24,6 +24,9 @@ function App() {
           <Route path="/edit-part/:id" element={<></>} />
           <Route path="/edit-supplier/:id" element={<></>} />
           <Route path="/supplier-details/:id" element={<></>} />
+          <Route path="/supplier-history/:id" element={<></>} />
+          <Route path="/part-historyInfo/:pid/:cid" element={<></>} />
+
           <Route path="/reference-object/:id" element={<></>} />
           <Route path="/supplier-documents" element={<></>} />
           <Route path='/supplier-documents-details/:id' element={<></>}/>

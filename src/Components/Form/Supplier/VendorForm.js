@@ -3,82 +3,114 @@ import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import HashLoader from 'react-spinners/HashLoader';
 import spinnerStyle from '../../../style.module.css';
+import message from '../../../utils/message';
 import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
 import styles from './../Parts/PartAttribut.module.css';
 
 const VendorForm = () => {
   const navigate = useNavigate();
-  const date=new Date().toJSON().slice(0, 10);
-  let supplier_type = localStorage.getItem('vendor');
-
+  const [currentDate, setCurrentDate] = useState(
+    new Date().toJSON().slice(0, 10)
+  );
+  let supplier_type = localStorage.getItem('manufacturer');
   const [timer, setTimer] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const [userData, setUserData] = useState({
     category: supplier_type,
     name: '',
-    email: '',
-    contact: '',
-    pt: '',
-    createdDate:date,
-    modifiedDate:date,
-    country: '',
-    state: '',
-    district: '',
-    location: '',
-    start_date: '',
-    end_date: '',
-    document: null,
+    description:'',
+    createdDate:currentDate,
+    modifiedDate:currentDate,
+    supplier:[{
+      email: '',
+      contact: '',
+      pt: '',
+      createdDate:currentDate,
+      modifiedDate:currentDate,
+      iteration_info: 1,
+      islatest_Iteration: 1,
+      country: '',
+      state: '',
+      district: '',
+      location: '',
+      start_date: '',
+      end_date: '',
+      document: [{}],
+    }]
+    
   });
 
+  
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
+    console.log("filesssss",file)
     const reader = new FileReader();
-
+   
     reader.onloadend = () => {
-      // After the file is loaded, store the result (Base64 string) in the state
-      setUserData({ ...userData, document:[{fileName:file.name,fileType:file.type,document:reader.result}]});
 
-    };
+      setUserData(prevState => ({
+        ...prevState,
+        supplier: prevState.supplier.map(suppliers => ({
+          ...suppliers,document:[{fileName:file.name,fileType:file.type,document:reader.result}]
+         
+        }))
+      }));
+      }
 
     // Read the file as a Data URL (Base64)
     if (file) {
       reader.readAsDataURL(file);
     }
+  
   };
-
-  let name, value;
-  const postUserData = (event) => {
+  const postUser = (event) => {
     name = event.target.name;
     value = event.target.value;
     setUserData({ ...userData, [name]: value });
+    console.log(userData);
+  };
+
+  let name, value;
+  const postUserData = (event,index) => {
+    const { name, value } = event.target;
+    setUserData((prevData) => {
+      const updatedSupplier = [...prevData.supplier];
+      updatedSupplier[index] = { ...updatedSupplier[index], [name]: value };
+      return { ...prevData, supplier: updatedSupplier };
+    });
   };
 
   const submitHandler = async (event) => {
+
     event.preventDefault();
-    setIsButtonDisabled(true)
-    const date=new Date().toJSON().slice(0, 10);
+    setIsButtonDisabled(true);
     const {
       category,
       name,
-      email,
-      contact,
-      pt,
+      description,
       createdDate,
       modifiedDate,
-      country,
-      state,
-      district,
-      location,
-      start_date,
-      end_date,
-      document,
+      supplier:[{
+        email,
+        contact,
+        pt,
+        iteration_info,
+        islatest_Iteration,
+        country,
+        state,
+        district,
+        location,
+        start_date,
+        end_date,
+        document,
+      }]
     } = userData;
 
     try {
       // `http://localhost:8181/addsuppliers`
       //https://kkh-mech-default-rtdb.firebaseio.com/manufacturer.json
-      const res = await fetch(`http://localhost:8181/addsuppliers`, {
+      const res = await fetch(`http://localhost:8181/KKHSupplierMasterObject`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -86,49 +118,68 @@ const VendorForm = () => {
         body: JSON.stringify({
           category,
           name,
-          email,
-          contact,
-          pt,
+          description,
           createdDate,
           modifiedDate,
-          country,
-          state,
-          district,
-          location,
-          start_date,
-          end_date,
-          document,
+          supplier:[{
+            email,
+            contact,
+            pt,
+            createdDate,
+            modifiedDate,
+            iteration_info,
+            islatest_Iteration,
+            country,
+            state,
+            district,
+            location,
+            start_date,
+            end_date,
+            document,
+          }]
         }),
       });
-      if (res) {
+      if (res.ok) {
         setUserData({
+          category:'',
           name: '',
-          email: '',
-          contact: '',
-          category: '',
-          pt: '',
-          createdDate:null,
-          modifiedDate:null,
-          country: '',
-          state: '',
-          district: '',
-          location: '',
-          start_date: '',
-          end_date: '',
-          document: null,
+          description:'',
+          createdDate:'',
+          modifiedDate:'',
+          supplier:[{
+            email: '',
+            contact: '',
+            pt: '',
+            country: '',
+            state: '',
+            district: '',
+            location: '',
+            start_date: '',
+            end_date: '',
+            document:[],
+          }]
         });
         setTimer(true);
         setTimeout(() => {
           setTimer(false);
+          navigate('/')
           window.location.reload();
         }, 1000);
       }
-      navigate('/')
+      else{
+        const data=await res.json();
+        console.log("...........",data.message)
+        message('error',data.message)
+       }
+     
     } catch (error) {
       console.log(error);
     }
+    finally{
+      setIsButtonDisabled(false)
+    }
   };
-
+   console.log("userData",userData)
   return (
     timer ?  <div className={spinnerStyle.spinnerContainer}>
     {' '}
@@ -154,34 +205,32 @@ const VendorForm = () => {
                       name='category'
                       className={styles.partName}
                       value={userData.category}
-                      onChange={postUserData}
+                      onChange={(e) => postUser(e)}
                     />
                   </div>
 
                   <div className={styles.formInput}>
-                    <strong>Manufacturer Name:</strong>
+                    <strong>Vendor Name:</strong>
                     <input
                       type='text'
                       name='name'
                       value={userData.name}
-                      onChange={(e) => postUserData(e)}
+                      onChange={(e) => postUser(e)}
                       className={styles.partName}
                     />
                   </div>
-
-                  
 
                   <div className={styles.formInput}>
-                    <strong htmlFor='text'>Product Type</strong>
+                    <strong>Description:</strong>
                     <input
                       type='text'
-                      id='pt'
+                      name='description'
+                      value={userData.description}
+                      onChange={(e) => postUser(e)}
                       className={styles.partName}
-                      name='pt'
-                      value={userData.pt}
-                      onChange={postUserData}
                     />
                   </div>
+
                 </div>
               </div>
             </div>
@@ -194,6 +243,19 @@ const VendorForm = () => {
                 </div>
 
                 <div className={styles.formContainer}>
+                  {userData.supplier.map((supplierData,index)=>(
+                    <>
+                     <div className={styles.formInput}>
+                    <strong htmlFor='text'>Product Type</strong>
+                    <input
+                      type='text'
+                      id='pt'
+                      className={styles.partName}
+                      name='pt'
+                      value={supplierData.pt}
+                      onChange={(event) => postUserData(event, index)}
+                    />
+                  </div>
 
                   <div className={styles.formInput}>
                     <strong htmlFor='text'>Email ID:</strong>
@@ -202,21 +264,21 @@ const VendorForm = () => {
                       id='email'
                       name='email'
                       className={styles.partName}
-                      value={userData.email}
-                      onChange={postUserData}
+                      value={supplierData.email}
+                      onChange={(event) => postUserData(event, index)}
                     />
                   </div>
 
                   <div className={styles.formInput}>
               <strong htmlFor='text'>Contact No:</strong>
-              <input type='number' id='contact' name="contact" value={userData.contact} onChange={postUserData} />
+              <input type='number' id='contact' name="contact" value={supplierData.contact} onChange={(event) => postUserData(event, index)} />
             </div>
 
             <div className={styles.formInput}>
               <strong>Country:</strong>
               <select
                 className={styles.partName}
-                name="country" value={userData.country} onChange={postUserData}>
+                name="country" value={supplierData.country} onChange={(event) => postUserData(event, index)}>
                 <option value="">Select Country</option>
                 <option value="Afghanistan">Afghanistan</option>
                 <option value="Åland Islands">Åland Islands</option>
@@ -470,7 +532,7 @@ const VendorForm = () => {
               <strong>State:</strong>
               <select
                 className={styles.partName}
-                name="state" value={userData.state} onChange={postUserData}>
+                name="state" value={supplierData.state} onChange={(event) => postUserData(event, index)}>
                 <option value="">Select State</option>
                 <option value="Andhra Pradesh">Andhra Pradesh</option>
                 <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -513,21 +575,21 @@ const VendorForm = () => {
 
             <div className={styles.formInput}>
               <strong htmlFor='text'>District:</strong>
-              <input type='text' className={styles.partName} id='district' name="district" value={userData.district} onChange={postUserData} />
+              <input type='text' className={styles.partName} id='district' name="district" value={supplierData.district} onChange={(event) => postUserData(event, index)} />
             </div>
 
             <div className={styles.formInput}>
               <strong htmlFor='text'>Location/Address:</strong>
-              <input type='text' className={styles.partName} id='location' name="location" value={userData.location} onChange={postUserData} />
+              <input type='text' className={styles.partName} id='location' name="location" value={supplierData.location} onChange={(event) => postUserData(event, index)} />
             </div>
 
             <div className={styles.formInput}>
               <strong htmlFor='text'>Contract Start Date:</strong>
-              <input type='date' className={styles.partName} id='sdate' name="start_date" value={userData.start_date} onChange={postUserData} />
+              <input type='date' className={styles.partName} id='sdate' name="start_date" value={supplierData.start_date} onChange={(event) => postUserData(event, index)} />
             </div>
             <div className={styles.formInput}>
               <strong htmlFor='text'>Contract End Date:</strong>
-              <input type='date' className={styles.partName} id='location' name="end_date" value={userData.end_date} onChange={postUserData} />
+              <input type='date' className={styles.partName} id='location' name="end_date" value={supplierData.end_date} onChange={(event) => postUserData(event, index)} />
             </div>
             <div className={styles.formInput}>
               <strong htmlFor='document'>Upload Contract Document:</strong>
@@ -535,7 +597,10 @@ const VendorForm = () => {
             </div>
 
 
-                </div>
+                    </>
+                  ))}
+               
+               </div>
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'right' }}>
