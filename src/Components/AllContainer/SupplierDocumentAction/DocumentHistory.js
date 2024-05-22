@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HashLoader from 'react-spinners/HashLoader';
-import { PartsContext } from '../../../store/PartsProvider';
-import DocumentServices from '../../../services/document.services';
-import styles from '../../../style.module.css';
 import ComplianceServices from '../../../services/compliance.services';
-import SupplierDocContainer from '../SupplierDocumentContainer/SupplierDocContainer';
+import DocumentServices from '../../../services/document.services';
 import { DocsContext } from '../../../store/DocsProvider';
+import { PartsContext } from '../../../store/PartsProvider';
+import styles from '../../../style.module.css';
+import SupplierDocContainer from '../SupplierDocumentContainer/SupplierDocContainer';
 
 const DocumentHistory = ({ id }) => {
   console.log("DocumentTYpe", id);
@@ -31,7 +31,7 @@ const DocumentHistory = ({ id }) => {
     }).sort((a, b) => b.iteration_info - a.iteration_info);
     console.log("HELLO:", { partInfo, newPartInfo });
     setPartHistories(newPartInfo || []);
-    setPartsHistory(partInfo.data || {});
+    setPartsHistory(partInfo.data || {});//
 
   };
 

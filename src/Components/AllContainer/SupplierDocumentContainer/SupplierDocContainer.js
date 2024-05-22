@@ -1,11 +1,10 @@
-import React, { useEffect, useState,useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import styles from '../../../style.module.css';
-import DocumentServices from '../../../services/document.services';
-import classes from './SupplierDoc.module.css';
-import { useLocation } from 'react-router-dom';
-import styleBtn from '../PartContainer/PartContainer.module.css';
 import HomeIcon from '@mui/icons-material/Home';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import DocumentServices from '../../../services/document.services';
+import styles from '../../../style.module.css';
+import styleBtn from '../PartContainer/PartContainer.module.css';
+import classes from './SupplierDoc.module.css';
 
 
 const SupplierDocContainer = ({ children, id,iteration_info }) => {
@@ -20,7 +19,7 @@ const SupplierDocContainer = ({ children, id,iteration_info }) => {
 
   const getSupplierApi = async (id) => {
       const partInfo = await getDocumentById(id);
-    console.log("document container data:",  partInfo.data )
+    console.log("document container data:",  partInfo?.data )
     const newParts = (partInfo?.data || {})
     setSupplierInformation(newParts);
     console.log({'info':supplierInformation});
@@ -73,9 +72,9 @@ const SupplierDocContainer = ({ children, id,iteration_info }) => {
           <div className={classes.tab_nav}>
 
             <div className={classes.tab_buttons}>
-              <button className={activeBtn == 'supplier-document-details' || activeBtn=='document-historyInfo' ? styleBtn.activeBtn : ''}  onClick={() => detailsHandler()} >Details</button>
-              <button className={activeBtn == 'document-history' ? styleBtn.activeBtn : ''} onClick={() => referenceObjectHandler()} >History</button>
-              <button className={activeBtn == 'attachment' ? styleBtn.activeBtn : ''} onClick={() => handleAttachments()} >Attachments</button>
+              <button className={activeBtn === 'supplier-document-details' || activeBtn=='document-historyInfo' ? styleBtn.activeBtn : ''}  onClick={() => detailsHandler()} >Details</button>
+              <button className={activeBtn === 'document-history' ? styleBtn.activeBtn : ''} onClick={() => referenceObjectHandler()} >History</button>
+              <button className={activeBtn === 'attachment' ? styleBtn.activeBtn : ''} onClick={() => handleAttachments()} >Attachments</button>
           
             </div>
 

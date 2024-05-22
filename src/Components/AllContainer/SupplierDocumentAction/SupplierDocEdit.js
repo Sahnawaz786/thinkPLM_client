@@ -201,7 +201,6 @@ const SupplierDocEdit = ({ id }) => {
                                                 type='text'
                                                 name='document_name'
                                                 value={userData?.document_name || ''}
-                                                // onChange={(e) => postUser(e)}
                                                 className={styles.partName}
                                                 readOnly
                                             />
@@ -215,7 +214,6 @@ const SupplierDocEdit = ({ id }) => {
                                             <input
                                                 className={styles.partNumber}
                                                 name='document_number'
-                                                // onChange={(e) => postUser(e)}
                                                 value={userData?.document_number || ''}
                                                 type='text'
                                                 readOnly
@@ -228,7 +226,6 @@ const SupplierDocEdit = ({ id }) => {
                                                 type='text'
                                                 name='description'
                                                 value={userData?.description || ''}
-                                                // onChange={(e) => postUser(e)}
                                                 className={styles.partName}
                                                 readOnly
                                             />

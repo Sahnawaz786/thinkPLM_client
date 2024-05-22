@@ -1,12 +1,8 @@
-import SettingsIcon from '@mui/icons-material/Settings';
+import HomeIcon from '@mui/icons-material/Home';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import PartServices from '../../../services/parts.services';
 import classes from './PartContainer.module.css';
-import HomeIcon from '@mui/icons-material/Home';
-
-
-
 
 const PartContainer = ({ children, id,iteration_info }) => {
   const [partInformation, setPartInformation] = useState([]);

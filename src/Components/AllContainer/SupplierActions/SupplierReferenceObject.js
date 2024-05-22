@@ -1,8 +1,8 @@
 import DownloadIcon from '@mui/icons-material/Download';
 import React, { useEffect, useState } from 'react';
 import SupplierServices from '../../../services/supplier.services';
+import styles from '../../../style.module.css';
 import SupplierContainer from '../SupplierContainer/SupplierContainer';
-import styles from '../../../style.module.css'
 
 const SupplierReferenceObject = ({id}) => {
 
@@ -15,15 +15,15 @@ const SupplierReferenceObject = ({id}) => {
   const getSupplier = async (id) => {
     
     const supplierInfo=await getSupplierById(id);
-    console.log("new supplier info:",supplierInfo)
-    console.log("checking....:",supplierInfo?.data?.document || [] )
-    setAttachment(supplierInfo?.data?.document || [] )
+    setAttachment(supplierInfo?.data?.supplier[0]?.document);
+    console.log("hgdytdythfhgfhj",attachment)
     // const newSupplier = (supplierInfo?.data || [])
     // setUid(newSupplier?.document);
 
 
   }
   console.log("outer uid is:",uid)
+  
 
   // const getFile = async (uid)=>{
   //   const fileInfo = await getFileDownload(uid);
@@ -60,8 +60,9 @@ const SupplierReferenceObject = ({id}) => {
             <tr>
             <th>
                     <span>Supplier Document</span>
+                   
                     <span className={styles.fileType}>{attachment[0]?.fileType}</span>
-                  </th>
+            </th>
             </tr>
           </thead>
           <tbody>

@@ -7,7 +7,7 @@ import styleBtn from '../PartContainer/PartContainer.module.css';
 import classes from './SupplierContainer.module.css';
 
 
-const SupplierContainer = ({ children, id }) => {
+const SupplierContainer = ({ children, id,iteration_info }) => {
 
   const [supplierInformation, setSupplierInformation] = useState([]);
   const [activeBtn,setActiveBtn] = useState('');
@@ -22,7 +22,7 @@ const SupplierContainer = ({ children, id }) => {
     const partInfo = await getSupplierById(id);
     console.log("supplier container data:", { partInfo })
     const newParts = (partInfo?.data || [])
-    setSupplierInformation(newParts);
+    setSupplierInformation([newParts]);
 
   }
   useEffect(() => {
@@ -34,7 +34,7 @@ const SupplierContainer = ({ children, id }) => {
     setActiveBtn(url);
   })
 
-  console.log(supplierInformation)
+  console.log(supplierInformation,'/////////////////////')
   // console.log(id)
 
 
@@ -45,7 +45,9 @@ const SupplierContainer = ({ children, id }) => {
   const referenceObjectHandler=()=>{
     navigate('/reference-object/'+id)
   }
-
+  const historyHandler=()=>{
+    navigate('/supplier-history/'+id)
+  }
 
   return (
     <>
@@ -59,7 +61,13 @@ const SupplierContainer = ({ children, id }) => {
                 alt='logo'
                 className={styles.imageIcon}
               />
-              Supplier-{supplierInformation?.name},{supplierInformation?.category}
+             {(supplierInformation || [])?.map((sup, index) => {
+          return (
+            <div className={classes.container} >
+              <p className={classes.container_paragraph}> <img width={35} height={35} src='/images/parts.png' /> Supplier-{sup?.category},{sup?.name},{iteration_info || sup?.supplier[0]?.iteration_info}</p>
+            </div>
+          )
+        })}
               </div>
               </p>
             </div>
@@ -69,9 +77,9 @@ const SupplierContainer = ({ children, id }) => {
           <div className={classes.tab_nav}>
 
             <div className={classes.tab_buttons}>
-              <button className={activeBtn === 'supplier-details' ? styleBtn.activeBtn : ''}  onClick={() => detailsHandler()} >Details</button>
+              <button className={activeBtn === 'supplier-details' || activeBtn==='supplier-historyInfo'? classes.activeBtn:''}  onClick={() => detailsHandler()} >Details</button>
               <button className={activeBtn === 'reference-object' ? styleBtn.activeBtn : ''} onClick={() => referenceObjectHandler()} >Attachments</button>
-            
+              <button className={activeBtn === 'supplier-history' ? styleBtn.activeBtn : ''} onClick={() => historyHandler()} >History</button>
             </div>
 
             <div className={classes.linkarea}>

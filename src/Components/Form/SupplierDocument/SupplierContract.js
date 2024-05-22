@@ -20,7 +20,7 @@ const SupplierContract = () => {
     setSelected(e.target.value);
   };
 
-  const [timer, setTimer] = useState(true);
+  const [timer, setTimer] = useState(false);
   const [currentDate, setCurrentDate] = useState(
     new Date().toJSON().slice(0, 10)
   );
