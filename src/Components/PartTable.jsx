@@ -55,16 +55,14 @@ const PartTable = () => {
 
   const handleDeleteBtn = async () => {
     try {
-    if (choice && pathname === '/document-table') {
-      await deleteDocument(deleteid);
-      const newData = await getAllDocuments();
-      setData2(newData.data);
-    }
-    if (choice && pathname === '/') {
+   
+     if (choice && pathname === '/') {
       await deletePart(id);
       const newData = await getPart();
       setData(newData.data);
-    } else if (choice && documentType === 'Supplier Contract') {
+    }
+   
+    else if (choice && documentType === 'Supplier Contract') {
       await deleteDocument(deleteid);
       const newData = await getAllDocuments();
       setData2(newData.data);

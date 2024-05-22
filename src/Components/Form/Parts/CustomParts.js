@@ -31,7 +31,7 @@ const CustomParts = () => {
       setTimer(false);
     }, 500);
     return () => clearTimeout(timeout);
-  }, [selected]);
+  }, []);
 
   
   const [userData, setUserData] = useState({

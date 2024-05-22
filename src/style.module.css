@@ -1,6 +1,6 @@
-*{
-   font-size: small;
-   
+* {
+  /* font-size: small; */
+  font-size: 12px;
 }
 
 .navbar {
@@ -14,18 +14,18 @@
   position: fixed;
 } */
 
-.sidebarSection{
-   display: flex;
-   font-size: 15px;
-   /* position: fixed; */
+.sidebarSection {
+  display: flex;
+  font-size: 15px;
+  /* position: fixed; */
 }
 
-.imageIcon{
+.imageIcon {
   width: 25px;
   height: 25px;
 }
 
-.logoText{
+.logoText {
   display: flex;
   align-items: center;
   gap: 3px;
@@ -33,17 +33,17 @@
   margin-top: 5px;
 }
 
-.alam{
+.alam {
   background-color: #2e2d2d;
 }
 
-.rightbarConatiner{
+.rightbarConatiner {
   flex-grow: 1;
   margin-bottom: 10px;
   width: 100vw;
 }
 
-.mainLeftbarContainer{
+.mainLeftbarContainer {
   margin-top: 8px;
   display: flex;
   justify-content: space-between;
@@ -51,8 +51,7 @@
   align-items: center;
 }
 
-
-.leftbar{
+.leftbar {
   background-color: #d9d9d9;
   margin-right: 2px;
   padding: 1px;
@@ -63,37 +62,37 @@
   max-width: 18vw;
 }
 
-.leftbarParent{
+.leftbarParent {
   margin-left: 20px;
   margin-top: 20px;
   margin-right: 20px;
   font-size: small;
 }
 
-.home{
+.home {
   color: black;
   text-decoration: none;
 }
 
-.leftbarChild{
+.leftbarChild {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
   cursor: pointer;
 }
 
-.leftbarOptions{
+.leftbarOptions {
   margin-left: 30px;
   display: flex;
   flex-direction: column;
 }
 
-.leftbarOptions a{
+.leftbarOptions a {
   margin-bottom: 3px;
   text-decoration: none;
 }
 
-.rightBar{
+.rightBar {
   display: flex;
   justify-content: space-between;
   flex-grow: 1;
@@ -101,28 +100,27 @@
   padding: 10px;
 }
 
-.rightBarLogo{
+.rightBarLogo {
   display: flex;
   gap: 10px;
   justify-items: center;
   align-items: center;
 }
 
-.searchSection{
-  display:flex;
-  gap:5px;
-  align-items:center;
+.searchSection {
+  display: flex;
+  gap: 5px;
+  align-items: center;
 }
 
-.checkboxStyle{
+.checkboxStyle {
   display: flex;
   gap: 3px;
 }
 
-.deleteIcon{
+.deleteIcon {
   cursor: pointer;
 }
-
 
 /* styling the table section  */
 
@@ -136,9 +134,8 @@ table {
   font-size: 10px;
 }
 
-
-
-th, td {
+th,
+td {
   padding: 12px 15px;
   text-align: left;
 }
@@ -153,21 +150,19 @@ th {
   white-space: nowrap; */
 }
 
-td{
+td {
   background-color: #f9f9f9;
-  
 }
 
-th{
+th {
   background-color: #45546c;
   color: white;
   word-wrap: break-word;
-  max-width: 20vw;
+  max-width: 15vw;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 
 .spinnerContainer {
   position: fixed;
@@ -180,32 +175,29 @@ th{
   display: flex;
 }
 
-
-
-
-.activeBtn{
+.activeBtn {
   background-color: rgb(188, 188, 228);
   cursor: pointer;
 }
 
-.display_icon{
+.display_icon {
   width: 30px;
   height: 30px;
   margin-right: 5px;
 }
 /* dropdown  */
 
-.hoverText:hover{
+.hoverText:hover {
   background-color: #01b0f1;
 }
 
-.display_supplier_icon{
+.display_supplier_icon {
   width: 25px;
   height: 25px;
   margin-right: 10px;
 }
 
-.fileType{
+.fileType {
   color: white;
   font-size: 10px;
   margin-left: 10px;
@@ -214,13 +206,13 @@ th{
   cursor: pointer;
 }
 
-.FileInput{
+.FileInput {
   padding: 2px 8px;
   font-weight: 700;
   border: 1px solid black;
   margin-right: 6px;
 }
 
-.icon_pointer{
+.icon_pointer {
   cursor: pointer;
 }

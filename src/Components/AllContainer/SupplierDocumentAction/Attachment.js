@@ -7,7 +7,7 @@ import styles from '../../../style.module.css'
 import InvoiceServices from '../../../services/invoice.services';
 import InvoiceDocContainer from '../SupplierDocumentContainer/InvoiceDocContainer';
 
-const { getInvoiceDocumentById, getFileDownload } = new InvoiceServices();
+const { getDocumentById, getFileDownload } = new DocumentServices();
 
 const Attachment = ({ id }) => {
   const [file, setFile] = useState([]);
@@ -16,9 +16,9 @@ const Attachment = ({ id }) => {
 
 
   const getSupplier = async (id) => {
-      const supplierInfo = await getInvoiceDocumentById(id);
+      const supplierInfo = await getDocumentById(id);
       console.log("new supplier info:", supplierInfo)
-      setAttachment(supplierInfo?.data?.invoice_Doc[0]?.attachment);
+      setAttachment(supplierInfo?.data?.supplier_contract[0]?.attachment);
       console.log('ATTACHEMNTS', attachment);
     
   }
@@ -54,7 +54,7 @@ const Attachment = ({ id }) => {
   console.log('ATTACHEMNTS', attachment);
 
   return (
-    <InvoiceDocContainer id={id} >
+    <SupplierDocContainer id={id} >
       <div>
         {/* <ul> */}
         {file && (
@@ -72,6 +72,10 @@ const Attachment = ({ id }) => {
                 <th>
                   <span>{attachment[2]?.attachmentType}</span>
                   <span className={styles.fileType}>{attachment[2]?.fileType}</span>
+                </th>
+                <th>
+                  <span>{attachment[3]?.attachmentType}</span>
+                  <span className={styles.fileType}>{attachment[3]?.fileType}</span>
                 </th>
                
               </tr>
@@ -95,6 +99,11 @@ const Attachment = ({ id }) => {
                   <span className={styles.fileType}>{attachment[2]?.fileName}</span>
                 </td>
 
+                <td>
+                  <DownloadIcon onClick={() => downloadFile(attachment[3]?.content)} />
+                  <span className={styles.fileType}>{attachment[3]?.fileName}</span>
+                </td>
+
               
               </tr>
             </tbody>
@@ -103,7 +112,7 @@ const Attachment = ({ id }) => {
         )}
         {/* </ul> */}
       </div>
-    </InvoiceDocContainer>
+    </SupplierDocContainer>
   )
 }
 
