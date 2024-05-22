@@ -8,12 +8,15 @@ import { useNavigate } from 'react-router-dom';
 import spinnerStyle from '../../../style.module.css'
 import HashLoader from 'react-spinners/HashLoader';
 import SupplierDocumentPage from '../../Pages/SupplierDocumentPage';
+import message from '../../../utils/message';
 
 const CertificateOFInsurance = () => {
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState('');
   const [attachments, setAttachments] = useState([]);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
 
 
   const handleChange = (e) => {
@@ -113,6 +116,8 @@ const CertificateOFInsurance = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    setIsButtonDisabled(true)
+
     let {
       document_number,
       document_name,
@@ -138,7 +143,7 @@ const CertificateOFInsurance = () => {
     try {
       // `http://localhost:8181/SupplierMasterObject`
 
-      const res = await fetch(`http://localhost:8181/Certification_of_InsuranceMasterObject121`, {
+      const res = await fetch(`http://localhost:8181/Certification_of_InsuranceMasterObject`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -194,8 +199,16 @@ const CertificateOFInsurance = () => {
           navigate('/');
         }, 1000);
       }
+      else{
+        const data=await res.json();
+        console.log("...........",data.message)
+        message('error',data.message)
+       }
     } catch (error) {
       console.log(error);
+    }
+    finally{
+      setIsButtonDisabled(false)
     }
   };
 
@@ -394,7 +407,7 @@ const CertificateOFInsurance = () => {
                 </div>
               </div>
               <div style={{ display: 'flex', justifyContent: 'right' }}>
-                <Button variant='primary' onClick={(e) => submitHandler(e)}>
+                <Button variant='primary' onClick={(e) => submitHandler(e)} disabled={isButtonDisabled}>
                   Submit
                 </Button>{' '}
               </div>

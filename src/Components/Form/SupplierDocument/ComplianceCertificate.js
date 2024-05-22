@@ -8,12 +8,15 @@ import { useNavigate } from 'react-router-dom';
 import spinnerStyle from '../../../style.module.css'
 import HashLoader from 'react-spinners/HashLoader';
 import SupplierDocumentPage from '../../Pages/SupplierDocumentPage';
+import message from '../../../utils/message';
 
 const ComplianceCertifcate = () => {
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState('');
   const [attachments, setAttachments] = useState([]);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
 
 
   const handleChange = (e) => {
@@ -112,6 +115,8 @@ const ComplianceCertifcate = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    setIsButtonDisabled(true)
+
     let {
       document_number,
       document_name,
@@ -192,8 +197,16 @@ const ComplianceCertifcate = () => {
           navigate('/');
         }, 1000);
       }
+      else{
+        const data=await res.json();
+        console.log("...........",data.message)
+        message('error',data.message)
+       }
     } catch (error) {
       console.log(error);
+    }
+    finally{
+      setIsButtonDisabled(false)
     }
   };
 
@@ -382,7 +395,7 @@ const ComplianceCertifcate = () => {
                 </div>
               </div>
               <div style={{ display: 'flex', justifyContent: 'right' }}>
-                <Button variant='primary' onClick={(e) => submitHandler(e)}>
+                <Button variant='primary' onClick={(e) => submitHandler(e)} disabled={isButtonDisabled} >
                   Submit
                 </Button>{' '}
               </div>

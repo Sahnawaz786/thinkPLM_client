@@ -6,6 +6,7 @@ import { categoryContext } from '../../../store/CategoryProvider';
 import spinnerStyle from '../../../style.module.css';
 import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
 import styles from '../Parts/PartAttribut.module.css';
+import message from '../../../utils/message';
 
 const SupplierContract = () => {
   const navigate = useNavigate();
@@ -190,6 +191,11 @@ const SupplierContract = () => {
           navigate('/');
         }, 1000);
       }
+      else{
+        const data=await res.json();
+        console.log("...........",data.message)
+        message('error',data.message)
+       }
     } catch (error) {
       console.log(error);
     }

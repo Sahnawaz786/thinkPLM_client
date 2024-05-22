@@ -7,12 +7,15 @@ import { categoryContext } from '../../../store/CategoryProvider';
 import { useNavigate } from 'react-router-dom';
 import spinnerStyle from '../../../style.module.css'
 import HashLoader from 'react-spinners/HashLoader';
+import message from '../../../utils/message';
 
 const SupplierContract = () => {
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState('');
   const [attachments, setAttachments] = useState([]);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
 
 
   const handleChange = (e) => {
@@ -115,6 +118,8 @@ const SupplierContract = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    setIsButtonDisabled(true)
+
     let {
       invoice_name,
       invoice_number,
@@ -191,8 +196,16 @@ const SupplierContract = () => {
           navigate('/');
         }, 1000);
       }
+      else{
+        const data=await res.json();
+        console.log("...........",data.message)
+        message('error',data.message)
+       }
     } catch (error) {
       console.log(error);
+    }
+    finally{
+      setIsButtonDisabled(false)
     }
   };
 
@@ -382,7 +395,7 @@ const SupplierContract = () => {
                 </div>
               </div>
               <div style={{ display: 'flex', justifyContent: 'right' }}>
-                <Button variant='primary' onClick={(e) => submitHandler(e)}>
+                <Button variant='primary' onClick={(e) => submitHandler(e)} disabled={isButtonDisabled} >
                   Submit
                 </Button>{' '}
               </div>

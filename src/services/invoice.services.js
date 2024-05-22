@@ -81,7 +81,7 @@ class InvoiceServices {
 
     async deleteInvoiceDocumentById(id) {
         try {
-            const response = await axios.delete(`${baseURL}/InvoiceObject/${id}`);
+            const response = await axios.delete(`${baseURL}/InvoiceMasterObject/${id}`);
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
