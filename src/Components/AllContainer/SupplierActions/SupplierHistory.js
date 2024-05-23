@@ -9,12 +9,12 @@ const SupplierHistory = ({id,iteration_info,children}) => {
 
     const [histories, setSupplierHistories] = useState([]);
     const [timer, setTimer] = useState(true);
-    const { getSupplierById } = new SupplierServices();
+    const { getSupplierById,getSupplierHistoryById } = new SupplierServices();
     const navigate = useNavigate();
     console.log({ 'ParanstestIDDD': id });
 
     const getSupplierApi= async (id)=>{
-        const supplierInfo = await getSupplierById(id);
+        const supplierInfo = await getSupplierHistoryById(id);
 
         const newSupplierInfo = (supplierInfo?.data?.supplier || []).map(elem => {
             return { ...elem, name: supplierInfo?.data.name, category: supplierInfo?.data?.category, createdDate: supplierInfo.data.createdDate ,modifiedDate:supplierInfo.data.modifiedDate}
@@ -55,6 +55,8 @@ console.log('hgjhfjfhvcghcgfcgf87677',histories)
                     <th scope="col">Iteration Info</th>
                     <th scope="col">Created Date</th>
                     <th scope="col">Modified Date</th>
+                    <th scope="col">Info</th>
+
                   </tr>
                 </thead>
   

@@ -238,6 +238,8 @@ const RightBar = () => {
           componentToRender = <SupplierSearch/>;
           break; 
 
+        
+
     default:
       componentToRender = <PartTable />;
   }

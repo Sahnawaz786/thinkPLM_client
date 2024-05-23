@@ -22,6 +22,19 @@ class SupplierServices {
 
     async getSupplierById(id) {
         try {
+            const response = await axios.get(`${baseURL}/KKHSupplierMasterObject1/${id}`);
+            if (response.status!==200) {
+                throw new Error(`Failed to fetch parts: ${response.statusText}`);
+            }
+            return await response;
+        } catch (error) {
+            console.error('Error fetching parts:', error);
+            return null;
+        }
+    }
+
+    async getSupplierHistoryById(id) {
+        try {
             const response = await axios.get(`${baseURL}/KKHSupplierMasterObject/${id}`);
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);

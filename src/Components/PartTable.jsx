@@ -175,7 +175,7 @@ const PartTable = () => {
   console.log('DATA2', data2);
 
   return (
-    <div>
+    <div className={styles.fontStyles}>
       <div className={styles.rightBar}>
         <div className={styles.rightBarLogo}>
           <div title='Parts'>
