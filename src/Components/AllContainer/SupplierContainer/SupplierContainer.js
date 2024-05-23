@@ -64,7 +64,7 @@ const SupplierContainer = ({ children, id,iteration_info }) => {
              {(supplierInformation || [])?.map((sup, index) => {
           return (
             <div className={classes.container} >
-              <p className={classes.container_paragraph}> <img width={35} height={35} src='/images/parts.png' /> Supplier-{sup?.category},{sup?.name},{iteration_info || sup?.supplier[0]?.iteration_info}</p>
+              <p className={classes.container_paragraph}> Supplier-{sup?.category},{sup?.name},{iteration_info || sup?.supplier[0]?.iteration_info}</p>
             </div>
           )
         })}
@@ -78,8 +78,9 @@ const SupplierContainer = ({ children, id,iteration_info }) => {
 
             <div className={classes.tab_buttons}>
               <button className={activeBtn === 'supplier-details' || activeBtn==='supplier-historyInfo'? classes.activeBtn:''}  onClick={() => detailsHandler()} >Details</button>
-              <button className={activeBtn === 'reference-object' ? styleBtn.activeBtn : ''} onClick={() => referenceObjectHandler()} >Attachments</button>
               <button className={activeBtn === 'supplier-history' ? styleBtn.activeBtn : ''} onClick={() => historyHandler()} >History</button>
+              <button className={activeBtn === 'reference-object' ? styleBtn.activeBtn : ''} onClick={() => referenceObjectHandler()} >Attachments</button>
+
             </div>
 
             <div className={classes.linkarea}>

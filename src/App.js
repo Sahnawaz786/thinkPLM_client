@@ -2,13 +2,14 @@ import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import Container from './Components/Container';
-
+import Login from './Components/Form/Authentication/Login';
+import ControlPage from './Components/Form/Authentication/ControlPage';
 
 function App() {
   return (
     <div className="App">
       <Router>
-       <Container/>
+       {/* <Container/> */}
         <Routes>
           <Route path="/part-table" element={<></>} />
           <Route path="/search-supplier" element={<></>} />
@@ -51,6 +52,10 @@ function App() {
           <Route path='/certificate-document-historyInfo/:pid/:cid' element={<></>}/>
           <Route path='/certificate-attachment/:id' element={<></>} />
           <Route path='/certificate-documents-edit/:id' element={<></>}/>
+
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/control-page' element={<ControlPage/>}/>
+         
 
           
 

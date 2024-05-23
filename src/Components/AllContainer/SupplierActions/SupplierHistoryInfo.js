@@ -9,13 +9,13 @@ import classes from './Supplier.module.css';
 
 const SupplierHistoryInfo = ({ pid, id }) => {
   const [supplierInformation, setSupplierInformation] = useState([]);
-  const [timer,setTimer] = useState(true)
-  const { getSupplierById} = new SupplierServices();
+  const [timer, setTimer] = useState(true)
+  const { getSupplierById, getSupplierHistoryById } = new SupplierServices();
   const navigate = useNavigate();
 
   const getSupplierApi = async (id) => {
-    
-    const { data } = await getSupplierById(pid);
+
+    const { data } = await getSupplierHistoryById(pid);
 
     console.log("PARTHISTORYID", [data])
 
@@ -25,111 +25,111 @@ const SupplierHistoryInfo = ({ pid, id }) => {
 
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     getSupplierApi(id)
-  },[id])
+  }, [id])
 
-  useEffect(()=>{
-    setTimeout(()=>{
-       setTimer(false)
-    },1000)
+  useEffect(() => {
+    setTimeout(() => {
+      setTimer(false)
+    }, 1000)
   })
 
-    return (
-      timer ? <div className={styles.spinnerContainer}>
+  return (
+    timer ? <div className={styles.spinnerContainer}>
       {' '}
       <HashLoader color='#0E6EFD' />{' '}
     </div> :
-        <SupplierContainer id={pid} iteration_info={supplierInformation[0]?.supplier[0]?.iteration_info}>
-          <div className={classes.detailContainer}>
-  
+      <SupplierContainer id={pid} iteration_info={supplierInformation[0]?.supplier[0]?.iteration_info}>
+        <div className={classes.detailContainer}>
+
           <div className={classes.profile_section}>
             <div className={classes.part_details_paragrah}>
-             
-                
-  
-                {supplierInformation.map((sup, i) => {
-                  console.log(sup);
-                  return (
-                    <>
-                      <div key={i} className={classes.part_container}>
-                        <div className={classes.master_part}>
-                          <div className={classes.masterpart_header}>
-                            <p>System:-</p>
-                          </div>
-                          <p>
-                            <strong>Supplier Name:</strong> {sup?.name}
-                          </p>
-                          <p>
-                            <strong>Category:</strong> {sup?.category}
-                          </p>
-                          <p>
-                            <strong>Created Date:</strong> {sup?.createdDate}
-                          </p>
-                          <p>
-                            <strong>Modified Date:</strong> {sup?.modifiedDate}
-                          </p>
-  
-                          <p>
-                            <strong>Description:</strong> {sup?.description}
-                          </p>
-  
-                          
+
+
+
+              {supplierInformation.map((sup, i) => {
+                console.log(sup);
+                return (
+                  <>
+                    <div key={i} className={classes.part_container}>
+                      <div className={classes.master_part}>
+                        <div className={classes.masterpart_header}>
+                          <p>System:-</p>
                         </div>
-                        
+                        <p>
+                          <strong>Supplier Name:</strong> {sup?.name}
+                        </p>
+                        <p>
+                          <strong>Category:</strong> {sup?.category}
+                        </p>
+                        <p>
+                          <strong>Created Date:</strong> {sup?.createdDate}
+                        </p>
+                        <p>
+                          <strong>Modified Date:</strong> {sup?.modifiedDate}
+                        </p>
+
+                        <p>
+                          <strong>Description:</strong> {sup?.description}
+                        </p>
+
+
                       </div>
-  
-                    </>
-                  );
-                })}
-           
-  
+
+                    </div>
+
+                  </>
+                );
+              })}
+
+
             </div>
-  
+
           </div>
-  
+
           <div className={classes.bottomDetails}>
-          {supplierInformation[0]?.supplier?.map((childSup, i) => {
-                        return (
-                          <>
-                            <div key={i} className={classes.child_part}>
-                              <div className={classes.childpart_header}>
-                                <p>Business:-</p>
-                              </div>
-                              <p>
-                                <strong>email:</strong>{' '}
-                                {childSup.email}
-                              </p>
-                              <p>
-                                <strong>Start Date:</strong> {childSup.start_date}
-                              </p>
-                              <p>
-                                <strong>End Date:</strong> {childSup.end_date}
-                              </p>
-                              <p>
-                                <strong>State:</strong> {childSup.state}
-                              </p>
-                              <p>
-                                <strong>District:</strong> {childSup.district}
-                              </p>
-                              <p>
-                                <strong>Country:</strong> {childSup.country}
-                              </p>
-                              <p>
-                                <strong>Location:</strong> {childSup.location}
-                              </p>
-                             
-                            </div>
-                          </>
-                        );
-                      })}
+            {supplierInformation[0]?.supplier?.map((childSup, i) => {
+              return (
+                <>
+                  <div key={i} className={classes.child_part}>
+                    <div className={classes.childpart_header}>
+                      <p>Business:-</p>
+                    </div>
+                    <p>
+                      <strong>email:</strong>{' '}
+                      {childSup.email}
+                    </p>
+                    <p>
+                      <strong>Start Date:</strong> {childSup.start_date}
+                    </p>
+                    <p>
+                      <strong>End Date:</strong> {childSup.end_date}
+                    </p>
+                    <p>
+                      <strong>State:</strong> {childSup.state}
+                    </p>
+                    <p>
+                      <strong>District:</strong> {childSup.district}
+                    </p>
+                    <p>
+                      <strong>Country:</strong> {childSup.country}
+                    </p>
+                    <p>
+                      <strong>Location:</strong> {childSup.location}
+                    </p>
+
+                  </div>
+                </>
+              );
+            })}
           </div>
-  
-           
-  
-          </div>
-        </SupplierContainer>
-    )
-  }
-  
-  export default SupplierHistoryInfo;
+
+
+
+        </div>
+      </SupplierContainer>
+  )
+}
+
+export default SupplierHistoryInfo;
