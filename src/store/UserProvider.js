@@ -7,7 +7,12 @@ const UserProvider = ({ children }) => {
     const [choice,setChoice] = useState(false);
     const [showAlert,setShowAlert] = useState(false);
 
-    return <UserContext.Provider value={{choice,setChoice,showAlert,setShowAlert}}>
+    const [showDeleteBomModal, setShowDeleteBomModal] = useState(false);
+
+    const handleCloseDeleteBomModal = () => setShowDeleteBomModal(false);
+    const handleShowDeleteBomModal = () => setShowDeleteBomModal(true);
+
+    return <UserContext.Provider value={{choice,setChoice,showAlert,setShowAlert, handleCloseDeleteBomModal, handleShowDeleteBomModal, showDeleteBomModal, setShowDeleteBomModal}}>
         {children}
     </UserContext.Provider>
 }
