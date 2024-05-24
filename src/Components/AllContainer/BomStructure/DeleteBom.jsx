@@ -14,10 +14,11 @@ function DeleteBomModal() {
 
   const handleDelete = async () => {
     try {
-      const { childId, parentId } = bomIds || {};
-      console.log({childId, parentId})
-      if (!(childId && parentId)) {
-        if(!childId || !parentId){
+      console.log({ bomIds });
+      const { childId, parentId, masterId } = bomIds || {};
+    //   console.log({childId, parentId})
+      if (!(masterId && parentId)) {
+        if(!masterId || !parentId){
             message('error', 'Deletion of the parent item is not allowed');
             handleClose();
             return;
@@ -29,7 +30,7 @@ function DeleteBomModal() {
 
       const payload = {
         ida3a5: parentId, // ====> partsId   (parent)   302
-        ida3b5: childId, //  ====> partsMasterId (child)  152
+        ida3b5: masterId, //  ====> partsMasterId (child)  152
       };
       await deleteBomPart(payload);
       message('success', 'BOM deleted');
@@ -37,7 +38,7 @@ function DeleteBomModal() {
     } catch (error) {
         message('error', 'Failed To Delete');
     } finally {
-      handleClose();
+        handleClose();
     }
   };
 

@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-       {/* <Container/> */}
+       <Container/>
         <Routes>
           <Route path="/part-table" element={<></>} />
           <Route path="/search-supplier" element={<></>} />
