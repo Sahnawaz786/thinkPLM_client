@@ -12,6 +12,7 @@ const PartsProvider = ({ children }) => {
   const [bomIds, setBomIds] = useState({
     parentId: "",
     childId: "",
+    masterId: "",
   });
 
   return (

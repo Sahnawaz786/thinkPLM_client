@@ -16,6 +16,7 @@ import BOM from './Bom';
 import BomRightBar from './BomRightBar';
 import CreateNewPart from './CreateNewPart';
 import classes from './Structure.module.css';
+import DeleteBomModal from './DeleteBom';
 const bomServices = new BomServices();
 const Structure = ({ id }) => {
   const [timer, setTimer] = useState(true);
@@ -25,7 +26,7 @@ const Structure = ({ id }) => {
   // const partsProvider = useContext(PartsProvider);
   const { selectedData, initialBomData, setInitialBomData } = useContext(PartsContext);
   // console.log([initialBomData])
-  const { choice, showAlert, setShowAlert } = useContext(UserContext);
+  const { choice, showAlert, setShowAlert,  handleCloseDeleteBomModal, handleShowDeleteBomModal, showDeleteBomModal, setShowDeleteBomModal } = useContext(UserContext);
   const location = useLocation();
 
   console.log({ selectedData, location });
@@ -148,7 +149,7 @@ const Structure = ({ id }) => {
                     height={30}
                     alt=''
                     className={styles.deleteIcon && styles.icon_pointer}
-                    onClick={(e) => setShowAlert(true)}
+                    onClick={(e) => setShowDeleteBomModal(true)}
 
                   />
                   Remove Part
@@ -231,6 +232,7 @@ const Structure = ({ id }) => {
         </div>
 
         {showAlert && <DisplayAlert />}
+        {showDeleteBomModal ? <DeleteBomModal/> : null}
       </PartContainer>
     </>
   );

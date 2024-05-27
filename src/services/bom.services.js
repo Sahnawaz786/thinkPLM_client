@@ -105,6 +105,19 @@ class BomServices {
         }
     }
 
+    async deleteBomPart(payload) {
+        console.log({payload});
+        const { ida3a5, ida3b5 } = payload || {};
+        try {
+            const response = await axios.delete(`${baseURL}/entities/${ida3a5}/${ida3b5}`, payload);
+            console.log({response})
+            return response;
+        } catch (error) {
+            console.error('Error adding part:', error);
+            return Promise.reject(error);
+        }
+    }
+
     async updatePart(id,partData) {
         try {
             const response = await axios.post(`${this.baseURL}/SupplierMasterObject/${id}`, {
