@@ -1,13 +1,14 @@
-import React from 'react';
-import styles from '../Parts/PartAttribut.module.css';
-import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { useContext, useState, useEffect } from 'react';
-import { categoryContext } from '../../../store/CategoryProvider';
 import { useNavigate } from 'react-router-dom';
-import spinnerStyle from '../../../style.module.css'
 import HashLoader from 'react-spinners/HashLoader';
+import { categoryContext } from '../../../store/CategoryProvider';
+import spinnerStyle from '../../../style.module.css';
+import { isAuthenticated } from '../../../utils/helper';
 import message from '../../../utils/message';
+import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
+import styles from '../Parts/PartAttribut.module.css';
+
 
 const SupplierContract = () => {
   const navigate = useNavigate();
@@ -148,6 +149,7 @@ const SupplierContract = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${isAuthenticated()}`
         },
         body: JSON.stringify({
           invoice_name,

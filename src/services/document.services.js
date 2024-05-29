@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { isAuthenticated } from '../utils/helper';
 // const dotenv = require('dotenv');
 
 // dotenv.config({ path: '../.env' });
@@ -14,7 +15,9 @@ class DocumentServices {
 
     async getAllDocuments() {
         try {
-            const response = await axios.get(`${baseURL}/SupplierMasterContractObject`);
+            const response = await axios.get(`${baseURL}/SupplierMasterContractObject`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
@@ -27,7 +30,9 @@ class DocumentServices {
 
     async editPartById(id,partData) {
         try {
-            const response = await axios.put(`${this.baseURL}/SupplierMasterObject/${id}`,partData);
+            const response = await axios.put(`${this.baseURL}/SupplierMasterObject/${id}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            },partData);
 
             if (response.status!=200) {
                 throw new Error(`Failed to add part: ${response.statusText}`);
@@ -41,7 +46,9 @@ class DocumentServices {
 
     async getDocumentById(id) {
         try {
-            const response = await axios.get(`${baseURL}/getSupplierMasterContractById/${id}`);
+            const response = await axios.get(`${baseURL}/getSupplierMasterContractById/${id}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
@@ -54,7 +61,9 @@ class DocumentServices {
 
     async getDocumentHistoryById(id) {
         try {
-            const response = await axios.get(`${baseURL}/SupplierMasterContractObject/${id}`);
+            const response = await axios.get(`${baseURL}/SupplierMasterContractObject/${id}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
@@ -68,7 +77,9 @@ class DocumentServices {
 
     async getFileDownload(id) {
         try {
-            const response = await axios.get(`${baseURL}/downloadFile/${id}`);
+            const response = await axios.get(`${baseURL}/downloadFile/${id}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
@@ -83,7 +94,9 @@ class DocumentServices {
         try {
             console.log({testID:id});
 
-            const response = await axios.get(`${baseURL}/SupplierMasterObject/${id}`);
+            const response = await axios.get(`${baseURL}/SupplierMasterObject/${id}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
             console.log({testResponse:response});
             
             if (response.status!==200) {
@@ -98,7 +111,9 @@ class DocumentServices {
 
     async deleteDocument(id) {
         try {
-            const response = await axios.delete(`${baseURL}/SupplierMasterContractObject/${id}`);
+            const response = await axios.delete(`${baseURL}/SupplierMasterContractObject/${id}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
@@ -109,43 +124,6 @@ class DocumentServices {
         }
     }
 
-    async addPart(partData) {
-        try {
-            const response = await axios.post(`${this.baseURL}/SupplierMasterObject`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(partData)
-            });
-            if (response.status!=200) {
-                throw new Error(`Failed to add part: ${response.statusText}`);
-            }
-            return await response.json();
-        } catch (error) {
-            console.error('Error adding part:', error);
-            return null;
-        }
-    }
-
-    async updatePart(id,partData) {
-        try {
-            const response = await axios.post(`${this.baseURL}/SupplierMasterObject/${id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(partData)
-            });
-            if (response.status!=200) {
-                throw new Error(`Failed to add part: ${response.statusText}`);
-            }
-            return await response.json();
-        } catch (error) {
-            console.error('Error adding part:', error);
-            return null;
-        }
-    }
 }
 
 export default DocumentServices;

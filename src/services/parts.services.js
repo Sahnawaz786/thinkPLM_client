@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { isAuthenticated } from '../utils/helper';
 // const dotenv = require('dotenv');
 
 // dotenv.config({ path: '../.env' });
@@ -13,8 +14,12 @@ class PartServices {
     }
 
     async getPart() {
+        console.log({auth:   isAuthenticated()})
         try {
-            const response = await axios.get(`${baseURL}/SupplierMasterObject`);
+            const response = await axios.get(`${baseURL}/SupplierMasterObject`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
+        
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
@@ -41,7 +46,9 @@ class PartServices {
 
     async getPartById(id) {
         try {
-            const response = await axios.get(`${baseURL}/SupplierMasterObject1/${id}`);
+            const response = await axios.get(`${baseURL}/SupplierMasterObject1/${id}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
@@ -57,7 +64,9 @@ class PartServices {
         try {
             console.log({testID:id});
 
-            const response = await axios.get(`${baseURL}/SupplierMasterObject/${id}`);
+            const response = await axios.get(`${baseURL}/SupplierMasterObject/${id}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
             console.log({testResponse:response});
             
             if (response.status!==200) {
@@ -72,7 +81,9 @@ class PartServices {
 
     async deletePart(id) {
         try {
-            const response = await axios.delete(`${baseURL}/SupplierMasterObject/${id}`);
+            const response = await axios.delete(`${baseURL}/SupplierMasterObject/${id}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }

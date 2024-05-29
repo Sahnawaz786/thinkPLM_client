@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { v4 as uuidv4 } from "uuid";
+import { isAuthenticated } from '../utils/helper';
 
 // const dotenv = require('dotenv');
 
@@ -16,7 +17,9 @@ class BomServices {
    
     async getBomById(id) {
         try {
-            const response = await axios.get(`${baseURL}/getPartStructure/${id}`);
+            const response = await axios.get(`${baseURL}/getPartStructure/${id}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
             console.log('====================================');
             console.log({response});
             console.log('====================================');
@@ -51,7 +54,9 @@ class BomServices {
 
     async searchBomPart(partNumber) {
         try {
-            const response = await axios.get(`${baseURL}/Supplier_MasterPartObjectBypart_number/${partNumber}`);
+            const response = await axios.get(`${baseURL}/Supplier_MasterPartObjectBypart_number/${partNumber}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
@@ -96,7 +101,9 @@ class BomServices {
     async addBomPart(payload) {
         console.log({payload});
         try {
-            const response = await axios.post(`${baseURL}/createUsageLink`, payload);
+            const response = await axios.post(`${baseURL}/createUsageLink`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            } ,payload);
             console.log({response})
             return response;
         } catch (error) {
@@ -109,7 +116,9 @@ class BomServices {
         console.log({payload});
         const { ida3a5, ida3b5 } = payload || {};
         try {
-            const response = await axios.delete(`${baseURL}/entities/${ida3a5}/${ida3b5}`, payload);
+            const response = await axios.delete(`${baseURL}/entities/${ida3a5}/${ida3b5}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            } ,payload);
             console.log({response})
             return response;
         } catch (error) {

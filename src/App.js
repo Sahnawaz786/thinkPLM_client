@@ -2,11 +2,12 @@ import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import Container from './Components/Container';
-import Login from './Components/Form/Authentication/Login';
 import ControlPage from './Components/Form/Authentication/ControlPage';
+import Login from './Components/Form/Authentication/Login';
 
 function App() {
-  let isLoggedIn = false;
+  const token = localStorage.getItem('token');
+  let isLoggedIn =Boolean(token);
   return (
     <div className="App">
       <Router>
@@ -15,7 +16,6 @@ function App() {
           {
             isLoggedIn ?
               <>
-
                 <Route path="/part-table" element={<></>} />
                 <Route path="/search-supplier" element={<></>} />
                 <Route path="/create-supplier" element={<></>} />
@@ -60,11 +60,8 @@ function App() {
               </> : null
           }
 
-
-
-
           {!isLoggedIn ? <Route path='/' element={<Login />} /> : null}
-          { !isLoggedIn ?<Route path='/control-page' element={<ControlPage />} /> : null}
+          { isLoggedIn ?<Route path='/control-page' element={<ControlPage />} /> : null}
 
         </Routes>
       </Router>

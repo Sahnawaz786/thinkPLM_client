@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import spinnerStyle from "../../../style.module.css";
-import { categoryContext } from "../../../store/CategoryProvider";
-import styles from '../../Form/Parts/PartAttribut.module.css';
-import HashLoader from 'react-spinners/HashLoader';
 import { Button } from 'react-bootstrap';
-import classes from "../../Form/AllForm.module.css";
-import FileInput from '../../../utils/FileInput';
+import { useLocation, useNavigate } from "react-router-dom";
+import HashLoader from 'react-spinners/HashLoader';
 import ComplianceServices from '../../../services/compliance.services';
+import { categoryContext } from "../../../store/CategoryProvider";
+import spinnerStyle from "../../../style.module.css";
+import FileInput from '../../../utils/FileInput';
+import { isAuthenticated } from "../../../utils/helper";
+import styles from '../../Form/Parts/PartAttribut.module.css';
 
 const ComplianceDocEdit = ({ id }) => {
 
@@ -151,6 +151,7 @@ const ComplianceDocEdit = ({ id }) => {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    Authorization: `Bearer ${isAuthenticated()}`
                 },
                 body: JSON.stringify(
                     { ...userData, docs: [{ ...userData?.docs[0], attachment: attachments }] }

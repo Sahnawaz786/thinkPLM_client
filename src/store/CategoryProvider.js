@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { isAuthenticated } from "../utils/helper";
 
 export const categoryContext = createContext({
   category: [],
@@ -133,7 +134,9 @@ const CategoryProvider = (props) => {
   // All data
   const getResult = async () => {
     try {
-      const res = await fetch('http://localhost:8181/getsuppliers');
+      const res = await fetch('http://localhost:8181/getsuppliers', {
+        headers: { Authorization: `Bearer ${isAuthenticated()}`},
+    });
       const mydata = await res.json();
       setData(mydata);
       console.log({mydata});
@@ -179,7 +182,9 @@ const CategoryProvider = (props) => {
   
     try {
       const res = await fetch(
-        `http://localhost:8181/suppliers1/${"manufacturer"}`
+        `http://localhost:8181/suppliers1/${"manufacturer"}`, {
+          headers: { Authorization: `Bearer ${isAuthenticated()}`},
+      }
       );
       const mydata = await res.json();
       console.log(mydata);
@@ -202,7 +207,9 @@ const CategoryProvider = (props) => {
   const getResultVendor = async () => {
     // `http://localhost:8181/suppliers1/${"vendor"}`
     try {
-      const res = await fetch(`http://localhost:8181/suppliers1/${"vendor"}`);
+      const res = await fetch(`http://localhost:8181/suppliers1/${"vendor"}`, {
+        headers: { Authorization: `Bearer ${isAuthenticated()}`},
+    });
       const mydata = await res.json();
       console.log(mydata);
 
@@ -224,7 +231,9 @@ const CategoryProvider = (props) => {
   const getResultTier1 = async () => {
     // `http://localhost:8181/suppliers1/${"tier1"}`
     try {
-      const res = await fetch(`http://localhost:8181/suppliers1/${"tier1"}`);
+      const res = await fetch(`http://localhost:8181/suppliers1/${"tier1"}`, {
+        headers: { Authorization: `Bearer ${isAuthenticated()}`},
+    });
       const mydata = await res.json();
       console.log(mydata);
 
@@ -246,7 +255,9 @@ const CategoryProvider = (props) => {
   const getResultTier2 = async () => {
     // `http://localhost:8181/suppliers1/${"tier2"}`
     try {
-      const res = await fetch(`http://localhost:8181/suppliers1/${"tier2"}`);
+      const res = await fetch(`http://localhost:8181/suppliers1/${"tier2"}`, {
+        headers: { Authorization: `Bearer ${isAuthenticated()}`},
+    });
       const mydata = await res.json();
       console.log(mydata);
 
@@ -268,7 +279,9 @@ const CategoryProvider = (props) => {
   const getPartApi = async () => {
     //http://localhost:8181/SupplierMasterObject
     try {
-      const res = await fetch(`http://localhost:8181/SupplierMasterObject`);
+      const res = await fetch(`http://localhost:8181/SupplierMasterObject`, {
+        headers: { Authorization: `Bearer ${isAuthenticated()}`},
+    });
       const mypartData = await res.json();
       console.log({ mypartData });
 

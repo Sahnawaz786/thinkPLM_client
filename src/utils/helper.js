@@ -53,8 +53,17 @@ function buildTree(data, parentId) {
   
     return treeNode;
   }
-export {
-    uniqueIds,
-    buildTree
+  const isAuthenticated = () => {
+    if (localStorage.getItem('token')) {
+        console.log({gazal: localStorage.getItem('token')})
+        return localStorage.getItem('token')
+    }
+    return false
 }
+export {
+  buildTree,
+  isAuthenticated,
+  uniqueIds
+};
+
 // export default uniqueIds;

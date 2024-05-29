@@ -6,6 +6,7 @@ import DocumentServices from '../../../services/document.services';
 import { categoryContext } from "../../../store/CategoryProvider";
 import spinnerStyle from "../../../style.module.css";
 import FileInput from '../../../utils/FileInput';
+import { isAuthenticated } from "../../../utils/helper";
 import styles from '../../Form/Parts/PartAttribut.module.css';
 
 const SupplierDocEdit = ({ id }) => {
@@ -149,6 +150,7 @@ const SupplierDocEdit = ({ id }) => {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    Authorization: `Bearer ${isAuthenticated()}`
                 },
                 body: JSON.stringify(
                     { ...userData, supplier_contract: [{ ...userData?.supplier_contract[0], attachment: attachments }] }
