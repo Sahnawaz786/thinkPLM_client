@@ -1,180 +1,273 @@
-
-.container{
-    width: 99vw;
-    height: 99vh;
-    border: 1px solid black;
-    margin: 5px;
-    font-weight: 100;
+.container {
+  width: 99vw;
+  height: 99vh;
+  border: 1px solid black;
+  margin: 5px;
+  font-weight: 100;
 }
 
-.topBar{
-    display: flex;
-    flex-direction: column;
+.topBar {
+  display: flex;
+  flex-direction: column;
 }
 
-.topBar1{
-    background-color: #05AFF1;
-    height: 6vh;
-    padding-left: 5px;
-    display: flex;
-    justify-content: space-between;
+.topBar1 {
+  background-color: #05aff1;
+  height: 6vh;
+  padding-left: 5px;
+  display: flex;
+  justify-content: space-between;
 }
 
-.topBar1 button{
-    padding: 8px;
-    margin: 5px;
-    border: none;
-    width: 5vw;
-    background-color: rgb(218, 208, 208);
-    border-radius: 3px;
+.topBar1 button {
+  padding: 8px;
+  margin: 5px;
+  border: none;
+  width: 5vw;
+  background-color: rgb(218, 208, 208);
+  border-radius: 3px;
 }
 
-.topBar2{
-    background-color: #FFF2CD;
-    text-align: center;
-    height: 6vh;
-    padding-top: 10px;
+.topBar2 {
+  background-color: #fff2cd;
+  text-align: center;
+  height: 6vh;
+  padding-top: 10px;
 }
 
-.topBar2 h5{
-    font-size: 19px;
+.topBar2 h5 {
+  font-size: 19px;
 }
 
-.logo{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.imglogo{
-    width: 15vw;
-    margin-top: 20px;
-    margin-bottom: 20px;
+.imglogo {
+  width: 15vw;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-.fotter{
-    background-color: #05AFF1;
-    height: 76.5vh;
+.fotter {
+  background-color: #05aff1;
+  height: 76.5vh;
 }
 
-.loginForm{
-    display: flex;
-    flex-direction: column;
+.loginForm {
+  display: flex;
+  flex-direction: column;
 }
 
-.username,.password{
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    align-items: center;
+.username,
+.password {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  align-items: center;
 }
 
-.username span,.password span{
-    width: 10rem;
-    font-size: 20px;
-    color: white;
+.username span,
+.password span {
+  width: 10rem;
+  font-size: 20px;
+  color: white;
 }
 
-.username input,.password input{
-    height: 5vh;
-    width: 14vw;
-    padding: 5px;
-    font-size: 18px;
+.username input,
+.password input {
+  height: 5vh;
+  width: 14vw;
+  padding: 5px;
+  font-size: 18px;
 }
 
-.submitBtn{
-    margin-left: 23rem;
+.submitBtn {
+  margin-left: 23rem;
 }
 
-.submitBtn button{
-    padding: 7px;
-    border: none;
-    width: 5.5rem;
-    border-radius: 3px;
+.submitBtnlogin button {
+  padding: 7px;
+  border: none;
+  width: 5.5rem;
+  border-radius: 3px;
+  margin-left: 18px;
 }
 
-.submitBtn :hover{
-    background-color: #79CD67;
-    transition: 0.1ms;
+.submitBtnlogin :hover {
+  background-color: #79cd67;
+  transition: 0.1ms;
 }
 
-.fotterInfo{
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    padding-left: 20px;
-    padding-top: 20px;
+.submitBtn :hover {
+  background-color: #79cd67;
+  transition: 0.1ms;
 }
 
-.fotterInfo span{
-    color: white;
+.fotterInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 20px;
+  padding-top: 20px;
 }
 
-.fotterLastInfo{
-    margin-top: 20rem;
-
+.fotterInfo span {
+  color: white;
 }
 
-
-.fotterLast p{
-    font-size: 18px;
-    padding: 0px 50px;
-    color: #0A5F87;
-    margin-bottom: 0px;
+.fotterLastInfo {
+  margin-top: 20rem;
 }
 
-.sales{
-    text-align: center;
+.fotterLast p {
+  font-size: 18px;
+  padding: 0px 50px;
+  color: #0a5f87;
+  margin-bottom: 0px;
+}
+
+.sales {
+  text-align: center;
 }
 
 /* Second page  */
 
-.controller{
+.controller {
+  display: flex;
+  flex-direction: row;
+  gap: 5rem;
+  margin-top: 20px;
+}
+
+.leftbar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* border: 2px solid #0A5F87; */
+  /* height: 80vh; */
+  margin-top: 8px;
+  padding: 10px;
+  margin-left: 8px;
+  width: 20vw;
+  border-radius: 30px;
+  padding-left: 3rem;
+}
+
+.leftbar span {
+  font-size: 16px;
+  text-decoration: underline;
+  color: white;
+  background-color: #376d8d;
+  padding: 10px;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.leftbar span:hover {
+  cursor: pointer;
+}
+
+.rightbar {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 18px;
+}
+
+.rightbar span {
+  font-size: 15px;
+  border: 1px solid rgb(180, 178, 178);
+  padding: 8px;
+  border-radius: 2px;
+}
+
+/* sign up form style  */
+
+.signupContainer {
+  /* border: 1px solid red; */
+  width: 98vw;
+  height: 98vh;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  padding-left: 20px;
+  
+}
+
+.signupFields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 25px 20px;
+}
+
+.fields {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  /* align-items: center; */
+}
+
+.fields input {
+  width: 17vw;
+  height: 4vh;
+  padding: 5px;
+  font-size: 13px;
+}
+
+.fields span {
+  width: 14vw;
+  font-size: 15px;
+}
+
+textarea {
+  width: 17vw;
+  height: 17vh;
+}
+
+.optionsBtn {
+  padding: 5px;
+}
+
+
+
+.innerContainer{
+    border: 1px solid black;
+    width: 95vw;
+    height: 94vh;
+    margin-top: 10px;
+  position: relative;
+
+}
+
+
+.submitBtn{
     display: flex;
-    flex-direction: row;
-    gap: 5rem;
-    margin-top: 20px;
-}
-
-.leftbar{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    /* border: 2px solid #0A5F87; */
-    /* height: 80vh; */
-    margin-top: 8px;
-    padding: 10px;
-    margin-left: 8px;
-    width: 20vw;
-    border-radius: 30px;
-    padding-left: 3rem;
-}
-
-.leftbar span{
-    font-size: 16px;
-    text-decoration: underline;
-    color: white;
-    background-color: #376D8D;
-    padding: 10px;
-    text-align: center;
-    border-radius: 3px;
-}
-
-.leftbar span:hover{
-    cursor: pointer;
+    justify-content: end;
+    padding-right: 10px;
+    margin-top: 8rem;
+    border: none;
 }
 
 
-.rightbar{
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    margin-top: 18px;
+
+.childpart_header {
+  position: absolute;
+  top: -15px; /* Adjust this value as needed */
+  left: 10px; /* Adjust this value as needed */
+  background-color: white;
+  padding: 0 5px;
+  /* border: 1px solid black; */
+  border-radius: 5px;
 }
 
-.rightbar span{
+.childpart_header p{
+    /* text-align: center; */
+    /* padding: 10px; */
+    /* width: 20px; */
+    height: 2vh;
     font-size: 15px;
-    border: 1px solid rgb(180, 178, 178);
-    padding: 8px;
-    border-radius: 2px;
 }

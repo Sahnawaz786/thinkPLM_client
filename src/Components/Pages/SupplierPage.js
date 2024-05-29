@@ -7,20 +7,44 @@ import Tier2 from '../Form/Supplier/Tier2';
 import VendorForm from '../Form/Supplier/VendorForm';
 import classes from './SupplierPage.module.css';
 import spinnerStyle from './../../style.module.css';
+import { URL, openNewWindow } from '../../utils/helper';
+import { useNavigate } from 'react-router-dom';
 
 const SupplierPage = () => {
 
   const categoryItemsCtx = useContext(categoryContext);
   console.log(categoryItemsCtx)
-
+  const navigate = useNavigate();
   const [timer, setTimer] = useState(true);
 
 
   const [selected, setSelected] = useState('');
   const handleChange = (e) => {
-    console.log(e.target.value)
-    setSelected(e.target.value)
+    if (e.detail === 0) {
+      setSelected(e.target.value)
+      const name = e.target.value;
+      switch (name) {
+        case 'tier1':
+          openNewWindow(e, `${URL}/supplier-tier1`);
+          setTimeout(() => {
+            navigate('/');
+          }, 1000)
+          break;
+
+        case 'tier2':
+          openNewWindow(e, `${URL}/supplier-tier2`);
+          setTimeout(() => {
+            navigate('/');
+          }, 1000)
+          break;
+
+        default:
+          break;
+      }
+    }
+
   }
+
 
   if (selected === 'manufacturer') {
     localStorage.setItem('manufacturer', selected)
@@ -64,16 +88,15 @@ const SupplierPage = () => {
     <>
       <div className={classes.container}>
         <div className={classes.headerContainer}>
-        <div>
-       
-      <h3 className={classes.supplierHeading}>Create Supplier</h3>
-      </div>
+          <div>
+            <h3 className={classes.supplierHeading}>Create Supplier</h3>
+          </div>
 
-      <div className={classes.labelContainer}>
-      <div className={classes.supplier_label_2}>
+          <div className={classes.labelContainer}>
+            <div className={classes.supplier_label_2}>
               <select
                 style={{ width: "9.5rem", borderRadius: "3px", borderStyle: "none", background: "rgba(183, 184, 192, 0.955)", outline: 'none', padding: "3px 4px 4px 3px", fontSize: "small", cursor: "pointer" }}
-                value={selected} onChange={(e) => handleChange(e)}>
+                onClick={handleChange}>
                 <option>Create Supplier</option>
                 {categoryItemsCtx.category.map((item, ind) => {
                   return (
@@ -82,29 +105,28 @@ const SupplierPage = () => {
 
               </select>
             </div>
-      </div>
+          </div>
         </div>
-     
 
         <div className={classes.supplierContainer} >
 
 
           <div className={classes.supplier_page}>
-           
+
           </div>
           <div className={classes.components}>
 
             {
-               timer ?  <div className={spinnerStyle.spinnerContainer}>
-               {' '}
-               <HashLoader color='#0E6EFD' />{' '}
-             </div>
-            : <>
-                {selected === "manufacturer" ? <ManufacturerForm /> : ""}
+              timer ? <div className={spinnerStyle.spinnerContainer}>
+                {' '}
+                <HashLoader color='#0E6EFD' />{' '}
+              </div>
+                : <>
+                  {/* {selected === "manufacturer" ? <ManufacturerForm /> : ""}
                 {selected === "vendor" ? <VendorForm /> : ""}
                 {selected === "tier1" ? <Tier1 /> : ""}
-                {selected === "tier2" ? <Tier2 /> : ""}
-              </>
+                {selected === "tier2" ? <Tier2 /> : ""} */}
+                </>
             }
 
 

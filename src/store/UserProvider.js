@@ -1,11 +1,11 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState } from 'react';
 
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
     
-    const [choice,setChoice] = useState(false);
-    const [showAlert,setShowAlert] = useState(false);
+    const [choice, setChoice] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
 
     const [showDeleteBomModal, setShowDeleteBomModal] = useState(false);
 

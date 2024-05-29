@@ -60,7 +60,7 @@ const Login = () => {
                 <span>Password</span>
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
             </div>
-            <div className={styles.submitBtn}>
+            <div className={styles.submitBtnlogin}>
                <button>Login</button>
             </div>
          </div>
