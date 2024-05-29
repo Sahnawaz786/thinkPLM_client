@@ -46,6 +46,7 @@ export default function TreeViewComponent({
     setBomIds({
       parentId: parentId,
       childId: id,
+      masterId: data?.masterId,
     })
   };
 
