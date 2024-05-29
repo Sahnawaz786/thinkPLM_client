@@ -26,7 +26,7 @@ const Login = () => {
                 <input type="text" name="" id="" />
             </div>
             <div className={styles.submitBtn}>
-               <button>Submit</button>
+               <button>Login</button>
             </div>
          </div>
 

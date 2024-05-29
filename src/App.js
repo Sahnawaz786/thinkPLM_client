@@ -8,6 +8,7 @@ import Tier1 from './Components/Form/Supplier/Tier1';
 import Tier2 from './Components/Form/Supplier/Tier2';
 
 function App() {
+  let isLoggedIn = false;
   return (
     <div className="App">
       <Router>
