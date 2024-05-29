@@ -53,8 +53,33 @@ function buildTree(data, parentId) {
   
     return treeNode;
   }
+
+  const openNewWindow = (event, link) => {
+      const screenWidth = window.screen.width;
+      const screenHeight = window.screen.height;
+      const features = 'width=' + screenWidth + ',height=' + screenHeight + ',left=0,top=0';
+  
+      let newwindow = window.open(link, `${link}dgvdvg`, features);
+      if (window.focus) {
+          newwindow.focus();
+      }
+      return false;
+  };
+
+const URL = "http://localhost:3000";
+
+const closeWindow = () => {
+  window.open("about:blank", "_self");
+  window.close();
+};
+
+const refreshPage = () => window.location.reload();
+
 export {
     uniqueIds,
-    buildTree
+    buildTree,
+    openNewWindow,
+    URL,
+    closeWindow,
+    refreshPage
 }
-// export default uniqueIds;

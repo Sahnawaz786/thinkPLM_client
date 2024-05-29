@@ -6,6 +6,7 @@ import spinnerStyle from '../../../style.module.css';
 import message from '../../../utils/message';
 import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
 import styles from './../Parts/PartAttribut.module.css';
+import { closeWindow } from '../../../utils/helper';
 
 const Tier1 = () => {
   const navigate = useNavigate();
@@ -160,11 +161,11 @@ const Tier1 = () => {
           }]
         });
         setTimer(true);
+        message('success', 'Tier1 Supplier Created, please refresh the page to get the latest data')
         setTimeout(() => {
           setTimer(false);
-          navigate('/')
-          window.location.reload();
-        }, 1000);
+          closeWindow();
+        }, 5000);
       }
       else{
         const data=await res.json();
