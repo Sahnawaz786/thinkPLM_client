@@ -4,6 +4,7 @@ import { Toaster } from 'sonner';
 import Container from './Components/Container';
 import Login from './Components/Form/Authentication/Login';
 import ControlPage from './Components/Form/Authentication/ControlPage';
+import SignUp from './Components/Form/Authentication/SignUp';
 
 function App() {
   let isLoggedIn = false;
@@ -64,7 +65,9 @@ function App() {
 
 
           {!isLoggedIn ? <Route path='/' element={<Login />} /> : null}
-          { !isLoggedIn ?<Route path='/control-page' element={<ControlPage />} /> : null}
+          { !isLoggedIn ?<Route path='/control-page' element={<ControlPage />} /> : null }
+           { !isLoggedIn ? <Route path='/sign-up' element={<SignUp/>} />: null} 
+          
 
         </Routes>
       </Router>
