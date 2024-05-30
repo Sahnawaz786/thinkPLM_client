@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import HashLoader from 'react-spinners/HashLoader';
-import SupplierServices from '../../../services/supplier.services';
 import DocumentServices from '../../../services/document.services';
 import { UserContext } from '../../../store/UserProvider';
-import DisplayAlert from '../../../utils/DisplayAlert';
-import SupplierDocContainer from '../SupplierDocumentContainer/SupplierDocContainer';
 import styles from '../../../style.module.css';
+import DisplayAlert from '../../../utils/DisplayAlert';
 import classes from '../SupplierActions/Supplier.module.css';
-import { useNavigate } from 'react-router-dom';
+import SupplierDocContainer from '../SupplierDocumentContainer/SupplierDocContainer';
 
 const SupplierDocDetails = ({ id }) => {
 
@@ -20,6 +19,7 @@ const  [docsupplier,setDocSupplier] = useState([]);
 
 const {getDocumentById,getAllDocuments,deleteDocument}=new DocumentServices();
 
+console.log("idssss",id)
   const getSupplierApi = async (id) => {
     const partInfo = await getDocumentById(id);
     console.log("PARTINFO",partInfo);

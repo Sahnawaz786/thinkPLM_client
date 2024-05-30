@@ -26,10 +26,8 @@ const Login = () => {
       const { token } = response.data;
       console.log('tokensss',token)
       localStorage.setItem('token', token);
-      setTimeout(() => {
-        navigate('/');
-      }, 100);
-      // window.location.reload();
+      navigate('/')
+      window.location.reload();
     } catch (error) {
       setError('Invalid credentials');
     }

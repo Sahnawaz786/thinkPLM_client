@@ -7,7 +7,7 @@ const Navbar = () => {
  const navigate=useNavigate();
   const logout = () => {
     localStorage.removeItem('token');
-    navigate('/')
+    navigate('/login')
     window.location.reload();
    
 
