@@ -53,6 +53,16 @@ function buildTree(data, parentId) {
   
     return treeNode;
   }
+  const isAuthenticated = () => {
+    if (localStorage.getItem('token')) {
+        console.log({gazal: localStorage.getItem('token')})
+        return localStorage.getItem('token')
+    }
+    return false
+}
+
+
+// export default uniqueIds;
 
   const openNewWindow = (event, link) => {
       const screenWidth = window.screen.width;
@@ -76,10 +86,6 @@ const closeWindow = () => {
 const refreshPage = () => window.location.reload();
 
 export {
-    uniqueIds,
-    buildTree,
-    openNewWindow,
-    URL,
-    closeWindow,
-    refreshPage
-}
+  URL, buildTree, closeWindow, isAuthenticated, openNewWindow, refreshPage, uniqueIds
+};
+

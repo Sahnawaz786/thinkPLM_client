@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import HashLoader from 'react-spinners/HashLoader';
 import SupplierServices from '../../../services/supplier.services';
 import spinnerStyle from "../../../style.module.css";
+import { isAuthenticated } from "../../../utils/helper";
 import classes from "../../Form/AllForm.module.css";
 import styles from '../../Form/Parts/PartAttribut.module.css';
 
@@ -105,10 +106,11 @@ const EditSupplier = ({ id }) => {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    Authorization: `Bearer ${isAuthenticated()}`
                 },
                 body: JSON.stringify(supplierData),
             });
-
+          
             if (res.ok) {
                 navigate("/");
             }

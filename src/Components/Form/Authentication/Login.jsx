@@ -1,7 +1,38 @@
-import React from 'react'
-import styles from './Auth.module.css'
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styles from './Auth.module.css';
 
 const Login = () => {
+
+  const [username, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+   e.preventDefault();
+   const credentials = btoa(`${username}:${password}`);
+    try {
+      const response = await axios.post(
+        'http://localhost:8181/authenticate',
+        {username,password},
+        {
+          headers: {
+            'Authorization': `Basic ${credentials}`
+          }
+        }
+      );
+      console.log('responsessss',response)
+      const { token } = response.data;
+      console.log('tokensss',token)
+      localStorage.setItem('token', token);
+      navigate('/')
+      window.location.reload();
+    } catch (error) {
+      setError('Invalid credentials');
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.topBar}>
@@ -16,20 +47,23 @@ const Login = () => {
         <img className={styles.imglogo} src="images/logo-main.webp" alt="" />
       </div>
       <div className={styles.fotter}>
+      <form onSubmit={handleSubmit}>
          <div className={styles.loginForm}>
+          
             <div className={styles.username}>
                 <span>User Name</span>
-                <input type="text" name="" id="" />
+                <input type="text" value={username} onChange={(e) => setUserName(e.target.value)} required/>
             </div>
             <div className={styles.password}>
                 <span>Password</span>
-                <input type="text" name="" id="" />
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
             </div>
             <div className={styles.submitBtnlogin}>
                <button>Login</button>
             </div>
          </div>
-
+         </form>
+         {error && <p>{error}</p>}
         <div className={styles.fotterInfo}>
             {/* <div>
 

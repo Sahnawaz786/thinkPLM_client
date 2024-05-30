@@ -5,6 +5,7 @@ import HashLoader from 'react-spinners/HashLoader';
 import PartServices from '../../../services/parts.services';
 import { categoryContext } from "../../../store/CategoryProvider";
 import spinnerStyle from "../../../style.module.css";
+import { isAuthenticated } from "../../../utils/helper";
 import message from "../../../utils/message";
 import styles from '../../Form/Parts/PartAttribut.module.css';
 
@@ -98,10 +99,11 @@ const EditPart = ({id}) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${isAuthenticated()}`
         },
-        body: JSON.stringify({...userData?.data, parts: [{ ...userData?.parts[0] }]}),
+        body: JSON.stringify({...userData?.data, parts: [{ ...userData?.parts[0]}]}),
+      
       });
-
       // console.log({res});
       if (res.ok) {
         navigate("/");

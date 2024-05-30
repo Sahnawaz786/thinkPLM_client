@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { isAuthenticated } from '../utils/helper';
 // const dotenv = require('dotenv');
 
 // dotenv.config({ path: '../.env' });
@@ -14,7 +15,9 @@ class CertificateServices {
 
     async getAllCertificateDocuments() {
         try {
-            const response = await axios.get(`${baseURL}/Certification_of_InsuranceMasterObject`);
+            const response = await axios.get(`${baseURL}/Certification_of_InsuranceMasterObject`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
@@ -27,7 +30,9 @@ class CertificateServices {
 
     async editCertificateDocumentById(id,partData) {
         try {
-            const response = await axios.put(`${this.baseURL}/InvoiceMasterObject/${id}`,partData);
+            const response = await axios.put(`${this.baseURL}/InvoiceMasterObject/${id}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            },partData);
 
             if (response.status!=200) {
                 throw new Error(`Failed to add part: ${response.statusText}`);
@@ -41,7 +46,9 @@ class CertificateServices {
 
     async getCertificateDocumentById(id) {
         try {
-            const response = await axios.get(`${baseURL}/Certification_of_InsuranceMasterObject1/${id}`);
+            const response = await axios.get(`${baseURL}/Certification_of_InsuranceMasterObject1/${id}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
@@ -54,7 +61,9 @@ class CertificateServices {
 
     async getCertificateDocumentHistoryById(id) {
         try {
-            const response = await axios.get(`${baseURL}/Certification_of_InsuranceMasterObject/${id}`);
+            const response = await axios.get(`${baseURL}/Certification_of_InsuranceMasterObject/${id}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
@@ -66,22 +75,11 @@ class CertificateServices {
     }
 
 
-    async getFileDownload(id) {
-        try {
-            const response = await axios.get(`${baseURL}/downloadFile/${id}`);
-            if (response.status!==200) {
-                throw new Error(`Failed to fetch parts: ${response.statusText}`);
-            }
-            return await response;
-        } catch (error) {
-            console.error('Error fetching parts:', error);
-            return null;
-        }
-      }
-
     async deleteCertificateDocumentById(id) {
         try {
-            const response = await axios.delete(`${baseURL}/Certification_of_InsuranceMasterObject/${id}`);
+            const response = await axios.delete(`${baseURL}/Certification_of_InsuranceMasterObject/${id}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
