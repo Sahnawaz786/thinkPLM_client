@@ -1,9 +1,16 @@
 import React from 'react';
 import styles from '../../../style.module.css';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { URL, openNewWindow } from '../../../utils/helper';
 
 const UserManagement = () => {
     const navigate = useNavigate();
+    const handleCreateUserClick = (e) => {
+      openNewWindow(e, `${URL}/sign-up`);
+      setTimeout(() => {
+        navigate('/user-management');
+      }, 1000)
+    }
   return (
     <div className={styles.fontStyles}>
       <div className={styles.rightBar}>
@@ -46,7 +53,7 @@ const UserManagement = () => {
               height={30}
               alt=''
               className={styles.deleteIcon}
-             onClick={()=>navigate('/sign-up')}
+             onClick={(e)=> handleCreateUserClick(e)}
             />
             
           </div>
