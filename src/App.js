@@ -72,7 +72,7 @@ function App() {
           <Route path='/sign-up' element={<SignUp/>} />
           {/* </>:null} */}
 
-          {!isLoggedIn ?<Route path='/login' element={<Login/>}/>:null }
+          {!isLoggedIn ?<Route path='/' element={<Login/>}/>:null }
           
         </Routes>
        

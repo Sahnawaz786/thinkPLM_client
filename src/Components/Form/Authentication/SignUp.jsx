@@ -1,8 +1,14 @@
-import React from 'react';
-import styles from './Auth.module.css';
+import { useState } from 'react';
 import { Button } from 'react-bootstrap';
+import styles from './Auth.module.css';
+
 
 const SignUp = () => {
+
+  const [formData, setFormData] = useState({
+    key1: '',
+    key2: ''
+});
   return (
     <div className={styles.signupContainer}>
         <div className={styles.innerContainer}>
