@@ -67,7 +67,7 @@ function App() {
           <Route path='/supplier-tier2' element={<Tier2 />}/>
           </>:null}
 
-          {!isLoggedIn ?<Route path='/login' element={<Login/>}/>:null }
+          {!isLoggedIn ?<Route path='/' element={<Login/>}/>:null }
           
         </Routes>
        
