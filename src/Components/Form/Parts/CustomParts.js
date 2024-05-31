@@ -10,6 +10,7 @@ import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
 import styles from './PartAttribut.module.css';
 
 const CustomParts = () => {
+
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState('');

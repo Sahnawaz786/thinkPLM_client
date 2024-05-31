@@ -6,6 +6,17 @@
   font-weight: 100;
 }
 
+.spinnerContainer {
+  position: fixed;
+  top: 14%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  padding: 20px;
+  border-radius: 5px;
+  display: flex;
+}
+
 .topBar {
   display: flex;
   flex-direction: column;
