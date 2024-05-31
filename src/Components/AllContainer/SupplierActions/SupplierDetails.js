@@ -43,8 +43,8 @@ const {getSupplierById,deleteSupplier}=new SupplierServices();
     if (choice) {
       console.log("choice is:",choice)
       const supplierInfo = await deleteSupplier(id);
-      window.location.reload();
       navigate('/part-table')
+      window.location.reload();
   };
 }
 
