@@ -13,7 +13,7 @@ const VendorForm = () => {
   const [currentDate, setCurrentDate] = useState(
     new Date().toJSON().slice(0, 10)
   );
-  let supplier_type = localStorage.getItem('manufacturer');
+  let supplier_type = localStorage.getItem('vendor');
   const [timer, setTimer] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 

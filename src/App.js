@@ -4,9 +4,9 @@ import { Toaster } from 'sonner';
 import Container from './Components/Container';
 import ControlPage from './Components/Form/Authentication/ControlPage';
 import Login from './Components/Form/Authentication/Login';
+import SignUp from './Components/Form/Authentication/SignUp';
 import Tier1 from './Components/Form/Supplier/Tier1';
 import Tier2 from './Components/Form/Supplier/Tier2';
-import SignUp from './Components/Form/Authentication/SignUp';
 
 function App() {
   const token = localStorage.getItem('token');
@@ -16,7 +16,7 @@ function App() {
       <Router>
        
           <Routes>
-          {/* {isLoggedIn ? <> */}
+          {isLoggedIn ? <>
           <Route path="/part-table" element={<Container/>} />
           <Route path="/search-supplier" element={<Container/>} />
           <Route path="/create-supplier" element={<Container/>} />
@@ -70,7 +70,7 @@ function App() {
           <Route path='/supplier-tier1' element={<Tier1 />}/>
           <Route path='/supplier-tier2' element={<Tier2 />}/>
           <Route path='/sign-up' element={<SignUp/>} />
-          {/* </>:null} */}
+          </>:null}
 
           {!isLoggedIn ?<Route path='/' element={<Login/>}/>:null }
           
