@@ -18,7 +18,7 @@ function App() {
       <Router>
        
           <Routes>
-          {/* {isLoggedIn ? <> */}
+          {isLoggedIn ? <>
           <Route path="/part-table" element={<Container/>} />
           <Route path="/search-supplier" element={<Container/>} />
           <Route path="/create-supplier" element={<Container/>} />
@@ -72,11 +72,12 @@ function App() {
           <Route path='/supplier-tier1' element={<Tier1 />}/>
           <Route path='/supplier-tier2' element={<Tier2 />}/>
           <Route path='/sign-up' element={<SignUp/>} />
-          {/* </>:null} */}
+          </>:null}
 
           {!isLoggedIn ?<Route path='/login' element={<Login/>}/>:null }
           <Route path='/supplier-manufacturer' element={<ManufacturerForm />}/>
           <Route path='/supplier-vendor' element={<VendorForm />}/>
+          {!isLoggedIn ?<Route path='/' element={<Login/>}/>:null }
           
         </Routes>
        
