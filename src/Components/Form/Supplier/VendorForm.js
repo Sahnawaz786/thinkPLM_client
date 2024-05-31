@@ -7,6 +7,7 @@ import { isAuthenticated } from '../../../utils/helper';
 import message from '../../../utils/message';
 import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
 import styles from './../Parts/PartAttribut.module.css';
+import { closeWindow } from '../../../utils/helper';
 
 const VendorForm = () => {
   const navigate = useNavigate();
@@ -162,11 +163,11 @@ const VendorForm = () => {
           }]
         });
         setTimer(true);
+        message('success', 'Vendor Supplier Created, please refresh the page to get the latest data')
         setTimeout(() => {
           setTimer(false);
-          navigate('/')
-          window.location.reload();
-        }, 1000);
+          closeWindow();
+        }, 5000);
       }
       else{
         const data=await res.json();

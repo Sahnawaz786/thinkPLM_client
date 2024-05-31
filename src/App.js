@@ -6,6 +6,8 @@ import ControlPage from './Components/Form/Authentication/ControlPage';
 import Login from './Components/Form/Authentication/Login';
 import Tier1 from './Components/Form/Supplier/Tier1';
 import Tier2 from './Components/Form/Supplier/Tier2';
+import ManufacturerForm from './Components/Form/Supplier/ManufacturerForm';
+import VendorForm from './Components/Form/Supplier/VendorForm';
 import SignUp from './Components/Form/Authentication/SignUp';
 
 function App() {
@@ -16,7 +18,7 @@ function App() {
       <Router>
        
           <Routes>
-          {/* {isLoggedIn ? <> */}
+          {isLoggedIn ? <>
           <Route path="/part-table" element={<Container/>} />
           <Route path="/search-supplier" element={<Container/>} />
           <Route path="/create-supplier" element={<Container/>} />
@@ -70,8 +72,11 @@ function App() {
           <Route path='/supplier-tier1' element={<Tier1 />}/>
           <Route path='/supplier-tier2' element={<Tier2 />}/>
           <Route path='/sign-up' element={<SignUp/>} />
-          {/* </>:null} */}
+          </>:null}
 
+          {!isLoggedIn ?<Route path='/login' element={<Login/>}/>:null }
+          <Route path='/supplier-manufacturer' element={<ManufacturerForm />}/>
+          <Route path='/supplier-vendor' element={<VendorForm />}/>
           {!isLoggedIn ?<Route path='/' element={<Login/>}/>:null }
           
         </Routes>
