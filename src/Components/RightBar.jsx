@@ -40,6 +40,7 @@ import InvoiceDocumentHistory from './AllContainer/InvoiceActions/InvoiceDocumen
 import InvoiceDocumentHistoryInfo from './AllContainer/InvoiceActions/InvoiceDocumentHistoryInfo';
 import SupplierHistory from './AllContainer/SupplierActions/SupplierHistory';
 import SupplierHistoryInfo from './AllContainer/SupplierActions/SupplierHistoryInfo';
+import UserManagement from './AllContainer/UserManagement/UserManagement';
 
 const RightBar = () => {
   const { type } = useContext(DocsContext);
@@ -237,6 +238,10 @@ const RightBar = () => {
         case '/search-supplier':
           componentToRender = <SupplierSearch/>;
           break; 
+
+      case '/user-management':
+        componentToRender = <UserManagement/>
+        break;
 
         
 

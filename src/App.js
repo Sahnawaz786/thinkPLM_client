@@ -6,6 +6,7 @@ import ControlPage from './Components/Form/Authentication/ControlPage';
 import Login from './Components/Form/Authentication/Login';
 import Tier1 from './Components/Form/Supplier/Tier1';
 import Tier2 from './Components/Form/Supplier/Tier2';
+import SignUp from './Components/Form/Authentication/SignUp';
 
 function App() {
   const token = localStorage.getItem('token');
@@ -15,7 +16,7 @@ function App() {
       <Router>
        
           <Routes>
-          {isLoggedIn ? <>
+          {/* {isLoggedIn ? <> */}
           <Route path="/part-table" element={<Container/>} />
           <Route path="/search-supplier" element={<Container/>} />
           <Route path="/create-supplier" element={<Container/>} />
@@ -58,6 +59,9 @@ function App() {
           <Route path='/certificate-document-historyInfo/:pid/:cid' element={<Container/>}/>
           <Route path='/certificate-attachment/:id' element={<Container/>} />
           <Route path='/certificate-document-edit/:id' element={<Container/>}/>
+          <Route path='/user-management' element={<Container/>}/>
+
+
 
           <Route path='/' element={<Container />}/>
           <Route path='/control-page' element={<ControlPage/>}/>
@@ -65,7 +69,8 @@ function App() {
           {/* POP UP */}
           <Route path='/supplier-tier1' element={<Tier1 />}/>
           <Route path='/supplier-tier2' element={<Tier2 />}/>
-          </>:null}
+          <Route path='/sign-up' element={<SignUp/>} />
+          {/* </>:null} */}
 
           {!isLoggedIn ?<Route path='/login' element={<Login/>}/>:null }
           
