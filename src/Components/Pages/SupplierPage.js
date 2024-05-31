@@ -38,6 +38,20 @@ const SupplierPage = () => {
           }, 1000)
           break;
 
+        case 'manufacturer':
+          openNewWindow(e, `${URL}/supplier-manufacturer`);
+          setTimeout(() => {
+            navigate('/');
+          }, 1000)
+          break;
+        
+        case 'vendor':
+          openNewWindow(e, `${URL}/supplier-vendor`);
+          setTimeout(() => {
+            navigate('/');
+          }, 1000)
+          break;
+          
         default:
           break;
       }
