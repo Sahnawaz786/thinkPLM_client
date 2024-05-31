@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../../../style.module.css";
+import { URL, openNewWindow } from "../../../utils/helper";
 const UserManagement = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
@@ -29,6 +30,13 @@ const UserManagement = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  const handleSignupClick = (e) => {
+    openNewWindow(e, `${URL}/sign-up`);
+      setTimeout(() => {
+        navigate('/user-management');
+      }, 1000)
+  }
 
   return (
     <div className={styles.fontStyles}>
@@ -68,7 +76,7 @@ const UserManagement = () => {
               height={30}
               alt=""
               className={styles.deleteIcon}
-              onClick={() => navigate("/sign-up")}
+              onClick={(e) => handleSignupClick(e)}
             />
           </div>
           <div title="Delete">
@@ -106,11 +114,11 @@ const UserManagement = () => {
             <th>User Name</th>
             <th>Last Name</th>
             <th>Email</th>
-            <th>Postal Address</th>
+            {/* <th>Postal Address</th> */}
             <th>Telephone Number</th>
             <th>Alternate Phone Number</th>
             <th>Supplier Name</th>
-            <th>User Details</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -143,7 +151,7 @@ const UserManagement = () => {
                 </td>
                 <td> {elem?.email || 'N/A'}</td>
 
-                <td>{elem?.postalAddress || 'N/A'}</td>
+                {/* <td>{elem?.postalAddress || 'N/A'}</td> */}
                 <td>{elem?.telephoneNumber || 'N/A'}</td>
 
                 <td>{elem?.alternatePhoneNumber || 'N/A'}</td>

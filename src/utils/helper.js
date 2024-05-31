@@ -65,15 +65,25 @@ function buildTree(data, parentId) {
 // export default uniqueIds;
 
   const openNewWindow = (event, link) => {
-      const screenWidth = window.screen.width;
-      const screenHeight = window.screen.height;
-      const features = 'width=' + screenWidth + ',height=' + screenHeight + ',left=0,top=0';
-  
-      let newwindow = window.open(link, `${link}dgvdvg`, features);
-      if (window.focus) {
-          newwindow.focus();
-      }
-      return false;
+    const screenWidth = window.screen.width;
+    const screenHeight = window.screen.height;
+    console.log({screenHeight, screenWidth});
+    
+    // Calculate 60% of the screen's width and height
+    const windowWidth = Math.floor(screenWidth * 0.7);
+    const windowHeight = Math.floor(screenHeight * 0.7);
+    
+    // Calculate the position to center the new window
+    const left = Math.floor((screenWidth - windowWidth) / 2);
+    const top = Math.floor((screenHeight - windowHeight) / 2);
+    
+    const features = `width=${windowWidth},height=${windowHeight},left=${left},top=${top - 10}`;
+    
+    let newwindow = window.open(link, `${link}dgvdvg`, features);
+    if (window.focus) {
+        newwindow.focus();
+    }
+    return false;
   };
 
 const URL = "http://localhost:3000";
