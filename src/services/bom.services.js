@@ -101,9 +101,9 @@ class BomServices {
     async addBomPart(payload) {
         console.log({payload});
         try {
-            const response = await axios.post(`${baseURL}/createUsageLink`, {
+            const response = await axios.post(`${baseURL}/createUsageLink`, payload, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
-            } ,payload);
+            });
             console.log({response})
             return response;
         } catch (error) {

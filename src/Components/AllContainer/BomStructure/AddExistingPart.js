@@ -3,12 +3,16 @@ import { useLocation } from 'react-router-dom';
 import BomServices from "../../../services/bom.services";
 import { PartsContext } from '../../../store/PartsProvider';
 import classes from "./AddExistingPart.module.css";
+import message from '../../../utils/message';
+import { closeWindow } from '../../../utils/helper';
+import HashLoader from 'react-spinners/HashLoader';
 
 const { searchBomPart, addBomPart } = new BomServices();
-const AddExistingPart = ({modalHideHandler}) => {
+const AddExistingPart = () => {
   const [partNumber, setPartNumber] = useState('');
   const [searchPartDetails, setSearchPartDetails] = useState([]);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [timer, setTimer] = useState(false);
   const location = useLocation();
   const { bomIds } = useContext(PartsContext);
 
@@ -34,24 +38,33 @@ const AddExistingPart = ({modalHideHandler}) => {
 
   const handleAddExistingPartsClick = async () => {
     setIsButtonDisabled(true)
+    setTimer(true);
     console.log({ searchPartDetails, location: location?.pathname?.split('/').slice(-1).join() });
     const parentId = Number(location?.pathname?.split('/').slice(-1).join());
     const childId = Number(searchPartDetails?.[0]?.id);
     console.log({childId, parentId: bomIds?.childId || parentId});
+    const bomIdsLocalStorage = JSON.parse(localStorage.getItem('bomIds'));
     const payload = {
-      ida3a5: bomIds?.childId || parentId, // ====> partsId   (parent)   302
+      ida3a5: bomIdsLocalStorage?.childId || bomIds?.childId || parentId, // ====> partsId   (parent)   302
       ida3b5: childId, //  ====> partsMasterId (child)  152
     }
-    if (bomIds?.childId || parentId) {
+    if ((bomIdsLocalStorage?.childId || bomIds?.childId ) && parentId) {
       await addBomPart(payload);
     } else {
-      //
+      message('error', 'BOM Parent or Child ID is missing');
     }
-    modalHideHandler();
-    window.location.reload();
+
+     message('success', 'BOM Inserted, please refresh the page to get the latest data')
+        setTimeout(() => {
+          setTimer(false);
+          closeWindow();
+     }, 5000);
   };
 
-  return (
+  return (timer ?  <div className={classes.spinnerContainer}>
+    <HashLoader color='#0E6EFD' />
+  </div>
+ :
     <div className={classes.main_container}>
       <div className={classes.body_container}>
         <div className={classes.first_content_container}>
