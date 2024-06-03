@@ -1,35 +1,31 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import authenticationServices from "../../../services/authentication.services";
+import { UserContext } from "../../../store/UserProvider";
 import styles from "../../../style.module.css";
+import DisplayAlert from "../../../utils/DisplayAlert";
 import { URL, openNewWindow } from "../../../utils/helper";
 const UserManagement = () => {
   const navigate = useNavigate();
+  const {choice,showAlert,setShowAlert}=useContext(UserContext)
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
+  const [id, setId] = useState();
+  const {getUser,deleteUser}=new authenticationServices();
 
   const fetchUsers = async () => {
-    const token = localStorage.getItem("token");
-
-    try {
-      const response = await axios.get(
-        "http://localhost:8181/getAllRegisterUserWithThink",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setUsers(response.data);
-      console.log(response, "responses");
-    } catch (error) {
-      setError(error);
-    }
+    const userData= await getUser();
+    setUsers(userData.data)
   };
   console.log({ users });
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  const handleCheckboxChange = (id) => {
+    setSelectedId(id);
+  };
 
   const handleSignupClick = (e) => {
     openNewWindow(e, `${URL}/sign-up`);
@@ -38,6 +34,17 @@ const UserManagement = () => {
       }, 1000)
   }
 
+  const handleDeleteBtn=async()=>{
+    if (choice) {
+      console.log("choice is:",choice)
+      await deleteUser(id);
+      window.location.reload();
+      
+  };
+  }
+  useEffect(()=>{
+    handleDeleteBtn()
+  },[choice])
   return (
     <div className={styles.fontStyles}>
       <div className={styles.rightBar}>
@@ -87,7 +94,7 @@ const UserManagement = () => {
               alt=""
               className={styles.deleteIcon}
               onClick={() => {
-                // setShowAlert(true);
+                setShowAlert(true);
               }}
             />
           </div>
@@ -129,16 +136,16 @@ const UserManagement = () => {
                 <td>
                   <input
                     className={styles.icon_pointer}
-                    // checked={elem.id === selectedId}
-                    // onChange={() => handleCheckboxChange(elem.id)}
-                    // onClick={() => setId(elem.id)}
+                    checked={elem.id === selectedId}
+                    onChange={() => handleCheckboxChange(elem.id)}
+                    onClick={() => setId(elem.id)}
                     type='checkbox'
                   />
                 </td>
-
+               
                 <td>
                   <img
-                    src='/images/supplier.png'
+                    src="images/human-logo.jpeg"
                     alt='part'
                     className={styles.display_supplier_icon}
                   />
@@ -176,7 +183,9 @@ const UserManagement = () => {
           })}
         </tbody>
       </table>
+      {showAlert && <DisplayAlert />}
     </div>
+      
   );
 };
 
