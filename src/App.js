@@ -9,6 +9,9 @@ import ManufacturerForm from './Components/Form/Supplier/ManufacturerForm';
 import Tier1 from './Components/Form/Supplier/Tier1';
 import Tier2 from './Components/Form/Supplier/Tier2';
 import VendorForm from './Components/Form/Supplier/VendorForm';
+import StandardParts from './Components/Form/Parts/StandardParts';
+import CustomParts from './Components/Form/Parts/CustomParts';
+import AddExistingPart from './Components/AllContainer/BomStructure/AddExistingPart';
 
 function App() {
   const token = localStorage.getItem('token');
@@ -69,14 +72,23 @@ function App() {
           <Route path='/control-page' element={<ControlPage/>}/>
 
           {/* POP UP */}
+          <Route path='/sign-up' element={<SignUp/>} />
+          {/* Supplier popup */}
           <Route path='/supplier-tier1' element={<Tier1 />}/>
           <Route path='/supplier-tier2' element={<Tier2 />}/>
-          <Route path='/sign-up' element={<SignUp/>} />
+          <Route path='/supplier-manufacturer' element={<ManufacturerForm />}/>
+          <Route path='/supplier-vendor' element={<VendorForm />}/>
+
+          {/* Parts popup */}
+          <Route path='/standard-parts' element={<StandardParts />}/>
+          <Route path='/custom-parts' element={<CustomParts />}/>
+
+          {/* BOM popup */}
+          <Route path='/add-existing-bom-part/:id' element={<AddExistingPart />}/>
+
           </>:null}
 
           {!isLoggedIn ?<Route path='/login' element={<Login/>}/>:null }
-          <Route path='/supplier-manufacturer' element={<ManufacturerForm />}/>
-          <Route path='/supplier-vendor' element={<VendorForm />}/>
           {!isLoggedIn ?<Route path='/' element={<Login/>}/>:null }
           
         </Routes>

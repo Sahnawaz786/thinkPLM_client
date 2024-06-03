@@ -1,6 +1,6 @@
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import HashLoader from 'react-spinners/HashLoader';
 import CreateModal from '../../../UI/CreateModal';
 import Modal from '../../../UI/Modal';
@@ -17,6 +17,7 @@ import BomRightBar from './BomRightBar';
 import CreateNewPart from './CreateNewPart';
 import classes from './Structure.module.css';
 import DeleteBomModal from './DeleteBom';
+import { URL, openNewWindow } from '../../../utils/helper';
 const bomServices = new BomServices();
 const Structure = ({ id }) => {
   const [timer, setTimer] = useState(true);
@@ -28,10 +29,14 @@ const Structure = ({ id }) => {
   // console.log([initialBomData])
   const { choice, showAlert, setShowAlert,  handleCloseDeleteBomModal, handleShowDeleteBomModal, showDeleteBomModal, setShowDeleteBomModal } = useContext(UserContext);
   const location = useLocation();
-
+  const navigate = useNavigate();
   console.log({ selectedData, location });
-  const modalAddHandler = () => {
-    modalIsshown(true);
+  const modalAddHandler = (e) => {
+    const parentId = location?.pathname?.slice(-1);
+    openNewWindow(e, `${URL}/add-existing-bom-part/${parentId}`);
+    setTimeout(() => {
+      navigate(location?.pathname);
+    }, 1000)
   };
 
   const modalHideHandler = () => {
@@ -118,9 +123,7 @@ const Structure = ({ id }) => {
                     width={35}
                     height={35}
                     alt='part'
-                    onClick={() => {
-                      modalAddHandler();
-                    }}
+                    onClick={(e) => modalAddHandler(e)}
                   />
                   Insert Existing Part
                 </p>
@@ -138,7 +141,7 @@ const Structure = ({ id }) => {
                       </p>
                     </div>
 
-                    <AddExistingPart modalHideHandler={modalHideHandler} />
+                    {/* <AddExistingPart modalHideHandler={modalHideHandler} /> */}
                   </Modal>
                 )}
 
