@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from '../../../style.module.css';
 import SupplierContainer from '../SupplierContainer/SupplierContainer';
 import classes from './Supplier.module.css';
+import { URL, openNewWindow } from '../../../utils/helper';
 
 const SupplierDetails = ({ id }) => {
 
@@ -48,6 +49,13 @@ const {getSupplierById,deleteSupplier}=new SupplierServices();
   };
 }
 
+const handleEditSupplier = (e) => {
+  openNewWindow(e, `${URL}/edit-supplier/${id}`);
+      setTimeout(() => {
+        navigate(`/supplier-details/${id}`);
+      }, 1000);
+}
+
 useEffect(()=>{
   DeleteFun(id)
 },[choice])
@@ -66,7 +74,7 @@ return (
         width={30}
         height={30}
         alt=''
-        onClick={()=>navigate(`/edit-supplier/${id}`)}
+        onClick={(e)=> handleEditSupplier(e) }
         className={styles.icon_pointer}
 
 

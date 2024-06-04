@@ -1,17 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import HashLoader from 'react-spinners/HashLoader';
 import PartServices from '../../../services/parts.services';
 import { categoryContext } from "../../../store/CategoryProvider";
 import spinnerStyle from "../../../style.module.css";
-import { isAuthenticated } from "../../../utils/helper";
+import { closeWindow, isAuthenticated } from "../../../utils/helper";
 import message from "../../../utils/message";
 import styles from '../../Form/Parts/PartAttribut.module.css';
 
-const EditPart = ({id}) => {
-
+const EditPart = () => {
   const {getPartById} = new PartServices();
+  const location = useLocation();
+  const [id, setId] = useState(location?.pathname?.split('/')?.slice(-1));
+  useEffect(() => {
+     setId(location?.pathname?.split('/')?.slice(-1))
+  }, [location])
 
   const categoryItemsCtx = useContext(categoryContext);
 
@@ -49,6 +53,7 @@ const EditPart = ({id}) => {
   });
 
   const getPartApiEdit = async (id) => {
+    console.log({sajjad: id})
     try {
       const mypartData = await getPartById(id);
       const newParts = (mypartData?.data.parts || []).sort((a, b) => b.id - a.id)?.[0];
@@ -89,6 +94,7 @@ const EditPart = ({id}) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    setTimer(true);
     setIsButtonDisabled(true)
     console.log("USER---DATA",{userData: {...userData.data, parts: [{ ...userData?.parts[0]}]}})
     // return;
@@ -106,7 +112,11 @@ const EditPart = ({id}) => {
       });
       // console.log({res});
       if (res.ok) {
-        navigate("/");
+        message('success', 'Parts Edited, please refresh the page to get the latest data')
+        setTimeout(() => {
+          setTimer(false);
+          closeWindow();
+        }, 5000);
       }
       else{
         const data=await res.json();

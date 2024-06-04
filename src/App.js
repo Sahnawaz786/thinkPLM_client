@@ -13,6 +13,8 @@ import ManufacturerForm from './Components/Form/Supplier/ManufacturerForm';
 import Tier1 from './Components/Form/Supplier/Tier1';
 import Tier2 from './Components/Form/Supplier/Tier2';
 import VendorForm from './Components/Form/Supplier/VendorForm';
+import EditPart from './Components/AllContainer/PartsAction/EditPart';
+import EditSupplier from './Components/AllContainer/SupplierActions/EditSupplier';
 
 function App() {
   const token = localStorage.getItem('token');
@@ -34,8 +36,6 @@ function App() {
           <Route path="/bom-structure/:id" element={<Container/>} />
           <Route path="/part-history/:id" element={<Container/>} />
           <Route path="/part-historyInfo/:pid/:cid" element={<Container/>} />
-          <Route path="/edit-part/:id" element={<Container/>} />
-          <Route path="/edit-supplier/:id" element={<Container/>} />
           <Route path="/supplier-details/:id" element={<Container/>} />
           <Route path="/supplier-history/:id" element={<Container/>} />
           <Route path="/part-historyInfo/:pid/:cid" element={<Container/>} />
@@ -81,6 +81,9 @@ function App() {
           <Route path='/supplier-tier2' element={<Tier2 />}/>
           <Route path='/supplier-manufacturer' element={<ManufacturerForm />}/>
           <Route path='/supplier-vendor' element={<VendorForm />}/>
+          <Route path="/edit-part/:id" element={<EditPart />} />
+          <Route path="/edit-supplier/:id" element={<EditSupplier/>} />
+
 
           {/* Parts popup */}
           <Route path='/standard-parts' element={<StandardParts />}/>

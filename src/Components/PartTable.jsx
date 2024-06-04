@@ -12,7 +12,7 @@ import message from '../utils/message';
 import ComplianceServices from '../services/compliance.services';
 import InvoiceServices from '../services/invoice.services';
 import CertificateServices from '../services/certificate.services';
-
+import {openNewWindow, URL} from '.././utils/helper';
 const { getPart, deletePart } = new PartServices();
 const { getAllDocuments, deleteDocument } = new DocumentServices();
 const { getAllComplianceDocuments, deleteComplianceDocumentById } =
@@ -55,39 +55,40 @@ const PartTable = () => {
 
   const handleDeleteBtn = async () => {
     try {
-   
-     if (choice && pathname === '/') {
-      await deletePart(id);
-      const newData = await getPart();
-      setData(newData.data);
+      if (choice && pathname === '/') {
+        await deletePart(id);
+        const newData = await getPart();
+        setData(newData.data);
+      } else if (choice && documentType === 'Supplier Contract') {
+        await deleteDocument(deleteid);
+        const newData = await getAllDocuments();
+        setData2(newData.data);
+      } else if (choice && documentType === 'Complaince Certificate') {
+        await deleteComplianceDocumentById(deleteid);
+        const newData = await getAllComplianceDocuments();
+        setComplianceData(newData.data);
+      } else if (choice && documentType === 'Invoice') {
+        await deleteInvoiceDocumentById(deleteid);
+        const newData = await getAllInvoiceDocuments();
+        setInvoiceData(newData.data);
+      } else if (choice && documentType === 'Certification_of_Insurance') {
+        await deleteCertificateDocumentById(deleteid);
+        const newData = await getAllCertificateDocuments();
+        setCertificateData(newData.data);
+      }
+    } catch (error) {
+      console.log({ error });
+      message('error', error?.response?.data);
     }
-   
-    else if (choice && documentType === 'Supplier Contract') {
-      await deleteDocument(deleteid);
-      const newData = await getAllDocuments();
-      setData2(newData.data);
-    } else if (choice && documentType === 'Complaince Certificate') {
-      await deleteComplianceDocumentById(deleteid);
-      const newData = await getAllComplianceDocuments();
-      setComplianceData(newData.data);
-    } else if (choice && documentType === 'Invoice') {
-      await deleteInvoiceDocumentById(deleteid);
-      const newData = await getAllInvoiceDocuments();
-      setInvoiceData(newData.data);
-    } else if (choice && documentType === 'Certification_of_Insurance') {
-      await deleteCertificateDocumentById(deleteid);
-      const newData = await getAllCertificateDocuments();
-      setCertificateData(newData.data);
-    }
-    
-  } catch (error) {
-    console.log({error})
-    message('error', error?.response?.data);
-  }};
+  };
 
-  const handlePartEditBtn = async () => {
-    if (pathname === '/') navigate(`/edit-part/${id}`);
-    else if (documentType == 'Supplier Contract')
+  const handlePartEditBtn = async (e) => {
+    if (pathname === '/') {
+      openNewWindow(e, `${URL}/edit-part/${id}`);
+      setTimeout(() => {
+        navigate('/');
+      }, 1000);
+    } else if (documentType == 'Supplier Contract')
       navigate(`/supplier-document-edit/${id}`);
     else if (documentType == 'Complaince Certificate')
       navigate(`/compliance-document-edit/${id}`);
@@ -292,9 +293,7 @@ const PartTable = () => {
               height={30}
               alt=''
               className={styles.deleteIcon}
-              onClick={() => {
-                handlePartEditBtn();
-              }}
+              onClick={(e) => handlePartEditBtn(e)}
             />
           </div>
         </div>
