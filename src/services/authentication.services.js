@@ -30,6 +30,23 @@ class authenticationServices {
         }
     }
 
+    async getUserByID(id) {
+        console.log({auth:isAuthenticated()})
+        try {
+            const response = await axios.get(`${baseURL}/getByIdRegisterUserWithThink/${id}`, {
+                headers: { Authorization: `Bearer ${isAuthenticated()}`},
+            });
+        
+            if (response.status!==200) {
+                throw new Error(`Failed to fetch parts: ${response.statusText}`);
+            }
+            return await response;
+        } catch (error) {
+            console.error('Error fetching parts:', error);
+            return null;
+        }
+    }
+
 
     async deleteUser(id) {
         try {

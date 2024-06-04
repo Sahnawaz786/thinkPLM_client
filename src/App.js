@@ -1,17 +1,18 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { Toaster } from 'sonner';
+import AddExistingPart from './Components/AllContainer/BomStructure/AddExistingPart';
+import EditUser from './Components/AllContainer/UserManagement/EditUser';
 import Container from './Components/Container';
 import ControlPage from './Components/Form/Authentication/ControlPage';
 import Login from './Components/Form/Authentication/Login';
 import SignUp from './Components/Form/Authentication/SignUp';
+import CustomParts from './Components/Form/Parts/CustomParts';
+import StandardParts from './Components/Form/Parts/StandardParts';
 import ManufacturerForm from './Components/Form/Supplier/ManufacturerForm';
 import Tier1 from './Components/Form/Supplier/Tier1';
 import Tier2 from './Components/Form/Supplier/Tier2';
 import VendorForm from './Components/Form/Supplier/VendorForm';
-import StandardParts from './Components/Form/Parts/StandardParts';
-import CustomParts from './Components/Form/Parts/CustomParts';
-import AddExistingPart from './Components/AllContainer/BomStructure/AddExistingPart';
 
 function App() {
   const token = localStorage.getItem('token');
@@ -65,6 +66,8 @@ function App() {
           <Route path='/certificate-attachment/:id' element={<Container/>} />
           <Route path='/certificate-document-edit/:id' element={<Container/>}/>
           <Route path='/user-management' element={<Container/>}/>
+          <Route path='/edit-user/:id' element={<EditUser/>}/>
+
 
 
 

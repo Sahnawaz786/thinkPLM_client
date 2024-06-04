@@ -40,6 +40,7 @@ import InvoiceDocumentHistory from './AllContainer/InvoiceActions/InvoiceDocumen
 import InvoiceDocumentHistoryInfo from './AllContainer/InvoiceActions/InvoiceDocumentHistoryInfo';
 import SupplierHistory from './AllContainer/SupplierActions/SupplierHistory';
 import SupplierHistoryInfo from './AllContainer/SupplierActions/SupplierHistoryInfo';
+import EditUser from './AllContainer/UserManagement/EditUser';
 import UserManagement from './AllContainer/UserManagement/UserManagement';
 
 const RightBar = () => {
@@ -243,7 +244,11 @@ const RightBar = () => {
         componentToRender = <UserManagement/>
         break;
 
-        
+      case `/edit-user/${id}`:
+      if (id) {
+        componentToRender = <EditUser id={id} />;
+      }
+      break;
 
     default:
       componentToRender = <PartTable />;

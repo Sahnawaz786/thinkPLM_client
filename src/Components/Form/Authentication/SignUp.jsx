@@ -12,6 +12,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const categoryItemsCtx = useContext(categoryContext);
   const [selected, setSelected] = useState("");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [timer, setTimer] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
@@ -41,6 +42,7 @@ const SignUp = () => {
   console.log("selected:", selected);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsButtonDisabled(true)
     setTimer(true);
     const token = localStorage.getItem("token");
 
@@ -77,7 +79,7 @@ const SignUp = () => {
         setTimeout(() => {
           setTimer(false);
           closeWindow();
-        }, 5000);
+        }, 3000);
       }
     } catch (error) {
       console.error({ error });
@@ -86,6 +88,9 @@ const SignUp = () => {
         error?.response?.data?.message?.slice(0, 60) || "Something went wrong"
       );
       setTimer(false);
+    }
+    finally{
+      setIsButtonDisabled(false)
     }
   };
   return timer ? (
@@ -231,7 +236,7 @@ const SignUp = () => {
         </div> */}
         </div>
         <div className={styles.submitBtn}>
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={handleSubmit} disabled={isButtonDisabled}>Submit</Button>
         </div>
       </div>
     </div>

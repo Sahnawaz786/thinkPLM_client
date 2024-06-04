@@ -34,6 +34,11 @@ const UserManagement = () => {
       }, 1000)
   }
 
+  const handlePartEditBtn = async () => {
+    navigate(`/edit-user/${id}`);
+   
+}
+
   const handleDeleteBtn=async()=>{
     if (choice) {
       console.log("choice is:",choice)
@@ -107,7 +112,7 @@ const UserManagement = () => {
               alt=""
               className={styles.deleteIcon}
               onClick={() => {
-                // handlePartEditBtn();
+                handlePartEditBtn();
               }}
             />
           </div>

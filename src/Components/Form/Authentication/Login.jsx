@@ -4,13 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Auth.module.css';
 
 const Login = () => {
-
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
    e.preventDefault();
+   setIsButtonDisabled(true);
    const credentials = btoa(`${username}:${password}`);
     try {
       const response = await axios.post(
@@ -30,6 +31,9 @@ const Login = () => {
       window.location.reload();
     } catch (error) {
       setError('Invalid credentials');
+    }
+    finally{
+      setIsButtonDisabled(false)
     }
   };
 
@@ -59,7 +63,7 @@ const Login = () => {
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
             </div>
             <div className={styles.submitBtnlogin}>
-               <button>Login</button>
+               <button disabled={isButtonDisabled}>Login</button>
             </div>
          </div>
          </form>
