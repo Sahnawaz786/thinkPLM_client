@@ -15,6 +15,11 @@ import Tier2 from './Components/Form/Supplier/Tier2';
 import VendorForm from './Components/Form/Supplier/VendorForm';
 import EditPart from './Components/AllContainer/PartsAction/EditPart';
 import EditSupplier from './Components/AllContainer/SupplierActions/EditSupplier';
+import SupplierContract from './Components/Form/SupplierDocument/SupplierContract';
+import Invoices from './Components/Form/SupplierDocument/Invoice';
+import CertificateOFInsurance from './Components/Form/SupplierDocument/CertificateOFInsurance';
+import ComplianceCertificate from './Components/Form/SupplierDocument/ComplianceCertificate';
+
 
 function App() {
   const token = localStorage.getItem('token');
@@ -91,7 +96,12 @@ function App() {
 
           {/* BOM popup */}
           <Route path='/add-existing-bom-part/:id' element={<AddExistingPart />}/>
-
+          {/* Document */}
+          <Route path='/supplier-contract' element={<SupplierContract />}/>
+          <Route path='/supplier-invoice' element={<Invoices />}/>
+          <Route path='/supplier-certificate-of-insurance' element={<CertificateOFInsurance />}/>
+          <Route path='/supplier-compliance-certificate' element={<ComplianceCertificate />}/>
+          
           </>:null}
 
           {!isLoggedIn ?<Route path='/login' element={<Login/>}/>:null }
