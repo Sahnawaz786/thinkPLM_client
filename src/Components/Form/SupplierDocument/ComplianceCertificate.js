@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import HashLoader from 'react-spinners/HashLoader';
 import { categoryContext } from '../../../store/CategoryProvider';
 import spinnerStyle from '../../../style.module.css';
-import { isAuthenticated } from '../../../utils/helper';
+import { closeWindow, isAuthenticated } from '../../../utils/helper';
 import message from '../../../utils/message';
 import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
 import styles from '../Parts/PartAttribut.module.css';
 
-const ComplianceCertifcate = () => {
+const ComplianceCertificate = () => {
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState('');
@@ -192,10 +192,11 @@ const ComplianceCertifcate = () => {
         });
 
         setTimer(true);
+        message('success', 'Supplier Compliance Certificate Created, please refresh the page to get the latest data')
         setTimeout(() => {
           setTimer(false);
-          navigate('/');
-        }, 1000);
+          closeWindow();
+        }, 5000);
       }
       else{
         const data=await res.json();
@@ -406,4 +407,4 @@ const ComplianceCertifcate = () => {
   );
 };
 
-export default ComplianceCertifcate;
+export default ComplianceCertificate;
