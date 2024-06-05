@@ -35,7 +35,7 @@ const UserManagement = () => {
   }
 
   const handlePartEditBtn = async () => {
-    navigate(`/edit-user/${id}`);
+     navigate(`/edit-user/${id}`);
    
 }
 
