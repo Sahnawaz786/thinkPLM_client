@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import { ImCross } from 'react-icons/im';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import SupplierServices from '../services/supplier.services';
 import styles from '../style.module.css';
-import { useLocation } from 'react-router-dom';
 
 const LeftBar = () => {
   const {getSupplier} = new SupplierServices();
@@ -22,7 +21,7 @@ const LeftBar = () => {
 
   const handleNavToggle = (elem) => {
     setData((data) =>
-      data.map((item) =>
+      data?.map((item) =>
         item === elem ? { ...item, isVisible: !item.isVisible } : {...item,isVisible:''}
       )
     );
@@ -30,7 +29,7 @@ const LeftBar = () => {
 
   const handleAPI = async () => {
     const data = await getSupplier();
-    const newData = data.data.map((elem) => ({ ...elem, isVisible: false }));
+    const newData = data?.data?.map((elem) => ({ ...elem, isVisible: false }));
     setData(newData.reverse());
     console.log('suppliers', data);
 };
@@ -76,7 +75,7 @@ const LeftBar = () => {
               </Link>
             </div>
 
-            {data.map((elem, index) => {
+            {data?.map((elem, index) => {
               return (
                 <div  key={index}>
                   <div className={styles.leftbarChild}>
@@ -88,12 +87,12 @@ const LeftBar = () => {
                       />
 
                       <span title={elem.category} onClick={() => handleNavToggle(elem)}>
-                        {elem.name}
+                        {elem?.name}
                       </span>
                     </div>
-                    {elem.isVisible ? (
+                    {elem?.isVisible ? (
                       <div className={styles.leftbarOptions}>
-                        <Link to={`/supplier-details/${elem.id}`}>Details</Link>
+                        <Link to={`/supplier-details/${elem?.id}`}>Details</Link>
                         <Link to={`/user-management`}>User Management</Link>
                         <Link to={'/onboard-status'}>Onboarding status</Link>
                         <Link to='/contract-details'>View Contract details</Link>

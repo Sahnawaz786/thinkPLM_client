@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import authenticationServices from '../services/authentication.services';
 import styles from '../style.module.css';
 
 
 const Navbar = () => {
+const {getUser}=new authenticationServices();
  const navigate=useNavigate();
+ const [users,setUsers]=useState();
+
+ const fetchUsers = async () => {
+  const userData= await getUser();
+  setUsers(userData?.data || [])
+};
+    console.log({ users });
+    useEffect(() => {
+      fetchUsers();
+    }, []);
+
   const logout = () => {
     localStorage.removeItem('token');
     navigate('/')
@@ -18,7 +31,14 @@ const Navbar = () => {
         <p ><Link className={styles.home} to='/'>ThinkPLM</Link></p>
       </div>
       <div>
-        <p className={styles.text}>login by : Talib Ali</p>
+        {users?.map((user)=>{
+          return (
+            <>
+                <p className={styles.text}>login by : {user?.username}</p>
+            </>
+          )
+        })}
+       
       </div>
       <div>
         <button onClick={logout}>Logout</button>

@@ -224,8 +224,8 @@ const SignUp = () => {
             </select>
 
           </div>
-          <div className={styles.submitBtn} styles={{marginTop:"-20px"}}>
-          <Button onClick={handleSubmit} disabled={isButtonDisabled} style={{marginBottom:"20rem" }}>Submit</Button>
+          <div className={styles.submitBtn} >
+          <Button onClick={handleSubmit} disabled={isButtonDisabled} >Submit</Button>
           </div>
 
           {/* <div className={styles.fields}>

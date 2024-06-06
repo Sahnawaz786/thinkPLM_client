@@ -9,10 +9,10 @@ import styles from '../style.module.css';
 import DisplayAlert from '../utils/DisplayAlert';
 import message from '../utils/message';
 // import 'bootstrap/dist/css/bootstrap.min.css';
+import { openNewWindow, URL } from '.././utils/helper';
+import CertificateServices from '../services/certificate.services';
 import ComplianceServices from '../services/compliance.services';
 import InvoiceServices from '../services/invoice.services';
-import CertificateServices from '../services/certificate.services';
-import {openNewWindow, URL} from '.././utils/helper';
 const { getPart, deletePart } = new PartServices();
 const { getAllDocuments, deleteDocument } = new DocumentServices();
 const { getAllComplianceDocuments, deleteComplianceDocumentById } =
@@ -150,15 +150,15 @@ const PartTable = () => {
       };
     });
 
-    setData(newPartsData.reverse());
-    setData2(newPartsData2.reverse());
-    setComplianceData(complianceData.reverse());
-    setInvoiceData(InvoiceData.reverse());
-    setCertificateData(CertificateData.reverse());
-    console.log('PARTSDATA', newPartsData);
-    console.log('Parts', response.data);
-    console.log('DATAIS', data2);
-    console.log('Compliance', complianceData);
+    setData(newPartsData?.reverse());
+    setData2(newPartsData2?.reverse());
+    setComplianceData(complianceData?.reverse());
+    setInvoiceData(InvoiceData?.reverse());
+    setCertificateData(CertificateData?.reverse());
+    // console.log('PARTSDATA', newPartsData);
+    // console.log('Parts', response.data);
+    // console.log('DATAIS', data2);
+    // console.log('Compliance', complianceData);
   };
 
   useEffect(() => {

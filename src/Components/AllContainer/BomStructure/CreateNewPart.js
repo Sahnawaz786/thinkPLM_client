@@ -7,6 +7,7 @@ import BomServices from '../../../services/bom.services';
 import { categoryContext } from '../../../store/CategoryProvider';
 import { PartsContext } from '../../../store/PartsProvider';
 import spinnerStyle from '../../../style.module.css';
+import { isAuthenticated } from '../../../utils/helper';
 import message from '../../../utils/message';
 import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
 import styles from '../../Form/Parts/PartAttribut.module.css';
@@ -116,6 +117,7 @@ const CreateNewPart = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${isAuthenticated()}`
         },
         body: JSON.stringify({
           part_number,
@@ -144,7 +146,11 @@ const CreateNewPart = () => {
         }),
       });
       console.log({res})
-      const { data } = await axios.get(`http://localhost:8181/SupplierMasterObject`);
+      const { data } = await axios.get(`http://localhost:8181/SupplierMasterObject`,{
+        headers: {
+          Authorization: `Bearer ${isAuthenticated()}`
+        }
+      });
       const newParts = (data || [])?.sort((a, b) => b.id - a.id)?.[0];
       console.log('====================================');
       console.log({data, newParts});

@@ -16,13 +16,14 @@ const UserManagement = () => {
 
   const fetchUsers = async () => {
     const userData= await getUser();
-    setUsers(userData.data)
+    setUsers(userData?.data || [])
   };
   console.log({ users });
   useEffect(() => {
     fetchUsers();
   }, []);
 
+ 
   const handleCheckboxChange = (id) => {
     setSelectedId(id);
   };
