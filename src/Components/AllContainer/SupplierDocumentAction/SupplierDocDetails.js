@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import HashLoader from 'react-spinners/HashLoader';
 import DocumentServices from '../../../services/document.services';
 import { UserContext } from '../../../store/UserProvider';
@@ -7,6 +7,7 @@ import styles from '../../../style.module.css';
 import DisplayAlert from '../../../utils/DisplayAlert';
 import classes from '../SupplierActions/Supplier.module.css';
 import SupplierDocContainer from '../SupplierDocumentContainer/SupplierDocContainer';
+import { URL, openNewWindow } from '../../../utils/helper';
 
 const SupplierDocDetails = ({ id }) => {
 
@@ -14,7 +15,7 @@ const SupplierDocDetails = ({ id }) => {
 const {choice,showAlert,setShowAlert}=useContext(UserContext);
  const [timer,setTimer] = useState(true);
 const  [docsupplier,setDocSupplier] = useState([]);
-
+ const location = useLocation();
  const navigate=useNavigate()
 
 const {getDocumentById,getAllDocuments,deleteDocument}=new DocumentServices();
@@ -85,8 +86,12 @@ return (
         width={30}
         height={30}
         alt=''
-        onClick={()=>navigate(`/supplier-document-edit/${id}`)}
-
+        onClick={(e)=> {
+          openNewWindow(e, `${URL}/supplier-document-edit/${id}`);
+          setTimeout(() => {
+            navigate(location?.pathname);
+          }, 1000);
+        }}
       />
       <img
         src='https://cdn-icons-png.freepik.com/512/9740/9740598.png'

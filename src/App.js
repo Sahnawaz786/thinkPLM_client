@@ -2,8 +2,6 @@ import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import AddExistingPart from './Components/AllContainer/BomStructure/AddExistingPart';
-import EditPart from './Components/AllContainer/PartsAction/EditPart';
-import EditSupplier from './Components/AllContainer/SupplierActions/EditSupplier';
 import EditUser from './Components/AllContainer/UserManagement/EditUser';
 import Container from './Components/Container';
 import ControlPage from './Components/Form/Authentication/ControlPage';
@@ -15,10 +13,17 @@ import ManufacturerForm from './Components/Form/Supplier/ManufacturerForm';
 import Tier1 from './Components/Form/Supplier/Tier1';
 import Tier2 from './Components/Form/Supplier/Tier2';
 import VendorForm from './Components/Form/Supplier/VendorForm';
+import EditPart from './Components/AllContainer/PartsAction/EditPart';
+import EditSupplier from './Components/AllContainer/SupplierActions/EditSupplier';
+import SupplierContract from './Components/Form/SupplierDocument/SupplierContract';
+import Invoices from './Components/Form/SupplierDocument/Invoice';
 import CertificateOFInsurance from './Components/Form/SupplierDocument/CertificateOFInsurance';
 import ComplianceCertificate from './Components/Form/SupplierDocument/ComplianceCertificate';
-import Invoices from './Components/Form/SupplierDocument/Invoice';
-import SupplierContract from './Components/Form/SupplierDocument/SupplierContract';
+import CreateNewPart from './Components/AllContainer/BomStructure/CreateNewPart';
+import SupplierDocEdit from './Components/AllContainer/SupplierDocumentAction/SupplierDocEdit';
+import ComplianceDocEdit from './Components/AllContainer/ComplianceCertificateActions/ComplianceDocEdit';
+import InvoiceDocEdit from './Components/AllContainer/InvoiceActions/InvoiceDocEdit';
+import CertificateDocEdit from './Components/AllContainer/CertificateOfInsuranceActions/CertificateDocEdit';
 
 
 function App() {
@@ -49,7 +54,6 @@ function App() {
           <Route path="/reference-object/:id" element={<Container/>} />
           <Route path="/supplier-documents" element={<Container/>} />
           <Route path='/supplier-document-details/:id' element={<Container/>}/>
-          <Route path='/supplier-document-edit/:id' element={<Container/>}/>
           <Route path='/attachment/:id' element={<Container/>} />
           <Route path='/document-history/:id' element={<Container/>}/>
           <Route path='/document-historyInfo/:pid/:cid' element={<Container/>}/>
@@ -57,24 +61,20 @@ function App() {
           <Route path='/compliance-document-history/:id' element={<Container/>}/>
           <Route path='/compliance-document-historyInfo/:pid/:cid' element={<Container/>}/>
           <Route path='/compliance-attachment/:id' element={<Container/>} />
-          <Route path='/compliance-document-edit/:id' element={<Container/>}/>
 
           <Route path='/invoice-documents-details/:id' element={<Container/>}/>
           <Route path='/invoice-document-history/:id' element={<Container/>}/>
           <Route path='/invoice-document-historyInfo/:pid/:cid' element={<Container/>}/>
           <Route path='/invoice-attachment/:id' element={<Container/>} />
-          <Route path='/invoice-document-edit/:id' element={<Container/>}/>
 
           <Route path='/certificate-documents-details/:id' element={<Container/>}/>
           <Route path='/certificate-document-history/:id' element={<Container/>}/>
           <Route path='/certificate-document-historyInfo/:pid/:cid' element={<Container/>}/>
           <Route path='/certificate-attachment/:id' element={<Container/>} />
-          <Route path='/certificate-document-edit/:id' element={<Container/>}/>
           <Route path='/user-management' element={<Container/>}/>
           <Route path='/edit-user/:id' element={<EditUser/>}/>
           <Route path='/task' element={<Container/>}/>
           <Route path='/suppliers' element={<Container/>} />
-
 
 
 
@@ -99,12 +99,17 @@ function App() {
 
           {/* BOM popup */}
           <Route path='/add-existing-bom-part/:id' element={<AddExistingPart />}/>
+          <Route path='/add-new-bom-part/:id' element={<CreateNewPart />}/>
           {/* Document */}
           <Route path='/supplier-contract' element={<SupplierContract />}/>
           <Route path='/supplier-invoice' element={<Invoices />}/>
           <Route path='/supplier-certificate-of-insurance' element={<CertificateOFInsurance />}/>
           <Route path='/supplier-compliance-certificate' element={<ComplianceCertificate />}/>
-          
+          {/* Document Edit */}
+          <Route path='/supplier-document-edit/:id' element={<SupplierDocEdit/>}/>
+          <Route path='/compliance-document-edit/:id' element={<ComplianceDocEdit />}/>
+          <Route path='/invoice-document-edit/:id' element={<InvoiceDocEdit/>}/>
+          <Route path='/certificate-document-edit/:id' element={<CertificateDocEdit />}/>
           </>:null}
 
           {!isLoggedIn ?<Route path='/login' element={<Login/>}/>:null }

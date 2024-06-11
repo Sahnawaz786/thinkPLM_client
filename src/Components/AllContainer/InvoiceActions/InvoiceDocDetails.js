@@ -4,10 +4,11 @@ import { UserContext } from '../../../store/UserProvider';
 import DisplayAlert from '../../../utils/DisplayAlert';
 import styles from '../../../style.module.css';
 import classes from '../SupplierActions/Supplier.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ComplianceCertificate from '../SupplierDocumentContainer/ComplianceCertificate';
 import InvoiceDocContainer from '../SupplierDocumentContainer/InvoiceDocContainer';
 import InvoiceServices from '../../../services/invoice.services';
+import { URL, openNewWindow } from '../../../utils/helper';
 
 const { getInvoiceDocumentById,getAllInvoiceDocuments,deleteInvoiceDocumentById } = new InvoiceServices();
 
@@ -17,7 +18,7 @@ const InvoiceDocDetails = ({ id }) => {
   const { choice, showAlert, setShowAlert } = useContext(UserContext);
   const [timer, setTimer] = useState(true);
   const [docsupplier, setDocSupplier] = useState([]);
-
+  const location = useLocation();
   const navigate = useNavigate()
 
 
@@ -86,7 +87,13 @@ const InvoiceDocDetails = ({ id }) => {
           width={30}
           height={30}
           alt=''
-          onClick={() => navigate(`/invoice-document-edit/${id}`)}
+          onClick={(e) => {
+            openNewWindow(e, `${URL}/invoice-document-edit/${id}`);
+            setTimeout(() => {
+              navigate(location?.pathname);
+            }, 1000);
+            // navigate(`/invoice-document-edit/${id}`)
+          }}
 
         />
         <img
