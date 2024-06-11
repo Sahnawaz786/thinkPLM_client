@@ -6,15 +6,17 @@ import DocumentServices from '../../../services/document.services';
 import { categoryContext } from "../../../store/CategoryProvider";
 import spinnerStyle from "../../../style.module.css";
 import FileInput from '../../../utils/FileInput';
-import { isAuthenticated } from "../../../utils/helper";
+import { closeWindow, isAuthenticated } from "../../../utils/helper";
 import styles from '../../Form/Parts/PartAttribut.module.css';
+import message from '../../../utils/message';
 
-const SupplierDocEdit = ({ id }) => {
-
+const SupplierDocEdit = () => {
+    let id = '';
     const { getDocumentById } = new DocumentServices();
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const location = useLocation();
     const editId = location?.pathname?.split('/').slice(-1).join();
+    id = editId;
     console.log({ location: location?.pathname?.split('/').slice(-1).join() })
     const categoryItemsCtx = useContext(categoryContext);
 
@@ -140,6 +142,7 @@ const SupplierDocEdit = ({ id }) => {
 
     const submitHandler = async (event) => {
         event.preventDefault();
+        setTimer(true);
         setIsButtonDisabled(true)
         console.log("USER---DATA", { sajjad: { ...userData, supplier_contract: [{ ...userData?.supplier_contract[0], attachment: attachments }] } })
 
@@ -159,10 +162,15 @@ const SupplierDocEdit = ({ id }) => {
 
             // console.log({res});
             if (res.ok) {
-                navigate("/");
+                message('success', 'Supplier Document Edited, please refresh the page to get the latest data')
+                setTimeout(() => {
+                  setTimer(false);
+                  closeWindow();
+             }, 5000);
             }
         } catch (error) {
             console.log(error);
+            setTimer(false);
         }
     };
 

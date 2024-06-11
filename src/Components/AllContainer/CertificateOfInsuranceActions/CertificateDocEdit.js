@@ -6,8 +6,9 @@ import CertificateServices from '../../../services/certificate.services';
 import { categoryContext } from "../../../store/CategoryProvider";
 import spinnerStyle from "../../../style.module.css";
 import FileInput from '../../../utils/FileInput';
-import { isAuthenticated } from "../../../utils/helper";
+import { closeWindow, isAuthenticated } from "../../../utils/helper";
 import styles from '../../Form/Parts/PartAttribut.module.css';
+import message from '../../../utils/message';
 
 const CertificateDocEdit = ({ id }) => {
 
@@ -143,8 +144,7 @@ const CertificateDocEdit = ({ id }) => {
 
     const submitHandler = async (event) => {
         event.preventDefault();
-        console.log("USER---DATA", { sajjad: { ...userData, docs: [{ ...userData?.docs[0], attachment: attachments }] } })
-
+        setTimer(true);
         try {
             // `http://localhost:8181/SupplierMasterObject`
 
@@ -161,10 +161,15 @@ const CertificateDocEdit = ({ id }) => {
 
             // console.log({res});
             if (res.ok) {
-                navigate("/");
+                message('success', 'Certificate Document Edited, please refresh the page to get the latest data')
+                setTimeout(() => {
+                  setTimer(false);
+                  closeWindow();
+                }, 5000);
             }
         } catch (error) {
             console.log(error);
+            setTimer(false);
         }
     };
 

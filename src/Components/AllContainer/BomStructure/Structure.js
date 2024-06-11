@@ -25,9 +25,9 @@ const Structure = ({ id }) => {
   const [createModalShown, setCreateModalIsshown] = useState(false);
   const [editModalShown, setEditModalIsshown] = useState(false);
   // const partsProvider = useContext(PartsProvider);
-  const { selectedData, initialBomData, setInitialBomData } = useContext(PartsContext);
-  // console.log([initialBomData])
-  const { choice, showAlert, setShowAlert,  handleCloseDeleteBomModal, handleShowDeleteBomModal, showDeleteBomModal, setShowDeleteBomModal } = useContext(UserContext);
+
+  const { selectedData, setInitialBomData } = useContext(PartsContext);
+  const { showAlert, showDeleteBomModal, setShowDeleteBomModal } = useContext(UserContext);
   const location = useLocation();
   const navigate = useNavigate();
   console.log({ selectedData, location });
@@ -43,8 +43,12 @@ const Structure = ({ id }) => {
     modalIsshown(false);
   };
 
-  const createModalAddHandler = () => {
-    setCreateModalIsshown(true);
+  const createModalAddHandler = (e) => {
+    const parentId = location?.pathname?.slice(-1);
+    openNewWindow(e, `${URL}/add-new-bom-part/${parentId}`);
+    setTimeout(() => {
+      navigate(location?.pathname);
+    }, 1000)
   };
 
   const createModalHideHandler = () => {
@@ -165,9 +169,7 @@ const Structure = ({ id }) => {
                     width={35}
                     height={35}
                     alt='part'
-                    onClick={() => {
-                      createModalAddHandler();
-                    }}
+                    onClick={(e) => createModalAddHandler(e)}
                     className={styles.icon_pointer}
 
                   />
