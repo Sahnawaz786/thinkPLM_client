@@ -184,19 +184,36 @@ const PartTable = () => {
       message('error', error?.response?.data);
     }
   };
-
+  console.log({documentType})
   const handlePartEditBtn = async (e) => {
     if (pathname === '/') {
       openNewWindow(e, `${URL}/edit-part/${id}`);
       setTimeout(() => {
         navigate('/');
       }, 1000);
-    } else if (documentType === 'Supplier Contract')
-      navigate(`/supplier-document-edit/${id}`);
-    else if (documentType === 'Complaince Certificate')
-      navigate(`/compliance-document-edit/${id}`);
-    else if (documentType === 'Invoice')
-      navigate(`/invoice-document-edit/${id}`);
+    } else if (documentType === 'Supplier Contract') {
+      openNewWindow(e, `${URL}/supplier-document-edit/${id}`);
+      setTimeout(() => {
+        navigate('/document-table');
+      }, 1000);
+    }
+    else if (documentType === 'Complaince Certificate') {
+      openNewWindow(e, `${URL}/compliance-document-edit/${id}`);
+      setTimeout(() => {
+        navigate('/document-table');
+      }, 1000);
+    }
+    else if (documentType === 'Invoice') {
+      openNewWindow(e, `${URL}/invoice-document-edit/${id}`);
+      setTimeout(() => {
+        navigate('/document-table');
+      }, 1000);
+    } else if (documentType === 'Certification_of_Insurance') {
+      openNewWindow(e, `${URL}/certificate-document-edit/${id}`);
+      setTimeout(() => {
+        navigate('/document-table');
+      }, 1000);
+    }
   };
 
   useEffect(() => {

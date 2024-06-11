@@ -6,8 +6,9 @@ import ComplianceServices from '../../../services/compliance.services';
 import { categoryContext } from "../../../store/CategoryProvider";
 import spinnerStyle from "../../../style.module.css";
 import FileInput from '../../../utils/FileInput';
-import { isAuthenticated } from "../../../utils/helper";
+import { closeWindow, isAuthenticated } from "../../../utils/helper";
 import styles from '../../Form/Parts/PartAttribut.module.css';
+import message from '../../../utils/message';
 
 const ComplianceDocEdit = ({ id }) => {
 
@@ -142,6 +143,7 @@ const ComplianceDocEdit = ({ id }) => {
 
     const submitHandler = async (event) => {
         event.preventDefault();
+        setTimer(true);
         console.log("USER---DATA", { sajjad: { ...userData, docs: [{ ...userData?.docs[0], attachment: attachments }] } })
 
         try {
@@ -160,10 +162,15 @@ const ComplianceDocEdit = ({ id }) => {
 
             // console.log({res});
             if (res.ok) {
-                navigate("/");
+                message('success', 'Compliance Document Edited, please refresh the page to get the latest data')
+                setTimeout(() => {
+                  setTimer(false);
+                  closeWindow();
+             }, 5000);
             }
         } catch (error) {
             console.log(error);
+            setTimer(false);
         }
     };
 
