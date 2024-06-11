@@ -40,6 +40,8 @@ import InvoiceDocumentHistory from './AllContainer/InvoiceActions/InvoiceDocumen
 import InvoiceDocumentHistoryInfo from './AllContainer/InvoiceActions/InvoiceDocumentHistoryInfo';
 import SupplierHistory from './AllContainer/SupplierActions/SupplierHistory';
 import SupplierHistoryInfo from './AllContainer/SupplierActions/SupplierHistoryInfo';
+import SupplierTable from './AllContainer/Task/SupplierTable';
+import Task from './AllContainer/Task/Task';
 import EditUser from './AllContainer/UserManagement/EditUser';
 import UserManagement from './AllContainer/UserManagement/UserManagement';
 
@@ -242,6 +244,13 @@ const RightBar = () => {
 
       case '/user-management':
         componentToRender = <UserManagement/>
+        break;
+
+      case '/task':
+        componentToRender = <Task/>
+        break;
+      case '/suppliers':
+        componentToRender = <SupplierTable/>
         break;
 
       case `/edit-user/${id}`:

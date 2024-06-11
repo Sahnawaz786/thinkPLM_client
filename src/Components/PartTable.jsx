@@ -111,14 +111,14 @@ const PartTable = () => {
 
     searchtext
       ? (newPartsData = response?.data?.filter((elem) =>
-          elem.part_number.includes(searchtext)
-        ))
+        elem.part_number.includes(searchtext)
+      ))
       : (newPartsData = response?.data.map((elem) => {
-          return {
-            ...elem,
-            parts: [elem?.parts?.sort((a, b) => b.id - a.id)?.[0]],
-          };
-        }));
+        return {
+          ...elem,
+          parts: [elem?.parts?.sort((a, b) => b.id - a.id)?.[0]],
+        };
+      }));
 
     const newPartsData2 = response2?.data.map((elem) => {
       return {
@@ -296,7 +296,22 @@ const PartTable = () => {
               onClick={(e) => handlePartEditBtn(e)}
             />
           </div>
+
+          <div title='Task'>
+            <img
+              src='https://img.freepik.com/free-vector/online-document-form-digital-agreement-electronic-contract-internet-questionnaire-list-note-voting-ballot-poll-flat-design-element_335657-2667.jpg'
+              width={30}
+              height={30}
+              alt=''
+              className={styles.deleteIcon}
+              onClick={() => {
+                navigate('/task')
+              }}
+            />
+          </div>
         </div>
+
+
 
         <div className={styles.searchSection}>
           <input
