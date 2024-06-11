@@ -19,9 +19,7 @@ const AddExistingPart = () => {
   const searchPart = async () => {
 
     const searchPartInfo = await searchBomPart(partNumber);
-    console.log("checking:", searchPartInfo)
     const searchData = (searchPartInfo?.data || [])
-    console.log('search info data', searchData);
     setSearchPartDetails(searchData)
   }
 
@@ -29,7 +27,6 @@ const AddExistingPart = () => {
     searchPart()
   }, [])
   // id
-  console.log("searching........", searchPartDetails)
 
   // const handleKeyPress = (event) => {
   //   if (event.key === 'Enter') {
@@ -37,28 +34,32 @@ const AddExistingPart = () => {
   //   }
 
   const handleAddExistingPartsClick = async () => {
-    setIsButtonDisabled(true)
-    setTimer(true);
-    console.log({ searchPartDetails, location: location?.pathname?.split('/').slice(-1).join() });
-    const parentId = Number(location?.pathname?.split('/').slice(-1).join());
-    const childId = Number(searchPartDetails?.[0]?.id);
-    console.log({childId, parentId: bomIds?.childId || parentId});
-    const bomIdsLocalStorage = JSON.parse(localStorage.getItem('bomIds'));
-    const payload = {
-      ida3a5: bomIdsLocalStorage?.childId || bomIds?.childId || parentId, // ====> partsId   (parent)   302
-      ida3b5: childId, //  ====> partsMasterId (child)  152
+    try {
+      setIsButtonDisabled(true)
+      setTimer(true);
+      const parentId = Number(location?.pathname?.split('/').slice(-1).join());
+      const childId = Number(searchPartDetails?.[0]?.id);
+      const bomIdsLocalStorage = JSON.parse(localStorage.getItem('bomIds'));
+      const payload = {
+        ida3a5: bomIdsLocalStorage?.childId || bomIds?.childId || parentId, // ====> partsId   (parent)   302
+        ida3b5: childId, //  ====> partsMasterId (child)  152
+      }
+      if ((bomIdsLocalStorage?.childId || bomIds?.childId ) && parentId) {
+        await addBomPart(payload);
+      } else {
+        message('error', 'BOM Parent or Child ID is missing');
+      }
+  
+       message('success', 'BOM Inserted, please refresh the page to get the latest data')
+          setTimeout(() => {
+            setTimer(false);
+            closeWindow();
+       }, 5000);
+    } catch (error) {
+      console.log(error);
+    } finally{
+      setIsButtonDisabled(false)
     }
-    if ((bomIdsLocalStorage?.childId || bomIds?.childId ) && parentId) {
-      await addBomPart(payload);
-    } else {
-      message('error', 'BOM Parent or Child ID is missing');
-    }
-
-     message('success', 'BOM Inserted, please refresh the page to get the latest data')
-        setTimeout(() => {
-          setTimer(false);
-          closeWindow();
-     }, 5000);
   };
 
   return (timer ?  <div className={classes.spinnerContainer}>
