@@ -417,6 +417,16 @@ const PartTable = () => {
               onClick={(e) => handlePartEditBtn(e)}
             />
           </div>
+          <div title='Edit'>
+            <img
+              src='images/task.jpg'
+              width={30}
+              height={30}
+              alt=''
+              className={styles.deleteIcon}
+              onClick={(e) => navigate('/task')}
+            />
+          </div>
         </div>
 
         <div className={styles.searchSection}>
