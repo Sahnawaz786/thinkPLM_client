@@ -187,29 +187,29 @@ const PartTable = () => {
   console.log({documentType})
   const handlePartEditBtn = async (e) => {
     if (pathname === '/') {
-      openNewWindow(e, ${URL}/edit-part/${id});
+      openNewWindow(e, `${URL}/edit-part/${id}`);
       setTimeout(() => {
         navigate('/');
       }, 1000);
     } else if (documentType === 'Supplier Contract') {
-      openNewWindow(e, ${URL}/supplier-document-edit/${id});
+      openNewWindow(e, `${URL}/supplier-document-edit/${id}`);
       setTimeout(() => {
         navigate('/document-table');
       }, 1000);
     }
     else if (documentType === 'Complaince Certificate') {
-      openNewWindow(e, ${URL}/compliance-document-edit/${id});
+      openNewWindow(e, `${URL}/compliance-document-edit/${id}`);
       setTimeout(() => {
         navigate('/document-table');
       }, 1000);
     }
     else if (documentType === 'Invoice') {
-      openNewWindow(e, ${URL}/invoice-document-edit/${id});
+      openNewWindow(e, `${URL}/invoice-document-edit/${id}`);
       setTimeout(() => {
         navigate('/document-table');
       }, 1000);
     } else if (documentType === 'Certification_of_Insurance') {
-      openNewWindow(e, ${URL}/certificate-document-edit/${id});
+      openNewWindow(e, `${URL}/certificate-document-edit/${id}`);
       setTimeout(() => {
         navigate('/document-table');
       }, 1000);
@@ -417,6 +417,16 @@ const PartTable = () => {
               onClick={(e) => handlePartEditBtn(e)}
             />
           </div>
+          <div title='Edit'>
+            <img
+              src='images/task.jpg'
+              width={30}
+              height={30}
+              alt=''
+              className={styles.deleteIcon}
+              onClick={(e) => navigate('/task')}
+            />
+          </div>
         </div>
 
         <div className={styles.searchSection}>
@@ -584,7 +594,7 @@ const PartTable = () => {
                     height={20}
                     className={styles.icon_pointer}
                     onClick={() => {
-                      navigate(/supplier-document-details/${elem.id});
+                      navigate(`/supplier-document-details/${elem.id}`);
                     }}
                   />
                 </td>
@@ -646,7 +656,7 @@ const PartTable = () => {
                     height={20}
                     className={styles.icon_pointer}
                     onClick={() => {
-                      navigate(/compliance-documents-details/${elem.id});
+                      navigate(`/compliance-documents-details/${elem.id}`);
                     }}
                   />
                 </td>
@@ -708,7 +718,7 @@ const PartTable = () => {
                     height={20}
                     className={styles.icon_pointer}
                     onClick={() => {
-                      navigate(/invoice-documents-details/${elem.id});
+                      navigate(`/invoice-documents-details/${elem.id}`);
                     }}
                   />
                 </td>
@@ -770,7 +780,7 @@ const PartTable = () => {
                     height={20}
                     className={styles.icon_pointer}
                     onClick={() => {
-                      navigate(/certificate-documents-details/${elem.id});
+                      navigate(`/certificate-documents-details/${elem.id}`);
                     }}
                   />
                 </td>
