@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom';
+import HashLoader from 'react-spinners/HashLoader';
 import BomServices from "../../../services/bom.services";
 import { PartsContext } from '../../../store/PartsProvider';
-import classes from "./AddExistingPart.module.css";
-import message from '../../../utils/message';
 import { closeWindow } from '../../../utils/helper';
-import HashLoader from 'react-spinners/HashLoader';
+import message from '../../../utils/message';
+import classes from "./AddExistingPart.module.css";
 
 const { searchBomPart, addBomPart } = new BomServices();
 const AddExistingPart = () => {
@@ -28,7 +28,7 @@ const AddExistingPart = () => {
   useEffect(() => {
     searchPart()
   }, [])
-  // id
+ 
   console.log("searching........", searchPartDetails)
 
   // const handleKeyPress = (event) => {
@@ -104,7 +104,7 @@ const AddExistingPart = () => {
                 </tr>
               </thead>
               <tbody>
-                {searchPartDetails.map((partdata, i) => {
+                {searchPartDetails?.map((partdata, i) => {
                   return (
                     <tr className="bg-base-200" key={i}>
                       <td>{partdata?.part_number}</td>

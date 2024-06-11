@@ -5,6 +5,7 @@ import styles from '../style.module.css';
 
 
 const Navbar = () => {
+
 const {getUser}=new authenticationServices();
  const navigate=useNavigate();
  const [users,setUsers]=useState();
@@ -16,19 +17,24 @@ const {getUser}=new authenticationServices();
     console.log({ users });
     useEffect(() => {
       fetchUsers();
+    
     }, []);
+
+    
+    const linkHandler =()=>{
+      navigate('/')
+      window.location.reload();
+   }
 
   const logout = () => {
     localStorage.removeItem('token');
     navigate('/')
-    window.location.reload();
-   
-
+    window.location.reload(); 
   };
   return (
     <div className={styles.navbar}>
       <div>
-        <p ><Link className={styles.home} to='/'>ThinkPLM</Link></p>
+        <p ><Link className={styles.home}  onClick={linkHandler}>ThinkPLM</Link></p>
       </div>
       <div>
         {users?.map((user)=>{

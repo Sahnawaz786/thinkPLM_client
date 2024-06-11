@@ -18,7 +18,7 @@ const PartDetails = ({ id }) => {
   const getPartApi = async (id) => {
     const partInfo = await getPartById(id);
     // console.log('part info data', { partInfo });
-    const newParts = (partInfo?.data.parts || [])
+    const newParts = (partInfo?.data?.parts || [])
       .map((elem) => {
         return { ...elem, createdDate: partInfo?.data?.createdDate };
       })
