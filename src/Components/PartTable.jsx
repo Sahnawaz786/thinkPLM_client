@@ -12,6 +12,7 @@ import message from '../utils/message';
 import { openNewWindow, URL } from '.././utils/helper';
 import CertificateServices from '../services/certificate.services';
 import ComplianceServices from '../services/compliance.services';
+import globalSearchServices from '../services/globalsearch.services';
 import InvoiceServices from '../services/invoice.services';
 const { getPart, deletePart } = new PartServices();
 const { getAllDocuments, deleteDocument } = new DocumentServices();
@@ -26,15 +27,19 @@ const { getAllCertificateDocuments, deleteCertificateDocumentById } =
   new CertificateServices();
 
 const PartTable = () => {
+  const {globalSearchByNameAndNumber}= new globalSearchServices();
   const { choice, showAlert, setShowAlert } = useContext(UserContext);
 
   const [data, setData] = useState([]);
+
   const [data2, setData2] = useState([]);
   const [complianceData, setComplianceData] = useState([]);
   const [invoiceData, setInvoiceData] = useState([]);
   const [certificateData, setCertificateData] = useState([]);
-  const [search, setSearch] = useState('');
+  const [searchInput,setSearchInput] = useState('');
+  const [searchData,setSearchData]= useState([]);
   const [searchtext, setSearchText] = useState('');
+  const [searchId,setSearchId]=useState('');
 
   const [selectedId, setSelectedId] = useState(null);
   const [id, setId] = useState();
@@ -46,6 +51,104 @@ const PartTable = () => {
   const handleCheckboxChange = (id) => {
     setSelectedId(id);
   };
+
+  const handleSearch= async ()=>{
+   try {
+    const searchInfo = await globalSearchByNameAndNumber(searchInput);
+    const searchData = searchInfo?.data || [];
+    console.log({"gazz":searchData})
+
+    if(searchData?.Parts?.length>0){
+      searchData?.Parts?.map((elem)=>{
+         return localStorage.setItem("searchId",elem.id)     
+         })
+         navigate('/')
+         const response = await getPart();
+         const tableData=response?.data;
+         const searchIDs=localStorage.getItem("searchId")
+         console.log(searchIDs,"id")
+         const filteredData = tableData.filter(item => searchIDs.includes(item.id));
+         setData(filteredData)   
+    }   
+    
+    // if(searchData?.Supplier_Contract_Document?.length>0){
+    //   searchData?.Supplier_Contract_Document?.map((elem)=>{
+    //      return localStorage.setItem("searchId",elem.id)     
+    //      })
+    //      navigate('/document-table')
+    //      const response = await getAllDocuments();
+    //      const tableData=response?.data;
+    //      const searchIDs=localStorage.getItem("searchId")
+    //      console.log(searchIDs,"Supplier_Contract_searchIDs:") 
+       
+    //       const filteredData = tableData.filter(item => item.documenttype==="Supplier Contract"?searchIDs.includes(item.id):"");
+    //       setData2(filteredData) 
+    //       setComplianceData(null) 
+    //       setCertificateData(null) 
+    //       setInvoiceData(null)
+              
+    // }   
+
+    
+    // if(searchData?.Complaince_Certificate_Document?.length>0){
+    //   searchData?.Complaince_Certificate_Document?.map((elem)=>{
+    //      return localStorage.setItem("searchId",elem.id)     
+    //      })
+    //      navigate('/document-table')
+    //      const response = await getAllComplianceDocuments();
+    //      const tableData=response?.data;
+    //      const searchIDs=localStorage.getItem("searchId")
+    //      console.log(searchIDs,"id")
+         
+    //      const filteredData = tableData.filter(item => item.documenttype==="Complaince Certificate"?searchIDs.includes(item.id):"");
+    //      setComplianceData(filteredData)
+    //      setData2(null) 
+    //      setCertificateData(null) 
+    //      setInvoiceData(null)
+    // }  
+
+    // if(searchData?.Certification_of_Insurance_Document?.length>0){
+    //   searchData?.Certification_of_Insurance_Document?.map((elem)=>{
+    //      return localStorage.setItem("searchId",elem.id)     
+    //      })
+    //      navigate('/document-table')
+    //      const response = await getAllCertificateDocuments();
+    //      const tableData=response?.data;
+    //      const searchIDs=localStorage.getItem("searchId")
+    //      console.log(searchIDs,"id")
+    //      const filteredData = tableData.filter(item => item.documenttype==="Certification_of_Insurance"?searchIDs.includes(item.id):"");
+    //      setCertificateData(filteredData)
+    //      setComplianceData(null)
+    //      setData2(null) 
+    //      setInvoiceData(null)
+    // }  
+
+    // if(searchData?.Invoice_Document?.length>0){
+    //   searchData?.Invoice_Document?.map((elem)=>{
+    //      return localStorage.setItem("searchId",elem.id)     
+    //      })
+    //      navigate('/document-table')
+    //      const response = await getAllInvoiceDocuments();
+    //      const tableData=response?.data;
+    //      const searchIDs=localStorage.getItem("searchId")
+    //      console.log(searchIDs,"id")
+    //      const filteredData = tableData.filter(item => item.documenttype==="Invoice"?searchIDs.includes(item.id):"");
+    //      setInvoiceData(filteredData)
+    //      setCertificateData(null)
+    //      setComplianceData(null)
+    //      setData2(null) 
+        
+    // }  
+
+   }
+   catch(error){
+       console.log(error)
+   }
+  }
+
+  useEffect(() => {
+    handleSearch()
+  }, [])
 
   const navigate = useNavigate();
 
@@ -84,29 +187,29 @@ const PartTable = () => {
   console.log({documentType})
   const handlePartEditBtn = async (e) => {
     if (pathname === '/') {
-      openNewWindow(e, `${URL}/edit-part/${id}`);
+      openNewWindow(e, ${URL}/edit-part/${id});
       setTimeout(() => {
         navigate('/');
       }, 1000);
     } else if (documentType === 'Supplier Contract') {
-      openNewWindow(e, `${URL}/supplier-document-edit/${id}`);
+      openNewWindow(e, ${URL}/supplier-document-edit/${id});
       setTimeout(() => {
         navigate('/document-table');
       }, 1000);
     }
     else if (documentType === 'Complaince Certificate') {
-      openNewWindow(e, `${URL}/compliance-document-edit/${id}`);
+      openNewWindow(e, ${URL}/compliance-document-edit/${id});
       setTimeout(() => {
         navigate('/document-table');
       }, 1000);
     }
     else if (documentType === 'Invoice') {
-      openNewWindow(e, `${URL}/invoice-document-edit/${id}`);
+      openNewWindow(e, ${URL}/invoice-document-edit/${id});
       setTimeout(() => {
         navigate('/document-table');
       }, 1000);
     } else if (documentType === 'Certification_of_Insurance') {
-      openNewWindow(e, `${URL}/certificate-document-edit/${id}`);
+      openNewWindow(e, ${URL}/certificate-document-edit/${id});
       setTimeout(() => {
         navigate('/document-table');
       }, 1000);
@@ -126,16 +229,17 @@ const PartTable = () => {
 
     let newPartsData;
 
-    searchtext
-      ? (newPartsData = response?.data?.filter((elem) =>
-        elem.part_number.includes(searchtext)
-      ))
-      : (newPartsData = response?.data.map((elem) => {
-        return {
-          ...elem,
-          parts: [elem?.parts?.sort((a, b) => b.id - a.id)?.[0]],
-        };
-      }));
+    // searchtext
+    //   ? (newPartsData = response?.data?.filter((elem) =>
+    //       elem.part_number?.includes(searchtext)
+    //     ))
+    //   : 
+      (newPartsData = response?.data?.map((elem) => {
+          return {
+            ...elem,
+            parts: [elem?.parts?.sort((a, b) => b.id - a.id)?.[0]],
+          };
+        }));
 
     const newPartsData2 = response2?.data.map((elem) => {
       return {
@@ -262,7 +366,7 @@ const PartTable = () => {
                   height={35}
                   alt=''
                   className={
-                    styles.deleteIcon && pathname != '/' ? styles.activeBtn : ''
+                    styles.deleteIcon && pathname !== '/' ? styles.activeBtn : ''
                   }
                   onClick={() => {
                     navigate('/document-table');
@@ -313,33 +417,21 @@ const PartTable = () => {
               onClick={(e) => handlePartEditBtn(e)}
             />
           </div>
-
-          <div title='Task'>
-            <img
-              src='https://img.freepik.com/free-vector/online-document-form-digital-agreement-electronic-contract-internet-questionnaire-list-note-voting-ballot-poll-flat-design-element_335657-2667.jpg'
-              width={30}
-              height={30}
-              alt=''
-              className={styles.deleteIcon}
-              onClick={() => {
-                navigate('/task')
-              }}
-            />
-          </div>
         </div>
-
-
 
         <div className={styles.searchSection}>
           <input
             type='text'
-            onChange={(e) => setSearchText(e.target.value)}
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
             name=''
             width={300}
             height={300}
             id=''
           />
-          <FaSearch />
+          <FaSearch/>
+          <button onClick={handleSearch}>search</button>
+         
         </div>
       </div>
       {pathname === '/' ? (
@@ -492,7 +584,7 @@ const PartTable = () => {
                     height={20}
                     className={styles.icon_pointer}
                     onClick={() => {
-                      navigate(`/supplier-document-details/${elem.id}`);
+                      navigate(/supplier-document-details/${elem.id});
                     }}
                   />
                 </td>
@@ -554,7 +646,7 @@ const PartTable = () => {
                     height={20}
                     className={styles.icon_pointer}
                     onClick={() => {
-                      navigate(`/compliance-documents-details/${elem.id}`);
+                      navigate(/compliance-documents-details/${elem.id});
                     }}
                   />
                 </td>
@@ -616,7 +708,7 @@ const PartTable = () => {
                     height={20}
                     className={styles.icon_pointer}
                     onClick={() => {
-                      navigate(`/invoice-documents-details/${elem.id}`);
+                      navigate(/invoice-documents-details/${elem.id});
                     }}
                   />
                 </td>
@@ -678,7 +770,7 @@ const PartTable = () => {
                     height={20}
                     className={styles.icon_pointer}
                     onClick={() => {
-                      navigate(`/certificate-documents-details/${elem.id}`);
+                      navigate(/certificate-documents-details/${elem.id});
                     }}
                   />
                 </td>
