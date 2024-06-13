@@ -45,6 +45,7 @@ function App() {
           <Route path="/supplier-history/:id" element={<Container/>} />
           <Route path="/part-historyInfo/:pid/:cid" element={<Container/>} />
           <Route path="/document-table" element={<Container/>} />
+          <Route path='/global-search' element={<Container/>} />
 
           <Route path="/reference-object/:id" element={<Container/>} />
           <Route path="/supplier-documents" element={<Container/>} />
@@ -74,10 +75,6 @@ function App() {
           <Route path='/edit-user/:id' element={<EditUser/>}/>
           <Route path='/task' element={<Container/>}/>
           <Route path='/suppliers' element={<Container/>} />
-
-
-
-
 
           <Route path='/' element={<Container />}/>
           <Route path='/control-page' element={<ControlPage/>}/>
