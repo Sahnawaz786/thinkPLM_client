@@ -2,6 +2,13 @@ import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import AddExistingPart from './Components/AllContainer/BomStructure/AddExistingPart';
+import CreateNewPart from './Components/AllContainer/BomStructure/CreateNewPart';
+import CertificateDocEdit from './Components/AllContainer/CertificateOfInsuranceActions/CertificateDocEdit';
+import ComplianceDocEdit from './Components/AllContainer/ComplianceCertificateActions/ComplianceDocEdit';
+import InvoiceDocEdit from './Components/AllContainer/InvoiceActions/InvoiceDocEdit';
+import EditPart from './Components/AllContainer/PartsAction/EditPart';
+import EditSupplier from './Components/AllContainer/SupplierActions/EditSupplier';
+import SupplierDocEdit from './Components/AllContainer/SupplierDocumentAction/SupplierDocEdit';
 import EditUser from './Components/AllContainer/UserManagement/EditUser';
 import Container from './Components/Container';
 import ControlPage from './Components/Form/Authentication/ControlPage';
@@ -13,17 +20,10 @@ import ManufacturerForm from './Components/Form/Supplier/ManufacturerForm';
 import Tier1 from './Components/Form/Supplier/Tier1';
 import Tier2 from './Components/Form/Supplier/Tier2';
 import VendorForm from './Components/Form/Supplier/VendorForm';
-import EditPart from './Components/AllContainer/PartsAction/EditPart';
-import EditSupplier from './Components/AllContainer/SupplierActions/EditSupplier';
-import SupplierContract from './Components/Form/SupplierDocument/SupplierContract';
-import Invoices from './Components/Form/SupplierDocument/Invoice';
 import CertificateOFInsurance from './Components/Form/SupplierDocument/CertificateOFInsurance';
 import ComplianceCertificate from './Components/Form/SupplierDocument/ComplianceCertificate';
-import CreateNewPart from './Components/AllContainer/BomStructure/CreateNewPart';
-import SupplierDocEdit from './Components/AllContainer/SupplierDocumentAction/SupplierDocEdit';
-import ComplianceDocEdit from './Components/AllContainer/ComplianceCertificateActions/ComplianceDocEdit';
-import InvoiceDocEdit from './Components/AllContainer/InvoiceActions/InvoiceDocEdit';
-import CertificateDocEdit from './Components/AllContainer/CertificateOfInsuranceActions/CertificateDocEdit';
+import Invoices from './Components/Form/SupplierDocument/Invoice';
+import SupplierContract from './Components/Form/SupplierDocument/SupplierContract';
 
 
 function App() {
@@ -50,6 +50,7 @@ function App() {
           <Route path="/supplier-history/:id" element={<Container/>} />
           <Route path="/part-historyInfo/:pid/:cid" element={<Container/>} />
           <Route path="/document-table" element={<Container/>} />
+          <Route path='/global-search' element={<Container/>} />
 
           <Route path="/reference-object/:id" element={<Container/>} />
           <Route path="/supplier-documents" element={<Container/>} />

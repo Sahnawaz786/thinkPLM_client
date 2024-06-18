@@ -33,6 +33,8 @@ import ComplianceDocDetails from './AllContainer/ComplianceCertificateActions/Co
 import ComplianceDocEdit from './AllContainer/ComplianceCertificateActions/ComplianceDocEdit';
 import ComplianceDocumentHistory from './AllContainer/ComplianceCertificateActions/ComplianceDocumentHistory';
 import ComplianceDocumentHistoryInfo from './AllContainer/ComplianceCertificateActions/ComplianceDocumentHistoryInfo';
+
+import GlobalSearchTable from './AllContainer/GlobalSearchTable/GlobalSearchTable';
 import InvoiceAttachment from './AllContainer/InvoiceActions/InvoiceAttachment';
 import InvoiceDocDetails from './AllContainer/InvoiceActions/InvoiceDocDetails';
 import InvoiceDocEdit from './AllContainer/InvoiceActions/InvoiceDocEdit';
@@ -253,11 +255,16 @@ const RightBar = () => {
         componentToRender = <SupplierTable/>
         break;
 
+      case '/global-search':
+        componentToRender = <GlobalSearchTable/>
+        break;
+
       case `/edit-user/${id}`:
       if (id) {
         componentToRender = <EditUser id={id} />;
       }
       break;
+      
 
     default:
       componentToRender = <PartTable />;
