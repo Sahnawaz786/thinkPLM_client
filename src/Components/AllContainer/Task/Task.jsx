@@ -26,7 +26,7 @@ const Task = () => {
 
             <tr>
               <td>1</td>
-              <td style={{cursor:'pointer'}} onClick={()=>navigate('/suppliers')}>Supplier table</td>
+              <td className={task.supplierTable} style={{cursor:'pointer'}} onClick={()=>navigate('/suppliers')}>Supplier table</td>
               <td>OnBoarding Supplier Process</td>
               <td>Prequalification</td>
             </tr>
@@ -55,7 +55,7 @@ const Task = () => {
       </div>
 
       <div className={task.btn}>
-        <Button variant="success">Success</Button>{' '}
+        <Button variant="success">Submit</Button>{' '}
       </div>
 
     </div>

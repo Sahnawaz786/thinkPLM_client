@@ -417,7 +417,7 @@ const PartTable = () => {
               onClick={(e) => handlePartEditBtn(e)}
             />
           </div>
-          <div title='Edit'>
+          <div title='Task'>
             <img
               src='images/task.jpg'
               width={30}

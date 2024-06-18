@@ -64,7 +64,7 @@
 
 .fotter {
   background-color: #05aff1;
-  height: 76.5vh;
+  height: 90vh;
 }
 
 .loginForm {
@@ -131,14 +131,15 @@
 }
 
 .fotterLastInfo {
-  margin-top: 20rem;
+  margin-top: 15rem;
 }
 
 .fotterLast p {
   font-size: 18px;
-  padding: 0px 50px;
+  padding: 5px 3rem;
   color: #0a5f87;
   margin-bottom: 0px;
+  margin-left: 5rem;
 }
 
 .sales {
