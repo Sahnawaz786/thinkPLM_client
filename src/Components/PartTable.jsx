@@ -27,17 +27,16 @@ const { getAllCertificateDocuments, deleteCertificateDocumentById } =
   new CertificateServices();
 
 const PartTable = () => {
+
   const {globalSearchByNameAndNumber}= new globalSearchServices();
-  const { choice, showAlert, setShowAlert } = useContext(UserContext);
+  const { choice, showAlert, setShowAlert,searchData,setSearchData } = useContext(UserContext);
 
   const [data, setData] = useState([]);
-
   const [data2, setData2] = useState([]);
   const [complianceData, setComplianceData] = useState([]);
   const [invoiceData, setInvoiceData] = useState([]);
   const [certificateData, setCertificateData] = useState([]);
   const [searchInput,setSearchInput] = useState('');
-  const [searchData,setSearchData]= useState([]);
   const [searchtext, setSearchText] = useState('');
   const [searchId,setSearchId]=useState('');
 
@@ -58,17 +57,25 @@ const PartTable = () => {
     const searchData = searchInfo?.data || [];
     console.log({"gazz":searchData})
 
-    if(searchData?.Parts?.length>0){
-      searchData?.Parts?.map((elem)=>{
-         return localStorage.setItem("searchId",elem.id)     
-         })
-         navigate('/')
-         const response = await getPart();
-         const tableData=response?.data;
-         const searchIDs=localStorage.getItem("searchId")
-         console.log(searchIDs,"id")
-         const filteredData = tableData.filter(item => searchIDs.includes(item.id));
-         setData(filteredData)   
+    if(searchData?.Parts?.length>0 || searchData.Supplier_Contract_Document?.length>0 || searchData.Complaince_Certificate_Document?.length>0 || 
+      searchData?.Certification_of_Insurance_Document?.length>0 || searchData?.Invoice_Document?.length>0
+    ){
+        setSearchData(searchData);
+        console.log(searchData,'gazal123')
+        navigate('/global-search')
+         
+
+
+      // searchData?.Parts?.map((elem)=>{
+      //    return localStorage.setItem("searchId",elem.id)     
+      //    })
+      //    navigate('/')
+      //    const response = await getPart();
+      //    const tableData=response?.data;
+      //    const searchIDs=localStorage.getItem("searchId")
+      //    console.log(searchIDs,"id")
+      //    const filteredData = tableData.filter(item => searchIDs.includes(item.id));
+      //    setData(filteredData)   
     }   
     
     // if(searchData?.Supplier_Contract_Document?.length>0){
@@ -149,6 +156,7 @@ const PartTable = () => {
   useEffect(() => {
     handleSearch()
   }, [])
+ 
 
   const navigate = useNavigate();
 
@@ -791,6 +799,7 @@ const PartTable = () => {
       )}
 
       {showAlert && <DisplayAlert />}
+  
     </div>
   );
 };
