@@ -7,8 +7,9 @@ import DisplayAlert from '../../../utils/DisplayAlert';
 import SupplierDocContainer from '../SupplierDocumentContainer/SupplierDocContainer';
 import styles from '../../../style.module.css';
 import classes from '../SupplierActions/Supplier.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ComplianceCertificate from '../SupplierDocumentContainer/ComplianceCertificate';
+import { URL, openNewWindow } from '../../../utils/helper';
 
 const { deleteComplianceDocumentById } =new ComplianceServices();
 
@@ -18,7 +19,7 @@ const ComplianceDocDetails = ({ id }) => {
 const {choice,showAlert,setShowAlert}=useContext(UserContext);
  const [timer,setTimer] = useState(true);
 const  [docsupplier,setDocSupplier] = useState([]);
-
+ const location = useLocation();
  const navigate=useNavigate()
 
 const {getComplianceDocumentById,getAllDocuments,deleteDocument}=new ComplianceServices();
@@ -88,7 +89,13 @@ return (
         width={30}
         height={30}
         alt=''
-        onClick={()=>navigate(`/compliance-document-edit/${id}`)}
+        onClick={(e)=> {
+          openNewWindow(e, `${URL}/compliance-document-edit/${id}`);
+          setTimeout(() => {
+            navigate(location?.pathname);
+          }, 1000);
+        }
+        }
 
       />
       <img

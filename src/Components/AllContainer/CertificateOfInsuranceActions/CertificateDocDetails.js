@@ -7,8 +7,9 @@ import CertificateServices from '../../../services/certificate.services';
 import SupplierDocContainer from '../SupplierDocumentContainer/SupplierDocContainer';
 import styles from '../../../style.module.css';
 import classes from '../SupplierActions/Supplier.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import CertificateDocContainer from '../SupplierDocumentContainer/CertificateDocContainer';
+import { URL, openNewWindow } from '../../../utils/helper';
 
 
 const CertificateDocDetails = ({ id }) => {
@@ -19,6 +20,7 @@ const {choice,showAlert,setShowAlert}=useContext(UserContext);
 const  [docsupplier,setDocSupplier] = useState([]);
 
  const navigate=useNavigate()
+ const location = useLocation();
 
 const {getCertificateDocumentById,deleteCertificateDocumentById}=new CertificateServices();
 
@@ -87,7 +89,13 @@ return (
         width={30}
         height={30}
         alt=''
-        onClick={()=>navigate(`/certificate-document-edit/${id}`)}
+        onClick={(e) => {
+          openNewWindow(e, `${URL}/certificate-document-edit/${id}`);
+          setTimeout(() => {
+            navigate(location?.pathname);
+          }, 1000);
+        }
+        }
 
       />
       <img

@@ -37,7 +37,7 @@ const {getUser}=new authenticationServices();
         <p ><Link className={styles.home}  onClick={linkHandler}>ThinkPLM</Link></p>
       </div>
       <div>
-        {users?.map((user)=>{
+        {users?.slice(0, 1)?.map((user)=>{
           return (
             <>
                 <p className={styles.text}>login by : {user?.username}</p>
