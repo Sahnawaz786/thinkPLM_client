@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { v4 as uuidv4 } from "uuid";
 import { isAuthenticated } from '../utils/helper';
+import api from './api';
 
 // const dotenv = require('dotenv');
 
@@ -17,7 +17,7 @@ class BomServices {
    
     async getBomById(id) {
         try {
-            const response = await axios.get(`${baseURL}/getPartStructure/${id}`, {
+            const response = await api.get(`${baseURL}/getPartStructure/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             console.log('====================================');
@@ -40,7 +40,7 @@ class BomServices {
 
     async editPartById(id,partData) {
         try {
-            const response = await axios.put(`${this.baseURL}/SupplierMasterObject/${id}`,partData);
+            const response = await api.put(`${this.baseURL}/SupplierMasterObject/${id}`,partData);
 
             if (response.status!=200) {
                 throw new Error(`Failed to add part: ${response.statusText}`);
@@ -54,7 +54,7 @@ class BomServices {
 
     async searchBomPart(partNumber) {
         try {
-            const response = await axios.get(`${baseURL}/Supplier_MasterPartObjectBypart_number/${partNumber}`, {
+            const response = await api.get(`${baseURL}/Supplier_MasterPartObjectBypart_number/${partNumber}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -72,7 +72,7 @@ class BomServices {
         try {
             console.log({testID:id});
 
-            const response = await axios.get(`${baseURL}/SupplierMasterObject/${id}`);
+            const response = await api.get(`${baseURL}/SupplierMasterObject/${id}`);
             console.log({testResponse:response});
             
             if (response.status!==200) {
@@ -87,7 +87,7 @@ class BomServices {
 
     async deletePart(id) {
         try {
-            const response = await axios.delete(`${baseURL}/SupplierMasterObject/${id}`);
+            const response = await api.delete(`${baseURL}/SupplierMasterObject/${id}`);
             if (response.status!==200) {
                 throw new Error(`Failed to fetch parts: ${response.statusText}`);
             }
@@ -101,7 +101,7 @@ class BomServices {
     async addBomPart(payload) {
         console.log({payload});
         try {
-            const response = await axios.post(`${baseURL}/createUsageLink`, payload, {
+            const response = await api.post(`${baseURL}/createUsageLink`, payload, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             console.log({response})
@@ -116,7 +116,7 @@ class BomServices {
         console.log({payload});
         const { ida3a5, ida3b5 } = payload || {};
         try {
-            const response = await axios.delete(`${baseURL}/entities/${ida3a5}/${ida3b5}`, {
+            const response = await api.delete(`${baseURL}/entities/${ida3a5}/${ida3b5}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             } ,payload);
             console.log({response})
@@ -129,7 +129,7 @@ class BomServices {
 
     async updatePart(id,partData) {
         try {
-            const response = await axios.post(`${this.baseURL}/SupplierMasterObject/${id}`, {
+            const response = await api.post(`${this.baseURL}/SupplierMasterObject/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -6,7 +6,7 @@ import styles from '../style.module.css';
 
 const Navbar = () => {
 
-const {getUser}=new authenticationServices();
+const {getUser,getCurrentUser}=new authenticationServices();
  const navigate=useNavigate();
  const [users,setUsers]=useState();
 
@@ -27,7 +27,8 @@ const {getUser}=new authenticationServices();
    }
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     navigate('/')
     window.location.reload(); 
   };
