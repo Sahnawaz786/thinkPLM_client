@@ -1,5 +1,5 @@
-import axios from "axios";
 import { isAuthenticated } from "../utils/helper";
+import api from "./api";
 
 const baseURL = "http://localhost:8181";
 
@@ -9,7 +9,7 @@ class UserServices {
   }
   async getUSerById(id) {
     try {
-      const response = await axios.get(
+      const response = await api.get(
         `${baseURL}/getByIdRegisterUserWithThink/${id}`,
         {
           headers: { Authorization: `Bearer ${isAuthenticated()}` },
@@ -27,7 +27,7 @@ class UserServices {
 
   async getAllUser() {
     try {
-      const response = await axios.get(
+      const response = await api.get(
         `${baseURL}/getAllRegisterUserWithThink`,
         {
           headers: { Authorization: `Bearer ${isAuthenticated()}` },
@@ -45,7 +45,7 @@ class UserServices {
 
   async getSelectiveUser(text) {
     try {
-      const response = await axios.get(
+      const response = await api.get(
         `${baseURL}/getBySupplierUsers/${text}`,
         {
           headers: { Authorization: `Bearer ${isAuthenticated()}` },
@@ -63,7 +63,7 @@ class UserServices {
 
   async getUserByMultipleIds(ids) {
     try {
-      const response = await axios.get(
+      const response = await api.get(
         `${baseURL}/getByIdsSelectiveUsers?${ids}`,
         {
           headers: { Authorization: `Bearer ${isAuthenticated()}` },
@@ -83,7 +83,7 @@ class UserServices {
 
     async searchByuserName(name) {
       try {
-        const response = await axios.get(
+        const response = await api.get(
           `${baseURL}/getByUserName/${name}`,
           {
             headers: { Authorization: `Bearer ${isAuthenticated()}` },
