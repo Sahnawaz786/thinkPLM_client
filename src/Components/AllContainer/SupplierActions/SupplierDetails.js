@@ -6,9 +6,9 @@ import DisplayAlert from '../../../utils/DisplayAlert';
 // import classes from '../PartsAction/PartDetails.module.css';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../../style.module.css';
+import { URL, openNewWindow } from '../../../utils/helper';
 import SupplierContainer from '../SupplierContainer/SupplierContainer';
 import classes from './Supplier.module.css';
-import { URL, openNewWindow } from '../../../utils/helper';
 
 const SupplierDetails = ({ id }) => {
 
@@ -21,7 +21,7 @@ const {getSupplierById,deleteSupplier}=new SupplierServices();
 
   const getSupplierApi = async (id) => {
     const supplierInfo = await getSupplierById(id);
-    const supData = (supplierInfo?.data.supplier || [])
+    const supData = (supplierInfo?.data?.supplier || [])
     .map((elem) => {
       return { ...elem, createdDate: supplierInfo?.data?.createdDate };
     })
@@ -157,6 +157,9 @@ return (
             </p>
             <p>
               <strong>State:</strong> {childSupplier?.state}
+            </p>
+            <p>
+              <strong>Product Type:</strong>{childSupplier?.pt}
             </p>
             <p>
               <strong>District:</strong>{childSupplier?.district}

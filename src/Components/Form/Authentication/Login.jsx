@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../../../services/api';
 import styles from './Auth.module.css';
 
 const Login = () => {
@@ -14,7 +14,7 @@ const Login = () => {
    setIsButtonDisabled(true);
    const credentials = btoa(`${username}:${password}`);
     try {
-      const response = await axios.post(
+      const response = await api.post(
         'http://localhost:8181/authenticate',
         {username,password},
         {
@@ -24,9 +24,10 @@ const Login = () => {
         }
       );
       console.log('responsessss',response)
-      const { token } = response.data;
-      console.log('tokensss',token)
-      localStorage.setItem('token', token);
+      const { accessToken, refreshToken } = response.data;
+      console.log('tokensss',accessToken, refreshToken)
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
       navigate('/')
       window.location.reload();
     } catch (error) {

@@ -5,9 +5,9 @@ import HashLoader from 'react-spinners/HashLoader';
 import SupplierServices from '../../../services/supplier.services';
 import spinnerStyle from "../../../style.module.css";
 import { closeWindow, isAuthenticated } from "../../../utils/helper";
+import message from '../../../utils/message';
 import classes from "../../Form/AllForm.module.css";
 import styles from '../../Form/Parts/PartAttribut.module.css';
-import message from '../../../utils/message';
 
 const EditSupplier = () => {
   const location = useLocation();
@@ -221,7 +221,7 @@ const EditSupplier = () => {
       
                         <div className={styles.formInput}>
                     <strong htmlFor='text'>Contact No:</strong>
-                    <input type='text' id='contact' name="contact" value={supplierData?.supplier[0]?.contact} onChange={(event)=>postUserData(event,0)} />
+                    <input type='number' id='contact' name="contact" value={supplierData?.supplier[0]?.contact} onChange={(event)=>postUserData(event,0)} />
                   </div>
       
                   <div className={styles.formInput}>
@@ -543,7 +543,7 @@ const EditSupplier = () => {
                   </div>
                   <div className={styles.formInput}>
                     <strong htmlFor='document'>Upload Contract Document:</strong>
-                    <input type='file' className={styles.partName}  id='document' name="document" onChange={handleFileUpload} />
+                    <input type='file' className={styles.partName}  id='document' name="document"  onChange={handleFileUpload} />
                   </div>
                       </div>
                     </div>

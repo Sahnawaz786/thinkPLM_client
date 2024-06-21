@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { isAuthenticated } from '../utils/helper';
+import api from './api';
 // const dotenv = require('dotenv');
 
 // dotenv.config({ path: '../.env' });
@@ -15,7 +15,7 @@ class CertificateServices {
 
     async getAllCertificateDocuments() {
         try {
-            const response = await axios.get(`${baseURL}/Certification_of_InsuranceMasterObject`, {
+            const response = await api.get(`${baseURL}/Certification_of_InsuranceMasterObject`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -30,7 +30,7 @@ class CertificateServices {
 
     async editCertificateDocumentById(id,partData) {
         try {
-            const response = await axios.put(`${this.baseURL}/InvoiceMasterObject/${id}`, {
+            const response = await api.put(`${this.baseURL}/InvoiceMasterObject/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             },partData);
 
@@ -46,7 +46,7 @@ class CertificateServices {
 
     async getCertificateDocumentById(id) {
         try {
-            const response = await axios.get(`${baseURL}/Certification_of_InsuranceMasterObject1/${id}`, {
+            const response = await api.get(`${baseURL}/Certification_of_InsuranceMasterObject1/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -61,7 +61,7 @@ class CertificateServices {
 
     async getCertificateDocumentHistoryById(id) {
         try {
-            const response = await axios.get(`${baseURL}/Certification_of_InsuranceMasterObject/${id}`, {
+            const response = await api.get(`${baseURL}/Certification_of_InsuranceMasterObject/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -77,7 +77,7 @@ class CertificateServices {
 
     async deleteCertificateDocumentById(id) {
         try {
-            const response = await axios.delete(`${baseURL}/Certification_of_InsuranceMasterObject/${id}`, {
+            const response = await api.delete(`${baseURL}/Certification_of_InsuranceMasterObject/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {

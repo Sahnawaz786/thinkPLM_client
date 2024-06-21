@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { isAuthenticated } from '../utils/helper';
+import api from './api';
 // const dotenv = require('dotenv');
 
 // dotenv.config({ path: '../.env' });
@@ -15,7 +15,7 @@ class DocumentServices {
 
     async getAllDocuments() {
         try {
-            const response = await axios.get(`${baseURL}/SupplierMasterContractObject`, {
+            const response = await api.get(`${baseURL}/SupplierMasterContractObject`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -30,7 +30,7 @@ class DocumentServices {
 
     async editPartById(id,partData) {
         try {
-            const response = await axios.put(`${this.baseURL}/SupplierMasterObject/${id}`, {
+            const response = await api.put(`${this.baseURL}/SupplierMasterObject/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             },partData);
 
@@ -46,7 +46,7 @@ class DocumentServices {
 
     async getDocumentById(id) {
         try {
-            const response = await axios.get(`${baseURL}/getSupplierMasterContractById/${id}`, {
+            const response = await api.get(`${baseURL}/getSupplierMasterContractById/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -61,7 +61,7 @@ class DocumentServices {
 
     async getDocumentHistoryById(id) {
         try {
-            const response = await axios.get(`${baseURL}/SupplierMasterContractObject/${id}`, {
+            const response = await api.get(`${baseURL}/SupplierMasterContractObject/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -77,7 +77,7 @@ class DocumentServices {
 
     async getFileDownload(id) {
         try {
-            const response = await axios.get(`${baseURL}/downloadFile/${id}`, {
+            const response = await api.get(`${baseURL}/downloadFile/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -94,7 +94,7 @@ class DocumentServices {
         try {
             console.log({testID:id});
 
-            const response = await axios.get(`${baseURL}/SupplierMasterObject/${id}`, {
+            const response = await api.get(`${baseURL}/SupplierMasterObject/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             console.log({testResponse:response});
@@ -111,7 +111,7 @@ class DocumentServices {
 
     async deleteDocument(id) {
         try {
-            const response = await axios.delete(`${baseURL}/SupplierMasterContractObject/${id}`, {
+            const response = await api.delete(`${baseURL}/SupplierMasterContractObject/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {

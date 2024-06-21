@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { isAuthenticated } from '../utils/helper';
+import api from './api';
 // const dotenv = require('dotenv');
 
 // dotenv.config({ path: '../.env' });
@@ -16,7 +16,7 @@ class globalSearchServices {
 
     async globalSearchByNameAndNumber(data) {
         try {
-            const response = await axios.get(`${baseURL}/search/${data}`, {
+            const response = await api.get(`${baseURL}/search/${data}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {

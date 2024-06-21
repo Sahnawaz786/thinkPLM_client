@@ -1,8 +1,8 @@
-import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import HashLoader from 'react-spinners/HashLoader';
+import api from '../../../services/api';
 import BomServices from '../../../services/bom.services';
 import { categoryContext } from '../../../store/CategoryProvider';
 import { PartsContext } from '../../../store/PartsProvider';
@@ -145,7 +145,7 @@ const CreateNewPart = () => {
           ],
         }),
       });
-      const { data } = await axios.get(`http://localhost:8181/SupplierMasterObject`, {
+      const { data } = await api.get(`http://localhost:8181/SupplierMasterObject`, {
         headers: {
           Authorization: `Bearer ${isAuthenticated()}`
         }

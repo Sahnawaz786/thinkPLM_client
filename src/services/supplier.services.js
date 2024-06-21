@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { isAuthenticated } from '../utils/helper';
+import api from './api';
 const baseURL = 'http://localhost:8181';
 
 class SupplierServices {
@@ -9,7 +9,7 @@ class SupplierServices {
 
     async getSupplier() {
         try {
-            const response = await axios.get(`${baseURL}/KKHSupplierMasterObject`, {
+            const response = await api.get(`${baseURL}/KKHSupplierMasterObject`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -24,7 +24,7 @@ class SupplierServices {
 
     async getSupplierById(id) {
         try {
-            const response = await axios.get(`${baseURL}/KKHSupplierMasterObject1/${id}`,{
+            const response = await api.get(`${baseURL}/KKHSupplierMasterObject1/${id}`,{
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -39,7 +39,7 @@ class SupplierServices {
 
     async getSupplierHistoryById(id) {
         try {
-            const response = await axios.get(`${baseURL}/KKHSupplierMasterObject/${id}`,{
+            const response = await api.get(`${baseURL}/KKHSupplierMasterObject/${id}`,{
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -54,7 +54,7 @@ class SupplierServices {
 
     async deleteSupplier(id) {
         try {
-            const response = await axios.delete(`${baseURL}/KKHSupplierMasterObject/${id}`,{
+            const response = await api.delete(`${baseURL}/KKHSupplierMasterObject/${id}`,{
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -69,7 +69,7 @@ class SupplierServices {
 
     async updateSupplier(supplierData) {
         try {
-            const response = await axios.post(`${this.baseURL}/updateSuppliers`, {
+            const response = await api.post(`${this.baseURL}/updateSuppliers`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -88,7 +88,7 @@ class SupplierServices {
 
     async getFileDownload(id) {
       try {
-          const response = await axios.get(`${baseURL}/downloadFile/${id}`,{
+          const response = await api.get(`${baseURL}/downloadFile/${id}`,{
             headers: { Authorization: `Bearer ${isAuthenticated()}`},
         });
           if (response.status!==200) {
