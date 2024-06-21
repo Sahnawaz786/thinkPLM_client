@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { isAuthenticated } from '../utils/helper';
+import api from './api';
 // const dotenv = require('dotenv');
 
 // dotenv.config({ path: '../.env' });
@@ -16,7 +16,7 @@ class PartServices {
     async getPart() {
         console.log({auth:   isAuthenticated()})
         try {
-            const response = await axios.get(`${baseURL}/SupplierMasterObject`, {
+            const response = await api.get(`${baseURL}/SupplierMasterObject`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
         
@@ -32,7 +32,7 @@ class PartServices {
 
     async editPartById(id,partData) {
         try {
-            const response = await axios.put(`${this.baseURL}/SupplierMasterObject/${id}`,partData);
+            const response = await api.put(`${this.baseURL}/SupplierMasterObject/${id}`,partData);
 
             if (response.status!=200) {
                 throw new Error(`Failed to add part: ${response.statusText}`);
@@ -46,7 +46,7 @@ class PartServices {
 
     async getPartById(id) {
         try {
-            const response = await axios.get(`${baseURL}/SupplierMasterObject1/${id}`, {
+            const response = await api.get(`${baseURL}/SupplierMasterObject1/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -64,7 +64,7 @@ class PartServices {
         try {
             console.log({testID:id});
 
-            const response = await axios.get(`${baseURL}/SupplierMasterObject/${id}`, {
+            const response = await api.get(`${baseURL}/SupplierMasterObject/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             console.log({testResponse:response});
@@ -81,7 +81,7 @@ class PartServices {
 
     async deletePart(id) {
         try {
-            const response = await axios.delete(`${baseURL}/SupplierMasterObject/${id}`, {
+            const response = await api.delete(`${baseURL}/SupplierMasterObject/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -96,7 +96,7 @@ class PartServices {
 
     async addPart(partData) {
         try {
-            const response = await axios.post(`${this.baseURL}/SupplierMasterObject`, {
+            const response = await api.post(`${this.baseURL}/SupplierMasterObject`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -115,7 +115,7 @@ class PartServices {
 
     async updatePart(id,partData) {
         try {
-            const response = await axios.post(`${this.baseURL}/SupplierMasterObject/${id}`, {
+            const response = await api.post(`${this.baseURL}/SupplierMasterObject/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

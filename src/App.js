@@ -28,7 +28,7 @@ import SupplierContract from './Components/Form/SupplierDocument/SupplierContrac
 
 
 function App() {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('accessToken');
   let isLoggedIn =Boolean(token);
   return (
     <div className="App">

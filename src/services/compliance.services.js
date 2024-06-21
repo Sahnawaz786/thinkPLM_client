@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { isAuthenticated } from '../utils/helper';
+import api from './api';
 // const dotenv = require('dotenv');
 
 // dotenv.config({ path: '../.env' });
@@ -14,7 +14,7 @@ class ComplianceServices {
 
     async getAllComplianceDocuments() {
         try {
-            const response = await axios.get(`${baseURL}/ComplainceCertificateMasterObject`, {
+            const response = await api.get(`${baseURL}/ComplainceCertificateMasterObject`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -29,7 +29,7 @@ class ComplianceServices {
 
     async editComplianceDocumentById(id,partData) {
         try {
-            const response = await axios.put(`${this.baseURL}/SupplierMasterObject/${id}`, {
+            const response = await api.put(`${this.baseURL}/SupplierMasterObject/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             },partData);
 
@@ -45,7 +45,7 @@ class ComplianceServices {
 
     async getComplianceDocumentById(id) {
         try {
-            const response = await axios.get(`${baseURL}/ComplainceCertificateMasterObject1/${id}`, {
+            const response = await api.get(`${baseURL}/ComplainceCertificateMasterObject1/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -60,7 +60,7 @@ class ComplianceServices {
 
     async getComplianceDocumentHistoryById(id) {
         try {
-            const response = await axios.get(`${baseURL}/ComplainceCertificateMasterObject/${id}`, {
+            const response = await api.get(`${baseURL}/ComplainceCertificateMasterObject/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -76,7 +76,7 @@ class ComplianceServices {
 
     async getFileDownload(id) {
         try {
-            const response = await axios.get(`${baseURL}/downloadFile/${id}`, {
+            const response = await api.get(`${baseURL}/downloadFile/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {
@@ -93,7 +93,7 @@ class ComplianceServices {
         try {
             console.log({testID:id});
 
-            const response = await axios.get(`${baseURL}/SupplierMasterObject/${id}`, {
+            const response = await api.get(`${baseURL}/SupplierMasterObject/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             console.log({testResponse:response});
@@ -110,7 +110,7 @@ class ComplianceServices {
 
     async deleteComplianceDocumentById(id) {
         try {
-            const response = await axios.delete(`${baseURL}/ComplainceCertificateMasterObject/${id}`, {
+            const response = await api.delete(`${baseURL}/ComplainceCertificateMasterObject/${id}`, {
                 headers: { Authorization: `Bearer ${isAuthenticated()}`},
             });
             if (response.status!==200) {

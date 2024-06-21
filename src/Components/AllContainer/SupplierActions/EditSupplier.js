@@ -5,9 +5,9 @@ import HashLoader from "react-spinners/HashLoader";
 import SupplierServices from "../../../services/supplier.services";
 import spinnerStyle from "../../../style.module.css";
 import { closeWindow, isAuthenticated } from "../../../utils/helper";
-import message from "../../../utils/message";
+import message from '../../../utils/message';
 import classes from "../../Form/AllForm.module.css";
-import styles from "../../Form/Parts/PartAttribut.module.css";
+import styles from '../../Form/Parts/PartAttribut.module.css';
 
 const EditSupplier = () => {
   const location = useLocation();
@@ -193,27 +193,41 @@ const EditSupplier = () => {
                     />
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className={styles.bussinessAttribute}>
-            <div className={classes.part_container}>
-              <div className={styles.master_part}>
-                <div className={styles.masterpart_header}>
-                  <p>Bussiness Attribute:-</p>
-                </div>
-
-                <div className={styles.formContainer}>
-                  <div className={styles.formInput}>
-                    <strong htmlFor="text">Product Type</strong>
-                    <input
-                      type="text"
-                      id="pt"
-                      className={styles.partName}
-                      name="pt"
-                      value={supplierData?.supplier[0]?.pt}
-                      onChange={(event) => postUserData(event, 0)}
-                    />
+                <div className={styles.bussinessAttribute}>
+                  <div className={classes.part_container}>
+                    <div className={styles.master_part}>
+                      <div className={styles.masterpart_header}>
+                        <p>Bussiness Attribute:-</p>
+                      </div>
+      
+                      <div className={styles.formContainer}>
+                      <div className={styles.formInput}>
+                          <strong htmlFor='text'>Product Type</strong>
+                          <input
+                            type='text'
+                            id='pt'
+                            className={styles.partName}
+                            name='pt'
+                            value={supplierData?.supplier[0]?.pt}
+                            onChange={(event)=>postUserData(event,0)}
+                          />
+                        </div>
+      
+                        <div className={styles.formInput}>
+                          <strong htmlFor='text'>Email ID:</strong>
+                          <input
+                            type='text'
+                            id='email'
+                            name='email'
+                            className={styles.partName}
+                            value={supplierData?.supplier[0]?.email}
+                            onChange={(event)=>postUserData(event,0)}
+                          />
+                        </div>
+      
+                        <div className={styles.formInput}>
+                    <strong htmlFor='text'>Contact No:</strong>
+                    <input type='number' id='contact' name="contact" value={supplierData?.supplier[0]?.contact} onChange={(event)=>postUserData(event,0)} />
                   </div>
 
                   <div className={styles.formInput}>
@@ -676,16 +690,16 @@ const EditSupplier = () => {
                     />
                   </div>
                   <div className={styles.formInput}>
-                    <strong htmlFor="document">
-                      Upload Contract Document:
-                    </strong>
-                    <input
-                      type="file"
-                      className={styles.partName}
-                      id="document"
-                      name="document"
-                      onChange={handleFileUpload}
-                    />
+                    <strong htmlFor='document'>Upload Contract Document:</strong>
+                    <input type='file' className={styles.partName}  id='document' name="document"  onChange={handleFileUpload} />
+                  </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'right' }}>
+                    <Button variant='primary' onClick={(e) => submitHandler(e)} disabled={isButtonDisabled}>
+                      Submit
+                    </Button>{' '}
                   </div>
                 </div>
               </div>
