@@ -3,11 +3,10 @@ import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import HashLoader from 'react-spinners/HashLoader';
 import spinnerStyle from '../../../style.module.css';
-import { isAuthenticated } from '../../../utils/helper';
+import { closeWindow, isAuthenticated } from '../../../utils/helper';
 import message from '../../../utils/message';
 import classes from '../../AllContainer/PartsAction/PartDetails.module.css';
 import styles from './../Parts/PartAttribut.module.css';
-import { closeWindow } from '../../../utils/helper';
 
 const Test = () => {
   const navigate = useNavigate();

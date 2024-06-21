@@ -54,9 +54,9 @@ function buildTree(data, parentId) {
     return treeNode;
   }
   const isAuthenticated = () => {
-    if (localStorage.getItem('token')) {
-        console.log({gazal: localStorage.getItem('token')})
-        return localStorage.getItem('token')
+    if (localStorage.getItem('accessToken')) {
+        console.log({gazal: localStorage.getItem('accessToken')})
+        return localStorage.getItem('accessToken')
     }
     return false
 }
