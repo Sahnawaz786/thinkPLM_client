@@ -1,0 +1,39 @@
+.selectSupplier{
+    display: flex;
+    margin: 10px;
+    justify-content: space-between;
+    gap: 5rem;
+
+}
+.search{
+    width: 10rem;
+    height: 2rem;
+    margin-right: 10px;
+    padding: 5px;
+}
+
+.searchContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.display_supplier_icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+  }
+
+  .addBtn{
+    display: flex;
+    justify-content: end;
+    margin-right: 2rem;
+    margin-top: 7rem;
+    
+  }
+
+  .selectFormInput{
+    width: 15.6rem;
+    padding: 2px;
+  }

@@ -16,6 +16,11 @@
     font-size: 17px;
 }
 
+.supplierTable{
+    text-decoration: underline;
+    color: blue;
+}
+
 .comments{
     display: flex;
     gap: 10px;
