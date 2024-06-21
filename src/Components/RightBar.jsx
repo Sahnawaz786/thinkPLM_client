@@ -45,6 +45,7 @@ import SupplierHistoryInfo from './AllContainer/SupplierActions/SupplierHistoryI
 import SupplierTable from './AllContainer/Task/SupplierTable';
 import Task from './AllContainer/Task/Task';
 import EditUser from './AllContainer/UserManagement/EditUser';
+import UserDetails from './AllContainer/UserManagement/UserDetails';
 import UserManagement from './AllContainer/UserManagement/UserManagement';
 
 const RightBar = () => {
@@ -264,8 +265,12 @@ const RightBar = () => {
         componentToRender = <EditUser id={id} />;
       }
       break;
-      
-
+      case `/user-details/${id}`:
+        if(id){
+          componentToRender = <UserDetails id={id}/>
+        }
+        break;
+    
     default:
       componentToRender = <PartTable />;
   }

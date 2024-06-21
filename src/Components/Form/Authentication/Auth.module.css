@@ -90,7 +90,7 @@
 .username input,
 .password input {
   height: 5vh;
-  width: 14vw;
+  width: 16vw;
   padding: 5px;
   font-size: 18px;
 }
@@ -231,7 +231,7 @@
 .fields {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 4rem;
   /* align-items: center; */
 }
 
@@ -272,8 +272,9 @@ textarea {
     display: flex;
     justify-content: end;
     padding-right: 10px;
-    margin-top: 8rem;
+    margin-top: 7rem;
     border: none;
+    overflow-x: hidden;
 }
 
 

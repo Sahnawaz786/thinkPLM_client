@@ -225,6 +225,7 @@ const SignUp = () => {
 
           </div>
           <div className={styles.submitBtn} >
+          {/* <Button onClick={() => navigate(-1)} >Go Back</Button> */}
           <Button onClick={handleSubmit} disabled={isButtonDisabled} >Submit</Button>
           </div>
 

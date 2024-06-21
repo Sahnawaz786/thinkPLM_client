@@ -9,6 +9,7 @@ import InvoiceDocEdit from './Components/AllContainer/InvoiceActions/InvoiceDocE
 import EditPart from './Components/AllContainer/PartsAction/EditPart';
 import EditSupplier from './Components/AllContainer/SupplierActions/EditSupplier';
 import SupplierDocEdit from './Components/AllContainer/SupplierDocumentAction/SupplierDocEdit';
+import AddUser from './Components/AllContainer/UserManagement/AddUser';
 import EditUser from './Components/AllContainer/UserManagement/EditUser';
 import Container from './Components/Container';
 import ControlPage from './Components/Form/Authentication/ControlPage';
@@ -76,6 +77,7 @@ function App() {
           <Route path='/edit-user/:id' element={<EditUser/>}/>
           <Route path='/task' element={<Container/>}/>
           <Route path='/suppliers' element={<Container/>} />
+          <Route path='/user-details/:id' element={<Container/>} />
 
 
 
@@ -111,6 +113,12 @@ function App() {
           <Route path='/compliance-document-edit/:id' element={<ComplianceDocEdit />}/>
           <Route path='/invoice-document-edit/:id' element={<InvoiceDocEdit/>}/>
           <Route path='/certificate-document-edit/:id' element={<CertificateDocEdit />}/>
+
+          {/* User Management  */}
+          <Route path='/add-users' element={<AddUser />}/>
+          
+          <Route path='/edit-user/:id' element={<EditUser />}/>
+
           </>:null}
 
           {!isLoggedIn ?<Route path='/login' element={<Login/>}/>:null }

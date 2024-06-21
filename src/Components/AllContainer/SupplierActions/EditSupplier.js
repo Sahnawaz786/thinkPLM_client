@@ -1,234 +1,252 @@
 import React, { useEffect, useState } from "react";
-import { Button } from 'react-bootstrap';
+import { Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
-import HashLoader from 'react-spinners/HashLoader';
-import SupplierServices from '../../../services/supplier.services';
+import HashLoader from "react-spinners/HashLoader";
+import SupplierServices from "../../../services/supplier.services";
 import spinnerStyle from "../../../style.module.css";
 import { closeWindow, isAuthenticated } from "../../../utils/helper";
+import message from "../../../utils/message";
 import classes from "../../Form/AllForm.module.css";
-import styles from '../../Form/Parts/PartAttribut.module.css';
-import message from '../../../utils/message';
+import styles from "../../Form/Parts/PartAttribut.module.css";
 
 const EditSupplier = () => {
   const location = useLocation();
-  const [id, setId] = useState(location?.pathname?.split('/')?.slice(-1));
+  const [id, setId] = useState(location?.pathname?.split("/")?.slice(-1));
   useEffect(() => {
-     setId(location?.pathname?.split('/')?.slice(-1))
-  }, [location])
-    const { getSupplierById, updateSupplier } = new SupplierServices();
+    setId(location?.pathname?.split("/")?.slice(-1));
+  }, [location]);
+  const { getSupplierById, updateSupplier } = new SupplierServices();
 
-    const [currentDate, setCurrentDate] = useState(
-      new Date().toJSON().slice(0, 10)
-    );
-    const [timer, setTimer] = useState(false);
-    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [currentDate, setCurrentDate] = useState(
+    new Date().toJSON().slice(0, 10)
+  );
+  const [timer, setTimer] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-
-    const [supplierData, setSupplierData] = useState({
-      category:'',
-      name: '',
-      description:'',
-      supplier:[{
-        email: '',
-        contact: '',
-        pt: '',
-        country: '',
-        state: '',
-        district: '',
-        location: '',
-        start_date: '',
-        end_date: '',
+  const [supplierData, setSupplierData] = useState({
+    category: "",
+    name: "",
+    description: "",
+    supplier: [
+      {
+        email: "",
+        contact: "",
+        pt: "",
+        country: "",
+        state: "",
+        district: "",
+        location: "",
+        start_date: "",
+        end_date: "",
         document: [{}],
-      }]
+      },
+    ],
+  });
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setSupplierData((prevState) => ({
+        ...prevState,
+        supplier: prevState.supplier.map((suppliers) => ({
+          ...suppliers,
+          document: [
+            {
+              fileName: file.name,
+              fileType: file.type,
+              document: reader.result,
+              id: suppliers?.documentId,
+            },
+          ],
+        })),
+      }));
+    };
+
+    // Read the file as a Data URL (Base64)
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const getSupplierApiEdit = async (id) => {
+    try {
+      const supplierInfo = await getSupplierById(id);
+      setSupplierData(supplierInfo?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getSupplierApiEdit(id);
+  }, [id]);
+
+  let name, value;
+
+  const postUser = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    setSupplierData((prevState) => {
+      return { ...prevState, [name]: value, modifiedDate: currentDate };
     });
+  };
 
-    const handleFileUpload = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-    
-        reader.onloadend = () => {
-          setSupplierData(prevState => ({
-            ...prevState,
-            supplier: prevState.supplier.map(suppliers => ({
-              ...suppliers,document:[{fileName:file.name,fileType:file.type,document:reader.result,id:suppliers?.documentId}]
-             
-            }))
-          }));
-
-        };
-    
-        // Read the file as a Data URL (Base64)
-        if (file) {
-          reader.readAsDataURL(file);
-        }
+  const postUserData = (event, index) => {
+    const { name, value } = event.target;
+    const date = new Date().toJSON().slice(0, 10);
+    setSupplierData((prevData) => {
+      const updatedSupplier = [...prevData.supplier];
+      updatedSupplier[index] = {
+        ...updatedSupplier[index],
+        [name]: value,
+        modifiedDate: date,
       };
+      return { ...prevData, supplier: updatedSupplier };
+    });
+  };
 
+  const submitHandler = async (event) => {
+    event.preventDefault();
+    setTimer(true);
+    setIsButtonDisabled(true);
+    // return;
+    try {
+      // `http://localhost:8181/SupplierMasterObject`
 
-    const getSupplierApiEdit = async (id) => {
-        try {
-            const supplierInfo = await getSupplierById(id);
-            setSupplierData(supplierInfo?.data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+      const res = await fetch(`http://localhost:8181/KKHSupplierMasterObject`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isAuthenticated()}`,
+        },
+        body: JSON.stringify(supplierData),
+      });
 
-    useEffect(() => {
-        getSupplierApiEdit(id);
-    }, [id]);
-    
-    let name,value;
+      if (res.ok) {
+        message(
+          "success",
+          "Supplier Edited, please refresh the page to get the latest data"
+        );
+        setTimeout(() => {
+          setTimer(false);
+          closeWindow();
+        }, 5000);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsButtonDisabled(false);
+    }
+  };
 
-    const postUser = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-    
-        setSupplierData(prevState => {
-            return { ...prevState, [name]: value,modifiedDate:currentDate}
-        })
-    };
+  return timer ? (
+    <div className={spinnerStyle.spinnerContainer}>
+      {" "}
+      <HashLoader color="#0E6EFD" />{" "}
+    </div>
+  ) : (
+    <div>
+      <div className={styles.parentContainer}>
+        <div className={styles.childContainer}>
+          <div className={styles.systemAttribute}>
+            <div className={classes.part_container}>
+              <div className={styles.master_part}>
+                <div className={styles.masterpart_header}>
+                  <p>System Attribute:-</p>
+                </div>
+                <div className={styles.formContainer}>
+                  <div className={styles.formInput}>
+                    <strong>Supplier Category(Non-Editable)</strong>
+                    <input
+                      type="text"
+                      name="category"
+                      className={styles.partName}
+                      value={supplierData?.category}
+                      readOnly
+                    />
+                  </div>
 
-    const postUserData = (event,index) => {
-        const { name, value } = event.target;
-        const date = new Date().toJSON().slice(0, 10);
-        setSupplierData((prevData) => {
-          const updatedSupplier = [...prevData.supplier];
-          updatedSupplier[index] = { ...updatedSupplier[index], [name]: value , modifiedDate: date};
-            return { ...prevData,supplier:updatedSupplier};
-        });
-    };
+                  <div className={styles.formInput}>
+                    <strong>Supplier Name(Non-Editable)</strong>
+                    <input
+                      type="text"
+                      name="name"
+                      value={supplierData?.name}
+                      className={styles.partName}
+                      readOnly
+                    />
+                  </div>
 
-    const submitHandler = async (event) => {
-        event.preventDefault();
-        setTimer(true);
-        setIsButtonDisabled(true)
-        // return;
-        try {
-            // `http://localhost:8181/SupplierMasterObject`
-
-            const res = await fetch(`http://localhost:8181/KKHSupplierMasterObject`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${isAuthenticated()}`
-                },
-                body: JSON.stringify(supplierData),
-            });
-          
-            if (res.ok) {
-              message('success', 'Supplier Edited, please refresh the page to get the latest data')
-              setTimeout(() => {
-                setTimer(false);
-                closeWindow();
-              }, 5000);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-        finally{
-          setIsButtonDisabled(false)
-        }
-    };
-
-
-    return (
-        timer ? <div className={spinnerStyle.spinnerContainer}>
-            {' '}
-            <HashLoader color='#0E6EFD' />{' '}
-        </div>
-            :
-            <div>
-     
-            <div className={styles.parentContainer}>
-              <div className={styles.childContainer}>
-                <div className={styles.systemAttribute}>
-                  <div className={classes.part_container}>
-                    <div className={styles.master_part}>
-                      <div className={styles.masterpart_header}>
-                        <p>System Attribute:-</p>
-                      </div>
-                      <div className={styles.formContainer}>
-      
-                      <div className={styles.formInput}>
-                          <strong>Supplier Category(Non-Editable)</strong>
-                          <input
-                            type='text'
-                            name='category'
-                            className={styles.partName}
-                            value={supplierData?.category}
-                            readOnly
-                          />
-                        </div>
-      
-                        <div className={styles.formInput}>
-                          <strong>Supplier Name(Non-Editable)</strong>
-                          <input
-                            type='text'
-                            name='name'
-                            value={supplierData?.name}
-                            className={styles.partName}
-                            readOnly
-                          />
-                        </div>
-
-                        <div className={styles.formInput}>
-                          <strong>Description(Non-Editable)</strong>
-                          <input
-                            type='text'
-                            name='name'
-                            value={supplierData?.description}
-                            className={styles.partName}
-                            readOnly
-                          />
-                        </div>
-                      </div>
-                    </div>
+                  <div className={styles.formInput}>
+                    <strong>Description(Non-Editable)</strong>
+                    <input
+                      type="text"
+                      name="name"
+                      value={supplierData?.description}
+                      className={styles.partName}
+                      readOnly
+                    />
                   </div>
                 </div>
-                <div className={styles.bussinessAttribute}>
-                  <div className={classes.part_container}>
-                    <div className={styles.master_part}>
-                      <div className={styles.masterpart_header}>
-                        <p>Bussiness Attribute:-</p>
-                      </div>
-      
-                      <div className={styles.formContainer}>
-                      <div className={styles.formInput}>
-                          <strong htmlFor='text'>Product Type</strong>
-                          <input
-                            type='text'
-                            id='pt'
-                            className={styles.partName}
-                            name='pt'
-                            value={supplierData?.supplier[0]?.pt}
-                            onChange={(event)=>postUserData(event,0)}
-                          />
-                        </div>
-      
-                        <div className={styles.formInput}>
-                          <strong htmlFor='text'>Email ID:</strong>
-                          <input
-                            type='text'
-                            id='email'
-                            name='email'
-                            className={styles.partName}
-                            value={supplierData?.supplier[0]?.email}
-                            onChange={(event)=>postUserData(event,0)}
-                          />
-                        </div>
-      
-                        <div className={styles.formInput}>
-                    <strong htmlFor='text'>Contact No:</strong>
-                    <input type='text' id='contact' name="contact" value={supplierData?.supplier[0]?.contact} onChange={(event)=>postUserData(event,0)} />
+              </div>
+            </div>
+          </div>
+          <div className={styles.bussinessAttribute}>
+            <div className={classes.part_container}>
+              <div className={styles.master_part}>
+                <div className={styles.masterpart_header}>
+                  <p>Bussiness Attribute:-</p>
+                </div>
+
+                <div className={styles.formContainer}>
+                  <div className={styles.formInput}>
+                    <strong htmlFor="text">Product Type</strong>
+                    <input
+                      type="text"
+                      id="pt"
+                      className={styles.partName}
+                      name="pt"
+                      value={supplierData?.supplier[0]?.pt}
+                      onChange={(event) => postUserData(event, 0)}
+                    />
                   </div>
-      
+
+                  <div className={styles.formInput}>
+                    <strong htmlFor="text">Email ID:</strong>
+                    <input
+                      type="text"
+                      id="email"
+                      name="email"
+                      className={styles.partName}
+                      value={supplierData?.supplier[0]?.email}
+                      onChange={(event) => postUserData(event, 0)}
+                    />
+                  </div>
+
+                  <div className={styles.formInput}>
+                    <strong htmlFor="text">Contact No:</strong>
+                    <input
+                      type="number"
+                      id="contact"
+                      name="contact"
+                      value={supplierData?.supplier[0]?.contact}
+                      onChange={(event) => postUserData(event, 0)}
+                    />
+                  </div>
+
                   <div className={styles.formInput}>
                     <strong>Country:</strong>
                     <select
                       className={styles.partName}
-                      name="country" value={supplierData?.supplier[0]?.country} onChange={(event)=>postUserData(event,0)}>
+                      name="country"
+                      value={supplierData?.supplier[0]?.country}
+                      onChange={(event) => postUserData(event, 0)}
+                    >
                       <option value="">Select Country</option>
                       <option value="Afghanistan">Afghanistan</option>
                       <option value="Åland Islands">Åland Islands</option>
@@ -239,7 +257,9 @@ const EditSupplier = () => {
                       <option value="Angola">Angola</option>
                       <option value="Anguilla">Anguilla</option>
                       <option value="Antarctica">Antarctica</option>
-                      <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                      <option value="Antigua and Barbuda">
+                        Antigua and Barbuda
+                      </option>
                       <option value="Argentina">Argentina</option>
                       <option value="Armenia">Armenia</option>
                       <option value="Aruba">Aruba</option>
@@ -257,12 +277,18 @@ const EditSupplier = () => {
                       <option value="Bermuda">Bermuda</option>
                       <option value="Bhutan">Bhutan</option>
                       <option value="Bolivia">Bolivia</option>
-                      <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                      <option value="Bosnia and Herzegovina">
+                        Bosnia and Herzegovina
+                      </option>
                       <option value="Botswana">Botswana</option>
                       <option value="Bouvet Island">Bouvet Island</option>
                       <option value="Brazil">Brazil</option>
-                      <option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
-                      <option value="Brunei Darussalam">Brunei Darussalam</option>
+                      <option value="British Indian Ocean Territory">
+                        British Indian Ocean Territory
+                      </option>
+                      <option value="Brunei Darussalam">
+                        Brunei Darussalam
+                      </option>
                       <option value="Bulgaria">Bulgaria</option>
                       <option value="Burkina Faso">Burkina Faso</option>
                       <option value="Burundi">Burundi</option>
@@ -271,16 +297,22 @@ const EditSupplier = () => {
                       <option value="Canada">Canada</option>
                       <option value="Cape Verde">Cape Verde</option>
                       <option value="Cayman Islands">Cayman Islands</option>
-                      <option value="Central African Republic">Central African Republic</option>
+                      <option value="Central African Republic">
+                        Central African Republic
+                      </option>
                       <option value="Chad">Chad</option>
                       <option value="Chile">Chile</option>
                       <option value="China">China</option>
                       <option value="Christmas Island">Christmas Island</option>
-                      <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
+                      <option value="Cocos (Keeling) Islands">
+                        Cocos (Keeling) Islands
+                      </option>
                       <option value="Colombia">Colombia</option>
                       <option value="Comoros">Comoros</option>
                       <option value="Congo">Congo</option>
-                      <option value="Congo, The Democratic Republic of The">Congo, The Democratic Republic of The</option>
+                      <option value="Congo, The Democratic Republic of The">
+                        Congo, The Democratic Republic of The
+                      </option>
                       <option value="Cook Islands">Cook Islands</option>
                       <option value="Costa Rica">Costa Rica</option>
                       <option value="Cote D'ivoire">Cote D'ivoire</option>
@@ -291,22 +323,30 @@ const EditSupplier = () => {
                       <option value="Denmark">Denmark</option>
                       <option value="Djibouti">Djibouti</option>
                       <option value="Dominica">Dominica</option>
-                      <option value="Dominican Republic">Dominican Republic</option>
+                      <option value="Dominican Republic">
+                        Dominican Republic
+                      </option>
                       <option value="Ecuador">Ecuador</option>
                       <option value="Egypt">Egypt</option>
                       <option value="El Salvador">El Salvador</option>
-                      <option value="Equatorial Guinea">Equatorial Guinea</option>
+                      <option value="Equatorial Guinea">
+                        Equatorial Guinea
+                      </option>
                       <option value="Eritrea">Eritrea</option>
                       <option value="Estonia">Estonia</option>
                       <option value="Ethiopia">Ethiopia</option>
-                      <option value="Falkland Islands (Malvinas)">Falkland Islands (Malvinas)</option>
+                      <option value="Falkland Islands (Malvinas)">
+                        Falkland Islands (Malvinas)
+                      </option>
                       <option value="Faroe Islands">Faroe Islands</option>
                       <option value="Fiji">Fiji</option>
                       <option value="Finland">Finland</option>
                       <option value="France">France</option>
                       <option value="French Guiana">French Guiana</option>
                       <option value="French Polynesia">French Polynesia</option>
-                      <option value="French Southern Territories">French Southern Territories</option>
+                      <option value="French Southern Territories">
+                        French Southern Territories
+                      </option>
                       <option value="Gabon">Gabon</option>
                       <option value="Gambia">Gambia</option>
                       <option value="Georgia">Georgia</option>
@@ -324,15 +364,21 @@ const EditSupplier = () => {
                       <option value="Guinea-bissau">Guinea-bissau</option>
                       <option value="Guyana">Guyana</option>
                       <option value="Haiti">Haiti</option>
-                      <option value="Heard Island and Mcdonald Islands">Heard Island and Mcdonald Islands</option>
-                      <option value="Holy See (Vatican City State)">Holy See (Vatican City State)</option>
+                      <option value="Heard Island and Mcdonald Islands">
+                        Heard Island and Mcdonald Islands
+                      </option>
+                      <option value="Holy See (Vatican City State)">
+                        Holy See (Vatican City State)
+                      </option>
                       <option value="Honduras">Honduras</option>
                       <option value="Hong Kong">Hong Kong</option>
                       <option value="Hungary">Hungary</option>
                       <option value="Iceland">Iceland</option>
                       <option value="India">India</option>
                       <option value="Indonesia">Indonesia</option>
-                      <option value="Iran, Islamic Republic of">Iran, Islamic Republic of</option>
+                      <option value="Iran, Islamic Republic of">
+                        Iran, Islamic Republic of
+                      </option>
                       <option value="Iraq">Iraq</option>
                       <option value="Ireland">Ireland</option>
                       <option value="Isle of Man">Isle of Man</option>
@@ -345,21 +391,31 @@ const EditSupplier = () => {
                       <option value="Kazakhstan">Kazakhstan</option>
                       <option value="Kenya">Kenya</option>
                       <option value="Kiribati">Kiribati</option>
-                      <option value="Korea, Democratic People's Republic of">Korea, Democratic People's Republic of</option>
-                      <option value="Korea, Republic of">Korea, Republic of</option>
+                      <option value="Korea, Democratic People's Republic of">
+                        Korea, Democratic People's Republic of
+                      </option>
+                      <option value="Korea, Republic of">
+                        Korea, Republic of
+                      </option>
                       <option value="Kuwait">Kuwait</option>
                       <option value="Kyrgyzstan">Kyrgyzstan</option>
-                      <option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option>
+                      <option value="Lao People's Democratic Republic">
+                        Lao People's Democratic Republic
+                      </option>
                       <option value="Latvia">Latvia</option>
                       <option value="Lebanon">Lebanon</option>
                       <option value="Lesotho">Lesotho</option>
                       <option value="Liberia">Liberia</option>
-                      <option value="Libyan Arab Jamahiriya">Libyan Arab Jamahiriya</option>
+                      <option value="Libyan Arab Jamahiriya">
+                        Libyan Arab Jamahiriya
+                      </option>
                       <option value="Liechtenstein">Liechtenstein</option>
                       <option value="Lithuania">Lithuania</option>
                       <option value="Luxembourg">Luxembourg</option>
                       <option value="Macao">Macao</option>
-                      <option value="Macedonia, The Former Yugoslav Republic of">Macedonia, The Former Yugoslav Republic of</option>
+                      <option value="Macedonia, The Former Yugoslav Republic of">
+                        Macedonia, The Former Yugoslav Republic of
+                      </option>
                       <option value="Madagascar">Madagascar</option>
                       <option value="Malawi">Malawi</option>
                       <option value="Malaysia">Malaysia</option>
@@ -372,8 +428,12 @@ const EditSupplier = () => {
                       <option value="Mauritius">Mauritius</option>
                       <option value="Mayotte">Mayotte</option>
                       <option value="Mexico">Mexico</option>
-                      <option value="Micronesia, Federated States of">Micronesia, Federated States of</option>
-                      <option value="Moldova, Republic of">Moldova, Republic of</option>
+                      <option value="Micronesia, Federated States of">
+                        Micronesia, Federated States of
+                      </option>
+                      <option value="Moldova, Republic of">
+                        Moldova, Republic of
+                      </option>
                       <option value="Monaco">Monaco</option>
                       <option value="Mongolia">Mongolia</option>
                       <option value="Montenegro">Montenegro</option>
@@ -385,7 +445,9 @@ const EditSupplier = () => {
                       <option value="Nauru">Nauru</option>
                       <option value="Nepal">Nepal</option>
                       <option value="Netherlands">Netherlands</option>
-                      <option value="Netherlands Antilles">Netherlands Antilles</option>
+                      <option value="Netherlands Antilles">
+                        Netherlands Antilles
+                      </option>
                       <option value="New Caledonia">New Caledonia</option>
                       <option value="New Zealand">New Zealand</option>
                       <option value="Nicaragua">Nicaragua</option>
@@ -393,12 +455,16 @@ const EditSupplier = () => {
                       <option value="Nigeria">Nigeria</option>
                       <option value="Niue">Niue</option>
                       <option value="Norfolk Island">Norfolk Island</option>
-                      <option value="Northern Mariana Islands">Northern Mariana Islands</option>
+                      <option value="Northern Mariana Islands">
+                        Northern Mariana Islands
+                      </option>
                       <option value="Norway">Norway</option>
                       <option value="Oman">Oman</option>
                       <option value="Pakistan">Pakistan</option>
                       <option value="Palau">Palau</option>
-                      <option value="Palestinian Territory, Occupied">Palestinian Territory, Occupied</option>
+                      <option value="Palestinian Territory, Occupied">
+                        Palestinian Territory, Occupied
+                      </option>
                       <option value="Panama">Panama</option>
                       <option value="Papua New Guinea">Papua New Guinea</option>
                       <option value="Paraguay">Paraguay</option>
@@ -411,16 +477,26 @@ const EditSupplier = () => {
                       <option value="Qatar">Qatar</option>
                       <option value="Reunion">Reunion</option>
                       <option value="Romania">Romania</option>
-                      <option value="Russian Federation">Russian Federation</option>
+                      <option value="Russian Federation">
+                        Russian Federation
+                      </option>
                       <option value="Rwanda">Rwanda</option>
                       <option value="Saint Helena">Saint Helena</option>
-                      <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                      <option value="Saint Kitts and Nevis">
+                        Saint Kitts and Nevis
+                      </option>
                       <option value="Saint Lucia">Saint Lucia</option>
-                      <option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
-                      <option value="Saint Vincent and The Grenadines">Saint Vincent and The Grenadines</option>
+                      <option value="Saint Pierre and Miquelon">
+                        Saint Pierre and Miquelon
+                      </option>
+                      <option value="Saint Vincent and The Grenadines">
+                        Saint Vincent and The Grenadines
+                      </option>
                       <option value="Samoa">Samoa</option>
                       <option value="San Marino">San Marino</option>
-                      <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                      <option value="Sao Tome and Principe">
+                        Sao Tome and Principe
+                      </option>
                       <option value="Saudi Arabia">Saudi Arabia</option>
                       <option value="Senegal">Senegal</option>
                       <option value="Serbia">Serbia</option>
@@ -432,60 +508,86 @@ const EditSupplier = () => {
                       <option value="Solomon Islands">Solomon Islands</option>
                       <option value="Somalia">Somalia</option>
                       <option value="South Africa">South Africa</option>
-                      <option value="South Georgia and The South Sandwich Islands">South Georgia and The South Sandwich Islands</option>
+                      <option value="South Georgia and The South Sandwich Islands">
+                        South Georgia and The South Sandwich Islands
+                      </option>
                       <option value="Spain">Spain</option>
                       <option value="Sri Lanka">Sri Lanka</option>
                       <option value="Sudan">Sudan</option>
                       <option value="Suriname">Suriname</option>
-                      <option value="Svalbard and Jan Mayen">Svalbard and Jan Mayen</option>
+                      <option value="Svalbard and Jan Mayen">
+                        Svalbard and Jan Mayen
+                      </option>
                       <option value="Swaziland">Swaziland</option>
                       <option value="Sweden">Sweden</option>
                       <option value="Switzerland">Switzerland</option>
-                      <option value="Syrian Arab Republic">Syrian Arab Republic</option>
+                      <option value="Syrian Arab Republic">
+                        Syrian Arab Republic
+                      </option>
                       <option value="Taiwan">Taiwan</option>
                       <option value="Tajikistan">Tajikistan</option>
-                      <option value="Tanzania, United Republic of">Tanzania, United Republic of</option>
+                      <option value="Tanzania, United Republic of">
+                        Tanzania, United Republic of
+                      </option>
                       <option value="Thailand">Thailand</option>
                       <option value="Timor-leste">Timor-leste</option>
                       <option value="Togo">Togo</option>
                       <option value="Tokelau">Tokelau</option>
                       <option value="Tonga">Tonga</option>
-                      <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                      <option value="Trinidad and Tobago">
+                        Trinidad and Tobago
+                      </option>
                       <option value="Tunisia">Tunisia</option>
                       <option value="Turkey">Turkey</option>
                       <option value="Turkmenistan">Turkmenistan</option>
-                      <option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+                      <option value="Turks and Caicos Islands">
+                        Turks and Caicos Islands
+                      </option>
                       <option value="Tuvalu">Tuvalu</option>
                       <option value="Uganda">Uganda</option>
                       <option value="Ukraine">Ukraine</option>
-                      <option value="United Arab Emirates">United Arab Emirates</option>
+                      <option value="United Arab Emirates">
+                        United Arab Emirates
+                      </option>
                       <option value="United Kingdom">United Kingdom</option>
                       <option value="United States">United States</option>
-                      <option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
+                      <option value="United States Minor Outlying Islands">
+                        United States Minor Outlying Islands
+                      </option>
                       <option value="Uruguay">Uruguay</option>
                       <option value="Uzbekistan">Uzbekistan</option>
                       <option value="Vanuatu">Vanuatu</option>
                       <option value="Venezuela">Venezuela</option>
                       <option value="Viet Nam">Viet Nam</option>
-                      <option value="Virgin Islands, British">Virgin Islands, British</option>
-                      <option value="Virgin Islands, U.S.">Virgin Islands, U.S.</option>
-                      <option value="Wallis and Futuna">Wallis and Futuna</option>
+                      <option value="Virgin Islands, British">
+                        Virgin Islands, British
+                      </option>
+                      <option value="Virgin Islands, U.S.">
+                        Virgin Islands, U.S.
+                      </option>
+                      <option value="Wallis and Futuna">
+                        Wallis and Futuna
+                      </option>
                       <option value="Western Sahara">Western Sahara</option>
                       <option value="Yemen">Yemen</option>
                       <option value="Zambia">Zambia</option>
                       <option value="Zimbabwe">Zimbabwe</option>
                     </select>
                   </div>
-      
-      
+
                   <div className={styles.formInput}>
                     <strong>State:</strong>
                     <select
                       className={styles.partName}
-                      name="state" value={supplierData?.supplier[0]?.state} onChange={(event)=>postUserData(event,0)}>
+                      name="state"
+                      value={supplierData?.supplier[0]?.state}
+                      onChange={(event) => postUserData(event, 0)}
+                    >
                       <option value="">Select State</option>
                       <option value="Andhra Pradesh">Andhra Pradesh</option>
-                      <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                      <option value="Arunachal Pradesh">
+                        Arunachal Pradesh
+                      </option>
                       <option value="Assam">Assam</option>
                       <option value="Bihar">Bihar</option>
                       <option value="Chattisgarh">Chhattisgarh</option>
@@ -513,51 +615,95 @@ const EditSupplier = () => {
                       <option value="Uttarakhand">Uttarakhand</option>
                       <option value="Uttar pradesh">Uttar Pradesh</option>
                       <option value="West bengal">West Bengal</option>
-                      <option value="Andaman and Nicobar">Andaman and Nicobar Islands</option>
+                      <option value="Andaman and Nicobar">
+                        Andaman and Nicobar Islands
+                      </option>
                       <option value="Chandigarh">Chandigarh</option>
-                      <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                      <option value="Dadar and Nagar Haveli">
+                        Dadar and Nagar Haveli
+                      </option>
                       <option value="Daman and Diu">Daman and Diu</option>
                       <option value="Delhi">Delhi</option>
                       <option value="Lakshadweep">Lakshadweep</option>
                       <option value="Puducherry">Puducherry</option>
                     </select>
                   </div>
-      
+
                   <div className={styles.formInput}>
-                    <strong htmlFor='text'>District:</strong>
-                    <input type='text' className={styles.partName} id='district' name="district" value={supplierData?.supplier[0]?.district} onChange={(event)=>postUserData(event,0)} />
+                    <strong htmlFor="text">District:</strong>
+                    <input
+                      type="text"
+                      className={styles.partName}
+                      id="district"
+                      name="district"
+                      value={supplierData?.supplier[0]?.district}
+                      onChange={(event) => postUserData(event, 0)}
+                    />
                   </div>
-      
+
                   <div className={styles.formInput}>
-                    <strong htmlFor='text'>Location/Address:</strong>
-                    <input type='text' className={styles.partName} id='location' name="location" value={supplierData?.supplier[0]?.location} onChange={(event)=>postUserData(event,0)} />
+                    <strong htmlFor="text">Location/Address:</strong>
+                    <input
+                      type="text"
+                      className={styles.partName}
+                      id="location"
+                      name="location"
+                      value={supplierData?.supplier[0]?.location}
+                      onChange={(event) => postUserData(event, 0)}
+                    />
                   </div>
-      
+
                   <div className={styles.formInput}>
-                    <strong htmlFor='text'>Contract Start Date:</strong>
-                    <input type='date' className={styles.partName} id='sdate' name="start_date" value={supplierData?.supplier[0]?.start_date} onChange={(event)=>postUserData(event)} />
+                    <strong htmlFor="text">Contract Start Date:</strong>
+                    <input
+                      type="date"
+                      className={styles.partName}
+                      id="sdate"
+                      name="start_date"
+                      value={supplierData?.supplier[0]?.start_date}
+                      onChange={(event) => postUserData(event)}
+                    />
                   </div>
                   <div className={styles.formInput}>
-                    <strong htmlFor='text'>Contract End Date:</strong>
-                    <input type='date' className={styles.partName} id='location' name="end_date" value={supplierData?.supplier[0]?.end_date} onChange={(event)=>postUserData(event,0)} />
+                    <strong htmlFor="text">Contract End Date:</strong>
+                    <input
+                      type="date"
+                      className={styles.partName}
+                      id="location"
+                      name="end_date"
+                      value={supplierData?.supplier[0]?.end_date}
+                      onChange={(event) => postUserData(event, 0)}
+                    />
                   </div>
                   <div className={styles.formInput}>
-                    <strong htmlFor='document'>Upload Contract Document:</strong>
-                    <input type='file' className={styles.partName}  id='document' name="document" onChange={handleFileUpload} />
-                  </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'right' }}>
-                    <Button variant='primary' onClick={(e) => submitHandler(e)} disabled={isButtonDisabled}>
-                      Submit
-                    </Button>{' '}
+                    <strong htmlFor="document">
+                      Upload Contract Document:
+                    </strong>
+                    <input
+                      type="file"
+                      className={styles.partName}
+                      id="document"
+                      name="document"
+                      onChange={handleFileUpload}
+                    />
                   </div>
                 </div>
               </div>
             </div>
+            <div style={{ display: "flex", justifyContent: "right" }}>
+              <Button
+                variant="primary"
+                onClick={(e) => submitHandler(e)}
+                disabled={isButtonDisabled}
+              >
+                Submit
+              </Button>{" "}
+            </div>
           </div>
-    );
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default EditSupplier;

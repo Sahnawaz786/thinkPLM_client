@@ -56,15 +56,15 @@ const SupplierContainer = ({ children, id,iteration_info }) => {
             <div className={classes.container} >
             <p className={classes.container_paragraph}> 
             <div className={styles.logoText} >
-              <img
+            <span> <img
                 src='/images/supplier.png'
                 alt='logo'
                 className={styles.imageIcon}
-              />
+              /></span> 
              {(supplierInformation || [])?.map((sup, index) => {
           return (
             <div className={classes.container} >
-              <p className={classes.container_paragraph}> Supplier-{sup?.category},{sup?.name},{iteration_info || sup?.supplier[0]?.iteration_info}</p>
+              <span className={classes.container_paragraph}> Supplier-{sup?.category},{sup?.name},{iteration_info || sup?.supplier[0]?.iteration_info}</span>
             </div>
           )
         })}

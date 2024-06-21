@@ -24,9 +24,9 @@ const Login = () => {
         }
       );
       console.log('responsessss',response)
-      const { token } = response.data;
-      console.log('tokensss',token)
-      localStorage.setItem('token', token);
+      const { accessToken } = response.data;
+      console.log('tokensss',accessToken)
+      localStorage.setItem('token', accessToken);
       navigate('/')
       window.location.reload();
     } catch (error) {
