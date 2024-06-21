@@ -5,9 +5,15 @@ import HashLoader from "react-spinners/HashLoader";
 import SupplierServices from "../../../services/supplier.services";
 import spinnerStyle from "../../../style.module.css";
 import { closeWindow, isAuthenticated } from "../../../utils/helper";
+<<<<<<< HEAD
 import message from '../../../utils/message';
 import classes from "../../Form/AllForm.module.css";
 import styles from '../../Form/Parts/PartAttribut.module.css';
+=======
+import message from "../../../utils/message";
+import classes from "../../Form/AllForm.module.css";
+import styles from "../../Form/Parts/PartAttribut.module.css";
+>>>>>>> a3b4c43870d5c4b59aa6398698813b3c192d76fa
 
 const EditSupplier = () => {
   const location = useLocation();
