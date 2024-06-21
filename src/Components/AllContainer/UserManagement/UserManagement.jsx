@@ -18,7 +18,7 @@ const UserManagement = () => {
   const [id, setId] = useState();
   const { getUser, deleteUser } = new authenticationServices();
 
-  let ids = localStorage.getItem("IDS")?.split(",");
+  let ids = localStorage?.getItem("IDS")?.split(",");
   let urls = "";
   console.log("IDS HELLO", ids);
   ids?.forEach((elem)=>{
@@ -33,8 +33,8 @@ const UserManagement = () => {
       const userData = await getUserByMultipleIds(urls.slice(0,urls.length-1));
        setUsers(userData?.data || []);
     }
-    
   };
+  
   console.log({ users });
   useEffect(() => {
     fetchUsers();
