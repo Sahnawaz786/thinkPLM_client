@@ -36,7 +36,7 @@
 .tab_buttons button{
   font-weight: bold;
   margin:5px;
-  padding:8px;
+  padding:5px;
   margin-right: -1px;
   border-radius: 3px;
   border-color: #0E6EFD;
@@ -62,7 +62,7 @@
     font-weight: bold;
     font-size: 15px;
     text-decoration: underline;
-    background-color: #d9d9d9;
+    background-color:#F5F5DC;
     padding: 2px;
 }
 

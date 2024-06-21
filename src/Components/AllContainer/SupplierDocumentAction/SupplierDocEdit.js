@@ -7,8 +7,8 @@ import { categoryContext } from "../../../store/CategoryProvider";
 import spinnerStyle from "../../../style.module.css";
 import FileInput from '../../../utils/FileInput';
 import { closeWindow, isAuthenticated } from "../../../utils/helper";
-import styles from '../../Form/Parts/PartAttribut.module.css';
 import message from '../../../utils/message';
+import styles from '../../Form/Parts/PartAttribut.module.css';
 
 const SupplierDocEdit = () => {
     let id = '';
@@ -194,7 +194,7 @@ const SupplierDocEdit = () => {
             <HashLoader color='#0E6EFD' />{' '}
         </div>
             :
-            <div>
+            <div className={styles.supplierEdit}>
                 {/* <h3>Part Management</h3> */}
                 <div className={styles.parentContainer}>
                     <div className={styles.childContainer}>

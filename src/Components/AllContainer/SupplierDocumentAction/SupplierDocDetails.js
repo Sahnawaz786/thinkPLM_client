@@ -5,9 +5,9 @@ import DocumentServices from '../../../services/document.services';
 import { UserContext } from '../../../store/UserProvider';
 import styles from '../../../style.module.css';
 import DisplayAlert from '../../../utils/DisplayAlert';
+import { URL, openNewWindow } from '../../../utils/helper';
 import classes from '../SupplierActions/Supplier.module.css';
 import SupplierDocContainer from '../SupplierDocumentContainer/SupplierDocContainer';
-import { URL, openNewWindow } from '../../../utils/helper';
 
 const SupplierDocDetails = ({ id }) => {
 

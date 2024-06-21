@@ -64,7 +64,7 @@
 
 .fotter {
   background-color: #05aff1;
-  height: 76.5vh;
+  height: 90vh;
 }
 
 .loginForm {
@@ -90,7 +90,7 @@
 .username input,
 .password input {
   height: 5vh;
-  width: 14vw;
+  width: 16vw;
   padding: 5px;
   font-size: 18px;
 }
@@ -131,14 +131,15 @@
 }
 
 .fotterLastInfo {
-  margin-top: 20rem;
+  margin-top: 15rem;
 }
 
 .fotterLast p {
   font-size: 18px;
-  padding: 0px 50px;
+  padding: 5px 3rem;
   color: #0a5f87;
   margin-bottom: 0px;
+  margin-left: 5rem;
 }
 
 .sales {
@@ -230,7 +231,7 @@
 .fields {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 4rem;
   /* align-items: center; */
 }
 
@@ -271,8 +272,9 @@ textarea {
     display: flex;
     justify-content: end;
     padding-right: 10px;
-    margin-top: 8rem;
+    margin-top: 7rem;
     border: none;
+    overflow-x: hidden;
 }
 
 

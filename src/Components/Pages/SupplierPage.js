@@ -1,14 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import HashLoader from "react-spinners/HashLoader";
 import { categoryContext } from '../../store/CategoryProvider';
-import ManufacturerForm from '../Form/Supplier/ManufacturerForm';
-import Tier1 from '../Form/Supplier/Tier1';
-import Tier2 from '../Form/Supplier/Tier2';
-import VendorForm from '../Form/Supplier/VendorForm';
-import classes from './SupplierPage.module.css';
-import spinnerStyle from './../../style.module.css';
 import { URL, openNewWindow } from '../../utils/helper';
-import { useNavigate } from 'react-router-dom';
+import spinnerStyle from './../../style.module.css';
+import classes from './SupplierPage.module.css';
 
 const SupplierPage = () => {
 

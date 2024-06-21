@@ -95,7 +95,5 @@ const closeWindow = () => {
 
 const refreshPage = () => window.location.reload();
 
-export {
-  URL, buildTree, closeWindow, isAuthenticated, openNewWindow, refreshPage, uniqueIds
-};
+export { buildTree, closeWindow, isAuthenticated, openNewWindow, refreshPage, uniqueIds, URL };
 

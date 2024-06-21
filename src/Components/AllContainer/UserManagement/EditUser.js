@@ -46,7 +46,7 @@ const EditUser=({id})=> {
 
       const updateUser=async()=> {
         setIsButtonDisabled(true)
-        const token=localStorage.getItem("token");
+        const token=localStorage.getItem("accessToken");
         try {
             const response = await axios.put("http://localhost:8181/updateRegisterUserWithThink", formData, {
                 headers: {
