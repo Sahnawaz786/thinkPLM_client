@@ -8,7 +8,7 @@ import SupplierServices from "../../../services/supplier.services";
 import { UserContext } from "../../../store/UserProvider";
 import styles from "../../../style.module.css";
 import DisplayAlert from "../../../utils/DisplayAlert";
-import { openNewWindow, URL } from "../../../utils/helper";
+import { URL, openNewWindow } from "../../../utils/helper";
 const { deletePart } = new PartServices();
 const { deleteSupplier } = new SupplierServices();
 const { deleteInvoiceDocumentById } = new InvoiceServices();
@@ -16,8 +16,7 @@ const { deleteCertificateDocumentById } = new CertificateServices();
 const { deleteComplianceDocumentById } = new ComplianceServices();
 
 const GlobalSearchTable = () => {
-  const { choice, showAlert, setShowAlert, searchData, setSearchData } =
-    useContext(UserContext);
+  const { choice, showAlert, setShowAlert, searchData, setSearchData } = useContext(UserContext);
   console.log(searchData, "@@@");
   const [selectedId, setSelectedId] = useState(null);
   const [elem, setElem] = useState();
