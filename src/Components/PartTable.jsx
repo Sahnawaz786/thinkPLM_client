@@ -340,7 +340,7 @@ const PartTable = () => {
               <Dropdown.Menu style={{ backgroundColor: "white" }}>
                 <Dropdown.Item
                   className={styles.hoverText}
-                  onClick={() => navigate("/create-part")}
+                  onClick={(e) => openNewWindow(e, `${URL}/create-part`)}
                 >
                   Create Parts
                 </Dropdown.Item>

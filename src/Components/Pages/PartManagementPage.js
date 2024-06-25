@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { categoryContext } from '../../store/CategoryProvider';
 import CustomParts from '../Form/Parts/CustomParts';
 import StandardParts from '../Form/Parts/StandardParts';
 import classes from './SupplierPage.module.css';
-import { useNavigate } from 'react-router-dom';
-import { URL, openNewWindow } from '../../utils/helper';
 
 const PartManagementPage = () => {
   const navigate = useNavigate();
@@ -24,29 +23,29 @@ const PartManagementPage = () => {
       },[])
   
 
-  const [selected, setSelected]=useState('');
+  const [selected, setSelected]=useState('standard parts');
   const handleChange = (e) => {
     if (e.detail === 0) {
       setSelected(e.target.value)
-      const name = e.target.value;
-      console.log({name})
-      switch (name) {
-        case 'standard parts':
-          openNewWindow(e, `${URL}/standard-parts`);
-          setTimeout(() => {
-            navigate('/');
-          }, 1000)
-          break;
+      // const name = e.target.value;
+      // console.log({name})
+      // switch (name) {
+      //   case 'standard parts':
+      //     openNewWindow(e, `${URL}/standard-parts`);
+      //     setTimeout(() => {
+      //       navigate('/');
+      //     }, 1000)
+      //     break;
 
-        case 'custom parts':
-          openNewWindow(e, `${URL}/custom-parts`);
-          setTimeout(() => {
-            navigate('/');
-          }, 1000)
-          break;
-        default:
-          break;
-      }
+      //   case 'custom parts':
+      //     openNewWindow(e, `${URL}/custom-parts`);
+      //     setTimeout(() => {
+      //       navigate('/');
+      //     }, 1000)
+      //     break;
+      //   default:
+      //     break;
+      // }
     }
 
   }
@@ -74,7 +73,7 @@ const PartManagementPage = () => {
             <select
               style={{ width: "9.5rem", borderRadius: "3px", borderStyle: "none", background: "rgba(183, 184, 192, 0.955)", outline: 'none', padding: "3px 4px 4px 3px", fontSize: "small", cursor: "pointer" }}
               onClick={(e) => handleChange(e)}>
-              <option>Create part</option>
+              {/* <option>Create part</option> */}
               {categoryItemsCtx.partCategories.map((item, ind) => {
                 return (
                   <option key={ind}>{item.value}</option>)

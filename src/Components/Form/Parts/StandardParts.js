@@ -166,7 +166,7 @@ const StandardParts = () => {
         setTimeout(() => {
           setTimer(false);
           closeWindow();
-        }, 5000);
+        }, 4000);
       }
      else{
       const data=await res.json();

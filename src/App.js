@@ -26,6 +26,8 @@ import CertificateOFInsurance from './Components/Form/SupplierDocument/Certifica
 import ComplianceCertificate from './Components/Form/SupplierDocument/ComplianceCertificate';
 import Invoices from './Components/Form/SupplierDocument/Invoice';
 import SupplierContract from './Components/Form/SupplierDocument/SupplierContract';
+import PartManagementPage from './Components/Pages/PartManagementPage';
+import SupplierPage from './Components/Pages/SupplierPage';
 
 
 function App() {
@@ -39,10 +41,10 @@ function App() {
           {isLoggedIn ? <>
           <Route path="/part-table" element={<Container/>} />
           <Route path="/search-supplier" element={<Container/>} />
-          <Route path="/create-supplier" element={<Container/>} />
+          <Route path="/create-supplier" element={<SupplierPage/>} />
           <Route path="/onboard-status" element={<Container/>} />
           <Route path="/contract-details" element={<Container/>} />
-          <Route path="/create-part" element={<Container/>} />
+          <Route path="/create-part" element={<PartManagementPage/>} />
           <Route path="/details/:id" element={<Container/>} />
           <Route path="/part-details/:id" element={<Container/>} />
           <Route path="/bom-structure/:id" element={<Container/>} />
@@ -50,6 +52,8 @@ function App() {
           <Route path="/part-historyInfo/:pid/:cid" element={<Container/>} />
           <Route path="/supplier-details/:id" element={<Container/>} />
           <Route path="/supplier-history/:id" element={<Container/>} />
+          <Route path="/supplier-historyInfo/:id/:pid" element={<Container/>} />
+
           <Route path="/part-historyInfo/:pid/:cid" element={<Container/>} />
           <Route path="/supplier-historyInfo/:pid/:cid" element={<Container/>} />
           <Route path="/document-table" element={<Container/>} />
