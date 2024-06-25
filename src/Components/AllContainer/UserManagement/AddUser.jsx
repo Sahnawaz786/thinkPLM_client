@@ -216,7 +216,7 @@ const AddUser = () => {
             localStorage.setItem("IDS", [ids]);
             message(
               "success",
-              "Users Added Succesfully pls reolad the page to see the latest data"
+              "Users Added Succesfully pls reload the page to see the latest data"
             );
             setTimer(true);
             setTimeout(() => {

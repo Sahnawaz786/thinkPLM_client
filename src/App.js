@@ -5,6 +5,7 @@ import AddExistingPart from './Components/AllContainer/BomStructure/AddExistingP
 import CreateNewPart from './Components/AllContainer/BomStructure/CreateNewPart';
 import CertificateDocEdit from './Components/AllContainer/CertificateOfInsuranceActions/CertificateDocEdit';
 import ComplianceDocEdit from './Components/AllContainer/ComplianceCertificateActions/ComplianceDocEdit';
+import InactivityTimeout from './Components/AllContainer/InactivityTimeout/InactivityTimeout';
 import InvoiceDocEdit from './Components/AllContainer/InvoiceActions/InvoiceDocEdit';
 import EditPart from './Components/AllContainer/PartsAction/EditPart';
 import EditSupplier from './Components/AllContainer/SupplierActions/EditSupplier';
@@ -35,7 +36,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-       
+       <InactivityTimeout/>
           <Routes>
           {isLoggedIn ? <>
           <Route path="/part-table" element={<Container/>} />
@@ -54,6 +55,7 @@ function App() {
           <Route path="/supplier-historyInfo/:id/:pid" element={<Container/>} />
 
           <Route path="/part-historyInfo/:pid/:cid" element={<Container/>} />
+          <Route path="/supplier-historyInfo/:pid/:cid" element={<Container/>} />
           <Route path="/document-table" element={<Container/>} />
           <Route path='/global-search' element={<Container/>} />
 

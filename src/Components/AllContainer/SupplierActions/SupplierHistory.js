@@ -17,7 +17,7 @@ const SupplierHistory = ({id,iteration_info,children}) => {
         const supplierInfo = await getSupplierHistoryById(id);
 
         const newSupplierInfo = (supplierInfo?.data?.supplier || []).map(elem => {
-            return { ...elem, name: supplierInfo?.data.name, category: supplierInfo?.data?.category, createdDate: supplierInfo.data.createdDate ,modifiedDate:supplierInfo.data.modifiedDate}
+            return { ...elem, name: supplierInfo?.data?.name, category: supplierInfo?.data?.category, createdDate: supplierInfo.data.createdDate ,modifiedDate:supplierInfo.data.modifiedDate}
           }).sort((a, b) => b.iteration_info - a.iteration_info);
           console.log({ supplierInfo, newSupplierInfo });
           setSupplierHistories(newSupplierInfo || []);

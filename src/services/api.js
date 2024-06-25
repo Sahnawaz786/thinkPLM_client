@@ -60,7 +60,7 @@ const refreshAccessToken = async () => {
 };
 
 // Set an interval to refresh the token every 10 minutes
-setInterval(refreshAccessToken,1410000); // 600,000 milliseconds = 10 minutes
+setInterval(refreshAccessToken,300000); // 600,000 milliseconds = 10 minutes
 //1410000
 export default api;
 
