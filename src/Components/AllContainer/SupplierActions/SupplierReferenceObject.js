@@ -1,29 +1,23 @@
-import DownloadIcon from '@mui/icons-material/Download';
-import React, { useEffect, useState } from 'react';
-import SupplierServices from '../../../services/supplier.services';
-import styles from '../../../style.module.css';
-import SupplierContainer from '../SupplierContainer/SupplierContainer';
+import DownloadIcon from "@mui/icons-material/Download";
+import React, { useEffect, useState } from "react";
+import SupplierServices from "../../../services/supplier.services";
+import styles from "../../../style.module.css";
+import SupplierContainer from "../SupplierContainer/SupplierContainer";
 
-const SupplierReferenceObject = ({id}) => {
+const SupplierReferenceObject = ({ id }) => {
+  const [file, setFile] = useState([]);
+  const [uid, setUid] = useState([]);
+  const { getSupplierById, getFileDownload } = new SupplierServices();
+  const [attachment, setAttachment] = useState([]);
 
-  const [file,setFile]=useState([]);
-  const [uid,setUid]=useState([])
-  const {getSupplierById,getFileDownload}=new SupplierServices();
-  const [attachment,setAttachment]  = useState([]);
-
-  
   const getSupplier = async (id) => {
-    
-    const supplierInfo=await getSupplierById(id);
+    const supplierInfo = await getSupplierById(id);
     setAttachment(supplierInfo?.data?.supplier[0]?.document);
-    console.log("hgdytdythfhgfhj",attachment)
+    console.log("hgdytdythfhgfhj", attachment);
     // const newSupplier = (supplierInfo?.data || [])
     // setUid(newSupplier?.document);
-
-
-  }
-  console.log("outer uid is:",uid)
-  
+  };
+  console.log("outer uid is:", uid);
 
   // const getFile = async (uid)=>{
   //   const fileInfo = await getFileDownload(uid);
@@ -35,9 +29,9 @@ const SupplierReferenceObject = ({id}) => {
   useEffect(() => {
     getSupplier(id);
     // getFile(uid)
-  }, [id,uid])
-  console.log("uid is:",uid)
-  console.log("file is:",file)
+  }, [id, uid]);
+  console.log("uid is:", uid);
+  console.log("file is:", file);
 
   const downloadFile = (url) => {
     // Create a link element
@@ -58,28 +52,29 @@ const SupplierReferenceObject = ({id}) => {
         <table>
           <thead>
             <tr>
-            <th>
-                    <span>Supplier Document</span>
-                   
-                    <span className={styles.fileType}>{attachment[0]?.fileType}</span>
-            </th>
+              <th>
+                <span style={{'fontSize':'9px'}}>Supplier Document</span>
+              </th>
             </tr>
           </thead>
           <tbody>
-          {file && (
-            <tr>
-              <td className={styles.icon_pointer} >
-                    <DownloadIcon  onClick={() => downloadFile(attachment[0]?.document)}   />
-                    <span className={styles.fileType}>{attachment[0]?.fileName}</span>
-              </td>
-            </tr>
-          )}
+            {file && (
+              <tr>
+                <td className={styles.icon_pointer}>
+                  <DownloadIcon
+                    onClick={() => downloadFile(attachment[0]?.document)}
+                  />
+                  <span className={styles.fileType}>
+                    {attachment[0]?.fileName}
+                  </span>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
-
       </div>
     </SupplierContainer>
   );
-}
+};
 
-export default SupplierReferenceObject
+export default SupplierReferenceObject;

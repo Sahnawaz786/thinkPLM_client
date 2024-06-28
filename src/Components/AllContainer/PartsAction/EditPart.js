@@ -135,7 +135,6 @@ const EditPart = () => {
           </div>
          :
     <div>
-      {/* <h3>Part Management</h3> */}
       <div className={styles.parentContainer}>
         <div className={styles.childContainer}>
           <div className={styles.systemAttribute}>

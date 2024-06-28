@@ -63,19 +63,18 @@ const Attachment = ({ id }) => {
               <tr>
                 <th>
                   <span>{attachment[0]?.attachmentType}</span>
-                  <span className={styles.fileType}>{attachment[0]?.fileType}</span>
+                  
                 </th>
                 <th>
                   <span>{attachment[1]?.attachmentType}</span>
-                  <span className={styles.fileType}>{attachment[1]?.fileType}</span>
+                 
                 </th>
                 <th>
                   <span>{attachment[2]?.attachmentType}</span>
-                  <span className={styles.fileType}>{attachment[2]?.fileType}</span>
+        
                 </th>
                 <th>
                   <span>{attachment[3]?.attachmentType}</span>
-                  <span className={styles.fileType}>{attachment[3]?.fileType}</span>
                 </th>
                
               </tr>

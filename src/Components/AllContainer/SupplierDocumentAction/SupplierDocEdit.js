@@ -175,10 +175,10 @@ const SupplierDocEdit = () => {
     };
 
     let obj = {
-        "termandTermination": attachments?.find((elem) => elem.attachmentType == "termandTermination"),
-        "goveringLawandJurisdication": attachments?.find((elem) => elem.attachmentType == "goveringLawandJurisdication"),
-        "signatures": attachments?.find((elem) => elem.attachmentType == "signatures"),
-        "contractDocument": attachments?.find((elem) => elem.attachmentType == "contractDocument"),
+        "termandTermination": attachments?.find((elem) => elem.attachmentType === "termandTermination"),
+        "goveringLawandJurisdication": attachments?.find((elem) => elem.attachmentType === "goveringLawandJurisdication"),
+        "signatures": attachments?.find((elem) => elem.attachmentType === "signatures"),
+        "contractDocument": attachments?.find((elem) => elem.attachmentType === "contractDocument"),
     }
 
     // useEffect(()=>{

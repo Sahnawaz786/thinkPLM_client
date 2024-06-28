@@ -65,11 +65,10 @@ const CertificateAttachment = ({ id }) => {
                 <tr>
                   <th>
                     <span>{attachment[0]?.attachmentType}</span>
-                    <span className={styles.fileType}>{attachment[0]?.fileType}</span>
+                    
                   </th>
                   <th>
                     <span>{attachment[1]?.attachmentType}</span>
-                    <span className={styles.fileType}>{attachment[1]?.fileType}</span>
                   </th>
                  
                 </tr>

@@ -83,8 +83,8 @@ return (
     <div className={classes.editIcons}>
     <img
         src='https://cdn-icons-png.freepik.com/512/3425/3425921.png'
-        width={30}
-        height={30}
+        width={20}
+        height={20}
         alt=''
         onClick={(e)=> {
           openNewWindow(e, `${URL}/supplier-document-edit/${id}`);

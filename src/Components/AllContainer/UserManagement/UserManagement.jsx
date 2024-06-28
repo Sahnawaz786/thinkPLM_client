@@ -7,7 +7,7 @@ import styles from "../../../style.module.css";
 import DisplayAlert from "../../../utils/DisplayAlert";
 import { URL, openNewWindow } from "../../../utils/helper";
 
-const { getUserByMultipleIds } = new UserServices();
+const { getUserByMultipleIds,getUSerById } = new UserServices();
 
 const UserManagement = () => {
   const navigate = useNavigate();
@@ -19,15 +19,17 @@ const UserManagement = () => {
   const { getUser, deleteUser } = new authenticationServices();
 
   let ids = localStorage?.getItem("IDS")?.split(",");
-  let urls = "";
+  let urls="";
   console.log("IDS HELLO", ids);
   ids?.forEach((elem)=>{
     urls+=`id=${elem}&`
   })
 
+  console.log('URLS',urls);
+
   const fetchUsers = async () => {
-    if(!urls){
-      const userData = await getUser();
+    if(urls!==""){
+      const userData = await getUSerById(urls?.slice(0,urls.length-1));
       setUsers(userData?.data || []);
     }else{
       const userData = await getUserByMultipleIds(urls.slice(0,urls.length-1));
@@ -72,8 +74,8 @@ const UserManagement = () => {
           <div title="Add User">
             <img
               src="/images/plus-icon.avif"
-              width={35}
-              height={35}
+              width={20}
+              height={20}
               alt="part"
               id={styles.hoverButton}
               className={styles.deleteIcon ? styles.activeBtn : ""}
@@ -86,8 +88,8 @@ const UserManagement = () => {
           <div title="Document">
             <img
               src="/images/minus2-logo.avif"
-              width={35}
-              height={35}
+              width={20}
+              height={20}
               alt=""
               className={styles.deleteIcon ? styles.activeBtn : ""}
               onClick={() => {
@@ -149,7 +151,7 @@ const UserManagement = () => {
                 <tr key={elem.id}>
                   <td>
                     <input
-                      className={styles.icon_pointer}
+                      className={styles.icon_pointer && styles.checkbox}
                       checked={elem.id === selectedId}
                       onChange={() => handleCheckboxChange(elem.id)}
                       onClick={() => setId(elem.id)}
@@ -180,8 +182,8 @@ const UserManagement = () => {
                     <img
                       className={styles.icon_pointer}
                       src="https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid"
-                      width={20}
-                      height={20}
+                      width={15}
+                      height={15}
                       onClick={() => {
                         navigate(`/user-details/${elem.id}`);
                       }}

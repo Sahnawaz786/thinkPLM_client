@@ -93,7 +93,7 @@ const EditUser=({id})=> {
     <div className={styles.signupContainer}>
       <div className={styles.innerContainer}>
         <div className={styles.childpart_header}>
-          <p>Create User:-</p>
+          <p>Edit User:-</p>
         </div>
 
         <div className={styles.signupFields}>

@@ -96,10 +96,11 @@ const SupplierPage = () => {
           </div>
 
           <div className={classes.labelContainer}>
+          <span className={classes.supplier_label  && classes.type }>TYPE : </span>
             <div className={classes.supplier_label_2}>
               <select
                 style={{
-                  width: "9.5rem",
+                  width: "12rem",
                   borderRadius: "3px",
                   borderStyle: "none",
                   background: "rgba(183, 184, 192, 0.955)",
@@ -107,6 +108,7 @@ const SupplierPage = () => {
                   padding: "3px 4px 4px 3px",
                   fontSize: "small",
                   cursor: "pointer",
+                  fontSize:'9px'
                 }}
                 onClick={handleChange}
               >

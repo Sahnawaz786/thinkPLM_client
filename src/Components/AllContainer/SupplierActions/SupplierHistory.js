@@ -80,8 +80,8 @@ console.log('hgjhfjfhvcghcgfcgf87677',histories)
                         >
                           <img
                             src='https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid'
-                            width={20}
-                            height={20}
+                            width={15}
+                            height={15}
                           />
                         </button></td>
                       </tr>
