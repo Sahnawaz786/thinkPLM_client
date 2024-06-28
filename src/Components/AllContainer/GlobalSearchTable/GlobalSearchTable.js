@@ -231,7 +231,7 @@ const GlobalSearchTable = () => {
 
                   <td>
                     <img
-                      src="/images/document.png"
+                      src="/images/supplier.png"
                       alt="part"
                       className={styles.display_supplier_icon}
                     />
@@ -788,7 +788,7 @@ const GlobalSearchTable = () => {
 
                   <td>
                     <img
-                      src="/images/document.png"
+                      src="/images/supplier.png"
                       alt="part"
                       className={styles.display_supplier_icon}
                     />

@@ -7,7 +7,7 @@ import styles from "../../../style.module.css";
 import DisplayAlert from "../../../utils/DisplayAlert";
 import { URL, openNewWindow } from "../../../utils/helper";
 
-const { getUserByMultipleIds,getUSerById } = new UserServices();
+const { getUserByMultipleIds,getUSerById,getAllUser } = new UserServices();
 
 const UserManagement = () => {
   const navigate = useNavigate();
@@ -32,10 +32,12 @@ const UserManagement = () => {
       const userData = await getUSerById(urls?.slice(0,urls.length-1));
       setUsers(userData?.data || []);
     }else{
-      const userData = await getUserByMultipleIds(urls.slice(0,urls.length-1));
+      const userData = await getAllUser();
        setUsers(userData?.data || []);
     }
   };
+
+
   
   console.log({ users });
   useEffect(() => {
