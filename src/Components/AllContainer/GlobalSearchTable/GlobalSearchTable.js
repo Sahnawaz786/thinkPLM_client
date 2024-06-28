@@ -267,7 +267,7 @@ const GlobalSearchTable = () => {
 
           {/* Supplier Contract */}
 
-          {searchData?.Documents?.map((elem, i) => {
+          {searchData?.Supplier_Contract_Document?.map((elem, i) => {
             console.log(i + 1, elem);
             return (
               <>
