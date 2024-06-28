@@ -27,9 +27,17 @@ const { getAllCertificateDocuments, deleteCertificateDocumentById } =
   new CertificateServices();
 
 const PartTable = () => {
-  const { globalSearchByNameAndNumber } = new globalSearchServices();
-  const { choice, showAlert, setShowAlert, searchData, setSearchData } =
-    useContext(UserContext);
+  const { globalSearchByNameAndNumber, globalSearchByCategory } =
+    new globalSearchServices();
+  const {
+    choice,
+    showAlert,
+    setShowAlert,
+    searchData,
+    setSearchData,
+    categorySearchData,
+    setCategorySearchData,
+  } = useContext(UserContext);
 
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
@@ -37,6 +45,7 @@ const PartTable = () => {
   const [invoiceData, setInvoiceData] = useState([]);
   const [certificateData, setCertificateData] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [searchCategory, setSearchCategory] = useState("");
   const [searchtext, setSearchText] = useState("");
   const [searchId, setSearchId] = useState("");
 
@@ -53,6 +62,29 @@ const PartTable = () => {
 
   const handleSearch = async () => {
     try {
+      const categoryData = await globalSearchByCategory(
+        searchCategory,
+        searchInput
+      );
+      console.log("categoryData", categoryData);
+
+      if (
+        (searchCategory === "part" &&
+          searchInput === "*" &&
+          categoryData?.data !== null) ||
+        (searchCategory === "document" &&
+          searchInput === "*" &&
+          categoryData?.data !== null) ||
+        (searchCategory === "supplier" &&
+          searchInput === "*" &&
+          categoryData?.data !== null) ||
+        (searchCategory === "all" &&
+          searchInput === "*" &&
+          categoryData?.data !== null)
+      ) {
+        setCategorySearchData(categoryData?.data || []);
+        navigate("/global-search");
+      }
       const searchInfo = await globalSearchByNameAndNumber(searchInput);
       const searchData = searchInfo?.data || [];
       console.log({ gazz: searchData });
@@ -62,7 +94,8 @@ const PartTable = () => {
         searchData.Supplier_Contract_Document?.length > 0 ||
         searchData.Complaince_Certificate_Document?.length > 0 ||
         searchData?.Certification_of_Insurance_Document?.length > 0 ||
-        searchData?.Invoice_Document?.length > 0
+        searchData?.Invoice_Document?.length > 0 ||
+        searchData?.Supplier?.length > 0
       ) {
         setSearchData(searchData);
         console.log(searchData, "gazal123");
@@ -436,6 +469,17 @@ const PartTable = () => {
         </div>
 
         <div className={styles.searchSection}>
+          <select
+            value={searchCategory}
+            onChange={(e) => setSearchCategory(e.target.value)}
+          >
+            <option value="">By Category</option>
+            <option value="all">All</option>
+            <option value="part">Parts</option>
+            <option value="document">Documents</option>
+            <option value="supplier">Suppliers</option>
+            {/* Add more categories as needed */}
+          </select>
           <input
             type="text"
             value={searchInput}
