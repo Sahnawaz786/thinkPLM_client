@@ -9,6 +9,7 @@ import { UserContext } from "../../../store/UserProvider";
 import styles from "../../../style.module.css";
 import DisplayAlert from "../../../utils/DisplayAlert";
 import { URL, openNewWindow } from "../../../utils/helper";
+
 const { deletePart } = new PartServices();
 const { deleteSupplier } = new SupplierServices();
 const { deleteInvoiceDocumentById } = new InvoiceServices();
@@ -16,12 +17,22 @@ const { deleteCertificateDocumentById } = new CertificateServices();
 const { deleteComplianceDocumentById } = new ComplianceServices();
 
 const GlobalSearchTable = () => {
-  const { choice, showAlert, setShowAlert, searchData, setSearchData } = useContext(UserContext);
+  const {
+    choice,
+    showAlert,
+    setShowAlert,
+    searchData,
+    setSearchData,
+    categorySearchData,
+    setCategorySearchData,
+  } = useContext(UserContext);
   console.log(searchData, "@@@");
   const [selectedId, setSelectedId] = useState(null);
   const [elem, setElem] = useState();
   const [id, setId] = useState();
   const navigate = useNavigate();
+
+  console.log("searchData", searchData);
 
   const handlePartDetails = (id) => {
     navigate("/part-details/" + id);
@@ -41,6 +52,10 @@ const GlobalSearchTable = () => {
 
   const handleCertificateOfInsuranceDetails = (id) => {
     navigate("/certificate-documents-details/" + id);
+  };
+
+  const handleSupplierDetails = (id) => {
+    navigate("/supplier-details/" + id);
   };
 
   const handleCheckboxChange = (id) => {
@@ -197,10 +212,63 @@ const GlobalSearchTable = () => {
             );
           })}
 
+          {searchData?.Supplier?.map((elem, i) => {
+            return (
+              <>
+                <tr key={i}>
+                  <td>
+                    <input
+                      className={styles.icon_pointer}
+                      checked={elem.id === selectedId}
+                      onChange={() => handleCheckboxChange(elem.id)}
+                      onClick={() => {
+                        setId(elem.id);
+                        setElem(elem);
+                      }}
+                      type="checkbox"
+                    />
+                  </td>
+
+                  <td>
+                    <img
+                      src="/images/document.png"
+                      alt="part"
+                      className={styles.display_supplier_icon}
+                    />
+                    {elem?.name}
+                  </td>
+
+                  <td>N/A</td>
+
+                  <td className={styles.open}>Open </td>
+
+                  <td>A</td>
+
+                  <td>{elem?.supplier[0]?.iteration_info}</td>
+
+                  <td>{elem?.createdDate}</td>
+
+                  <td>{elem?.modifiedDate}</td>
+                  <td>
+                    <img
+                      className={styles.icon_pointer}
+                      src="https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid"
+                      width={20}
+                      height={20}
+                      onClick={() => {
+                        handleSupplierDetails(elem.id);
+                      }}
+                    />
+                  </td>
+                </tr>
+              </>
+            );
+          })}
+
           {/* Supplier Contract */}
 
-          {searchData?.Supplier_Contract_Document?.map((elem, i) => {
-            console.log(i+1,elem)
+          {searchData?.Documents?.map((elem, i) => {
+            console.log(i + 1, elem);
             return (
               <>
                 <tr key={i}>
@@ -410,6 +478,342 @@ const GlobalSearchTable = () => {
                       height={20}
                       onClick={() => {
                         handleCertificateOfInsuranceDetails(elem.id);
+                      }}
+                    />
+                  </td>
+                </tr>
+              </>
+            );
+          })}
+
+          {/* search all parts by category */}
+
+          {categorySearchData?.Parts?.map((elem, i) => {
+            console.log({ elem });
+            return (
+              <>
+                <tr key={i}>
+                  <td>
+                    <input
+                      className={styles.icon_pointer}
+                      checked={elem.id === selectedId}
+                      onChange={() => setSelectedId(elem.id)}
+                      onClick={() => {
+                        setId(elem.id);
+                        setElem(elem);
+                      }}
+                      type="checkbox"
+                    />
+                  </td>
+
+                  <td>
+                    <img
+                      src="/images/parts.png"
+                      alt="part"
+                      className={styles.display_supplier_icon}
+                    />
+                    {elem?.part_name}
+                  </td>
+
+                  <td>{elem?.part_number}</td>
+
+                  <td className={styles.open}>Open </td>
+
+                  <td>A</td>
+
+                  <td>{elem?.parts[0]?.iteration_info || []}</td>
+
+                  <td>{elem?.createdDate}</td>
+
+                  <td>{elem?.parts[0]?.modifiedDate}</td>
+                  <td>
+                    <img
+                      className={styles.icon_pointer}
+                      src="https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid"
+                      width={20}
+                      height={20}
+                      onClick={() => {
+                        handlePartDetails(elem.id);
+                      }}
+                    />
+                  </td>
+                </tr>
+              </>
+            );
+          })}
+
+          {/* search all documents by category ,Supplier_Contract */}
+
+          {categorySearchData?.Supplier_Contract_Document?.map((elem, i) => {
+            console.log(elem, "elem");
+            return (
+              <>
+                <tr key={i}>
+                  <td>
+                    <input
+                      className={styles.icon_pointer}
+                      checked={elem.id === selectedId}
+                      onChange={() => handleCheckboxChange(elem.id)}
+                      onClick={() => {
+                        setId(elem.id);
+                        setElem(elem);
+                      }}
+                      type="checkbox"
+                    />
+                  </td>
+
+                  <td>
+                    <img
+                      src="/images/document.png"
+                      alt="part"
+                      className={styles.display_supplier_icon}
+                    />
+                    {elem?.document_name}
+                  </td>
+
+                  <td>{elem?.document_number}</td>
+
+                  <td className={styles.open}>Open </td>
+
+                  <td>A</td>
+
+                  <td>{elem?.supplier_contract[0]?.iteration_info}</td>
+
+                  <td>{elem?.createdDate}</td>
+
+                  <td>{elem?.modifiedDate}</td>
+                  <td>
+                    <img
+                      className={styles.icon_pointer}
+                      src="https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid"
+                      width={20}
+                      height={20}
+                      onClick={() => {
+                        handleSupplierContractDetails(elem.id);
+                      }}
+                    />
+                  </td>
+                </tr>
+              </>
+            );
+          })}
+
+          {/* search all documents by category , Invoice */}
+
+          {categorySearchData?.Invoice_Document?.map((elem, i) => {
+            return (
+              <>
+                <tr key={i}>
+                  <td>
+                    <input
+                      className={styles.icon_pointer}
+                      checked={elem.id === selectedId}
+                      onChange={() => handleCheckboxChange(elem.id)}
+                      onClick={() => {
+                        setId(elem.id);
+                        setElem(elem);
+                      }}
+                      type="checkbox"
+                    />
+                  </td>
+
+                  <td>
+                    <img
+                      src="/images/document.png"
+                      alt="part"
+                      className={styles.display_supplier_icon}
+                    />
+                    {elem?.invoice_name}
+                  </td>
+
+                  <td>{elem?.invoice_number}</td>
+
+                  <td className={styles.open}>Open </td>
+
+                  <td>A</td>
+
+                  <td>{elem?.invoice_Doc[0]?.iteration_info}</td>
+
+                  <td>{elem?.createdDate}</td>
+
+                  <td>{elem?.modifiedDate}</td>
+                  <td>
+                    <img
+                      className={styles.icon_pointer}
+                      src="https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid"
+                      width={20}
+                      height={20}
+                      onClick={() => {
+                        handleInvoiceDetails(elem.id);
+                      }}
+                    />
+                  </td>
+                </tr>
+              </>
+            );
+          })}
+
+          {/* search all documents by category , Complaince_certificate */}
+
+          {categorySearchData?.Complaince_Certificate_Document?.map(
+            (elem, i) => {
+              return (
+                <>
+                  <tr key={i}>
+                    <td>
+                      <input
+                        className={styles.icon_pointer}
+                        checked={elem.id === selectedId}
+                        onChange={() => handleCheckboxChange(elem.id)}
+                        onClick={() => {
+                          setId(elem.id);
+                          setElem(elem);
+                        }}
+                        type="checkbox"
+                      />
+                    </td>
+
+                    <td>
+                      <img
+                        src="/images/document.png"
+                        alt="part"
+                        className={styles.display_supplier_icon}
+                      />
+                      {elem?.document_name}
+                    </td>
+
+                    <td>{elem?.document_number}</td>
+
+                    <td className={styles.open}>Open </td>
+
+                    <td>A</td>
+
+                    <td>{elem?.docs[0]?.iteration_info}</td>
+
+                    <td>{elem?.createdDate}</td>
+
+                    <td>{elem?.modifiedDate}</td>
+                    <td>
+                      <img
+                        className={styles.icon_pointer}
+                        src="https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid"
+                        width={20}
+                        height={20}
+                        onClick={() => {
+                          handleComplianceCertificateDetails(elem.id);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                </>
+              );
+            }
+          )}
+
+          {/* search all documents by category , Certificate_of_insurance */}
+
+          {categorySearchData?.Certification_of_Insurance_Document?.map(
+            (elem, i) => {
+              return (
+                <>
+                  <tr key={i}>
+                    <td>
+                      <input
+                        className={styles.icon_pointer}
+                        checked={elem.id === selectedId}
+                        onChange={() => handleCheckboxChange(elem.id)}
+                        onClick={() => {
+                          setId(elem.id);
+                          setElem(elem);
+                        }}
+                        type="checkbox"
+                      />
+                    </td>
+
+                    <td>
+                      <img
+                        src="/images/document.png"
+                        alt="part"
+                        className={styles.display_supplier_icon}
+                      />
+                      {elem?.document_name}
+                    </td>
+
+                    <td>{elem?.document_number}</td>
+
+                    <td className={styles.open}>Open </td>
+
+                    <td>A</td>
+
+                    <td>{elem?.docs[0]?.iteration_info}</td>
+
+                    <td>{elem?.createdDate}</td>
+
+                    <td>{elem?.modifiedDate}</td>
+                    <td>
+                      <img
+                        className={styles.icon_pointer}
+                        src="https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid"
+                        width={20}
+                        height={20}
+                        onClick={() => {
+                          handleCertificateOfInsuranceDetails(elem.id);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                </>
+              );
+            }
+          )}
+
+          {/* search all documents by category , Suppliers */}
+
+          {categorySearchData?.Supplier?.map((elem, i) => {
+            return (
+              <>
+                <tr key={i}>
+                  <td>
+                    <input
+                      className={styles.icon_pointer}
+                      checked={elem.id === selectedId}
+                      onChange={() => handleCheckboxChange(elem.id)}
+                      onClick={() => {
+                        setId(elem.id);
+                        setElem(elem);
+                      }}
+                      type="checkbox"
+                    />
+                  </td>
+
+                  <td>
+                    <img
+                      src="/images/document.png"
+                      alt="part"
+                      className={styles.display_supplier_icon}
+                    />
+                    {elem?.name}
+                  </td>
+
+                  <td>N/A</td>
+
+                  <td className={styles.open}>Open </td>
+
+                  <td>A</td>
+
+                  <td>{elem?.supplier[0]?.iteration_info}</td>
+
+                  <td>{elem?.createdDate}</td>
+
+                  <td>{elem?.modifiedDate}</td>
+                  <td>
+                    <img
+                      className={styles.icon_pointer}
+                      src="https://cdn-icons-png.freepik.com/256/665/665049.png?semt=ais_hybrid"
+                      width={20}
+                      height={20}
+                      onClick={() => {
+                        handleSupplierDetails(elem.id);
                       }}
                     />
                   </td>
