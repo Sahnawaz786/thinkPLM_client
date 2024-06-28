@@ -67,8 +67,9 @@
     background-color: rgba(183, 184, 192, 0.955);
     padding: 6px 6px 6px 6px;
     border-radius: 3px;
-    font-size: small;
+    font-size: 9px;
     cursor: pointer;
+
 }
 
 /* .supplierContainer{
@@ -83,4 +84,15 @@
     align-items: center;
     margin-bottom: 15px;
     height: 62px;
+}
+
+.type{
+    margin-right: 5px;
+    padding: 6px;
+    background-color: rgba(183, 184, 192, 0.957);
+}
+
+.labelContainer{
+    display: flex;
+    align-items: center;
 }

@@ -149,7 +149,7 @@ const AddUser = () => {
               }
             }}
           >
-            Search
+            SearchAll
           </Button>{" "}
         </div>
       </div>

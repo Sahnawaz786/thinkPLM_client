@@ -70,12 +70,6 @@ const LeftBar = () => {
                 alt="logo"
                 className={styles.imageIcon}
               />
-              {/* <Link
-                style={{ textDecoration: 'none', color: 'black' }}
-                to={'/create-supplier'}
-              >
-                Create Supplier ➕
-              </Link> */}
               <span
                 style={{ cursor: "pointer" }}
                 onClick={(e) => openNewWindow(e, `${URL}/create-supplier`)}
@@ -104,15 +98,15 @@ const LeftBar = () => {
                     </div>
                     {elem?.isVisible ? (
                       <div className={styles.leftbarOptions}>
-                        <Link to={`/supplier-details/${elem?.id}`}>
+                        <Link className={styles.subHeadingFont} to={`/supplier-details/${elem?.id}`}>
                           Details
                         </Link>
-                        <Link to="/contract-details">Part Management</Link>
-                        <Link to="/contract-details">Document Management</Link>
+                        <Link className={styles.subHeadingFont} to="/" onClick={(e)=>localStorage.setItem("SupplierName",elem?.name)}>Part Management</Link>
+                        <Link className={styles.subHeadingFont} to="/document-table"  onClick={(e)=>localStorage.setItem("SupplierName",elem?.name)}>Document Management</Link>
 
-                        <Link to={`/user-management`}>User Management</Link>
-                        <Link to={"/onboard-status"}>Onboarding status</Link>
-                        <Link to="/contract-details">
+                        <Link className={styles.subHeadingFont} to={`/user-management`}>User Management</Link>
+                        <Link className={styles.subHeadingFont} to={"/onboard-status"}>Onboarding status</Link>
+                        <Link className={styles.subHeadingFont} to="/contract-details">
                           View Contract details
                         </Link>
                       </div>

@@ -28,7 +28,7 @@ import Invoices from './Components/Form/SupplierDocument/Invoice';
 import SupplierContract from './Components/Form/SupplierDocument/SupplierContract';
 import PartManagementPage from './Components/Pages/PartManagementPage';
 import SupplierPage from './Components/Pages/SupplierPage';
-
+import SupplierDocumentPage from './Components/Pages/SupplierDocumentPage';
 
 function App() {
   const token = localStorage.getItem('accessToken');
@@ -60,7 +60,7 @@ function App() {
           <Route path='/global-search' element={<Container/>} />
 
           <Route path="/reference-object/:id" element={<Container/>} />
-          <Route path="/supplier-documents" element={<Container/>} />
+          <Route path="/supplier-documents" element={<SupplierDocumentPage/>} />
           <Route path='/supplier-document-details/:id' element={<Container/>}/>
           <Route path='/attachment/:id' element={<Container/>} />
           <Route path='/document-history/:id' element={<Container/>}/>

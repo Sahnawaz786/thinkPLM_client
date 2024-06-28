@@ -8,6 +8,7 @@ import { closeWindow, isAuthenticated } from "../../../utils/helper";
 import message from "../../../utils/message";
 import classes from "../../Form/AllForm.module.css";
 import styles from "../../Form/Parts/PartAttribut.module.css";
+import FileInput from "../../../utils/FileInput";
 
 const EditSupplier = () => {
   const location = useLocation();
@@ -22,6 +23,7 @@ const EditSupplier = () => {
   );
   const [timer, setTimer] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [attachment,setAttachment] = useState('');
 
   const navigate = useNavigate();
 
@@ -76,6 +78,8 @@ const EditSupplier = () => {
     try {
       const supplierInfo = await getSupplierById(id);
       setSupplierData(supplierInfo?.data);
+      console.log('EDIT',supplierInfo?.data.supplier[0]?.document[0]?.fileName);
+      setAttachment(supplierInfo?.data.supplier[0]?.document[0])
     } catch (error) {
       console.log(error);
     }
@@ -193,7 +197,12 @@ const EditSupplier = () => {
                     />
                   </div>
                 </div>
-                <div className={styles.bussinessAttribute}>
+                
+              </div>
+             
+            </div>
+          </div>
+          <div className={styles.bussinessAttribute}>
                   <div className={classes.part_container}>
                     <div className={styles.master_part}>
                       <div className={styles.masterpart_header}>
@@ -224,11 +233,11 @@ const EditSupplier = () => {
                             onChange={(event)=>postUserData(event,0)}
                           />
                         </div>
-      
+{/*       
                         <div className={styles.formInput}>
                     <strong htmlFor='text'>Contact No:</strong>
                     <input type='number' id='contact' name="contact" value={supplierData?.supplier[0]?.contact} onChange={(event)=>postUserData(event,0)} />
-                  </div>
+                  </div> */}
 
                   <div className={styles.formInput}>
                     <strong htmlFor="text">Email ID:</strong>
@@ -691,7 +700,9 @@ const EditSupplier = () => {
                   </div>
                   <div className={styles.formInput}>
                     <strong htmlFor='document'>Upload Contract Document:</strong>
-                    <input type='file' className={styles.partName}  id='document' name="document"  onChange={handleFileUpload} />
+                    {/* <input type='file' className={styles.partName}  id='document' name="document"  onChange={handleFileUpload} /> */}
+                    <FileInput fileName={attachment} setFileName={handleFileUpload} />
+                  
                   </div>
                       </div>
                     </div>
@@ -702,18 +713,6 @@ const EditSupplier = () => {
                     </Button>{' '}
                   </div>
                 </div>
-              </div>
-            </div>
-            <div style={{ display: "flex", justifyContent: "right" }}>
-              <Button
-                variant="primary"
-                onClick={(e) => submitHandler(e)}
-                disabled={isButtonDisabled}
-              >
-                Submit
-              </Button>{" "}
-            </div>
-          </div>
         </div>
       </div>
     </div>

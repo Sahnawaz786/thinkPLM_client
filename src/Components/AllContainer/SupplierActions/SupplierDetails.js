@@ -71,8 +71,8 @@ return (
     <div className={classes.editIcons}>
     <img
         src='https://cdn-icons-png.freepik.com/512/3425/3425921.png'
-        width={30}
-        height={30}
+        width={20}
+        height={20}
         alt=''
         onClick={(e)=> handleEditSupplier(e) }
         className={styles.icon_pointer}
@@ -81,8 +81,7 @@ return (
       />
       <img
         src='https://cdn-icons-png.freepik.com/512/9740/9740598.png'
-        width={30}
-        height={30}
+       
         alt=''
         className={styles.deleteIcon}
         onClick={(e)=>setShowAlert(true)}

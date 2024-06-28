@@ -44,7 +44,7 @@ const SignUp = () => {
     e.preventDefault();
     setIsButtonDisabled(true)
     setTimer(true);
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
 
     try {
       const response = await axios.post(
@@ -183,6 +183,7 @@ const SignUp = () => {
               name="supplier_category"
               value={selected}
               onChange={(e) => handleChange(e)}
+              className={styles.selectOption}
             >
               <option className={styles.partName}> Supplier Category </option>
               {categoryItemsCtx.category.map((item, ind) => {
@@ -193,7 +194,7 @@ const SignUp = () => {
           <div className={styles.fields}>
             <span>Supplier Name:</span>
             <select
-              className={styles.selectFormInput}
+               className={styles.selectOption}
               name="supplierName"
               value={formData.supplierName}
               onChange={(e) => postUser(e)}

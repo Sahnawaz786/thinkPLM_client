@@ -13,8 +13,8 @@
   .detailContainer{
     width: 70vw;
     height: 75vh;
-    margin-left: 15px;
-    margin-top: 1rem;
+    /* margin-left: 15px; */
+    margin-top: 2rem;
   }
   
   .part_container {
@@ -28,11 +28,11 @@
     max-width: 85vw;
     width: 80vw !important;
     max-height: auto;
-    height: 13.5rem;
+    height: 15.5rem;
     border: 1px solid black;
     padding: 20px;
     position: relative;
-    margin-left: 10px;
+    margin-left: 26px;
   }
   .masterpart_header {
     position: absolute;
@@ -54,6 +54,7 @@
   }
   .master_part p {
     margin: 5px;
+    font-size: 10px;
   }
   
   .child_part {
@@ -68,16 +69,17 @@
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-left: 13px;
+    margin-left: 2.9rem;
     position: relative;
   }
   .child_part p {
     margin: 3px;
+    font-size: 10px;
   }
   
   .childpart_header {
     position: absolute;
-    top: -16px; /* Adjust this value as needed */
+    top: -15px; /* Adjust this value as needed */
     left: 10px; /* Adjust this value as needed */
     background-color: white;
     padding: 0 5px;
@@ -85,7 +87,7 @@
     border-radius: 5px;
   }
   .childpart_header p {
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
   }
   

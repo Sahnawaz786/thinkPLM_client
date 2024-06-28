@@ -35,7 +35,7 @@ const {getUser,getCurrentUser}=new authenticationServices();
   return (
     <div className={styles.navbar}>
       <div>
-        <p ><Link className={styles.home}  onClick={linkHandler}>ThinkPLM</Link></p>
+        <p ><Link className={styles.home}  onClick={(e)=>{localStorage.setItem("SupplierName",'');linkHandler()}}>ThinkPLM</Link></p>
       </div>
       <div>
         {users?.slice(0, 1)?.map((user)=>{

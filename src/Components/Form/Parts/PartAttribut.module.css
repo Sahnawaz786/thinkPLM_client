@@ -41,12 +41,12 @@
 }
 
 strong{
-    width: 20vw;
+    width: 15vw;
 }
 
 
 .partName {
-    width: 20rem;
+    width: 29rem;
     vertical-align: baseline;
     padding: 3px;
 }
@@ -77,8 +77,8 @@ h3{
 }
 
 .selectFormInput{
-    width: 22vw;
-    height: 1.8rem;
+    width: 20.5rem;
+    height: 2rem;
 }
 
 .formContainer{
@@ -90,9 +90,9 @@ h3{
 
 .masterpart_header {
     position: absolute;
-    top: -23px; /* Adjust this value as needed */
+    top: -13px; /* Adjust this value as needed */
     left: 10px; /* Adjust this value as needed */
-    background-color: rgb(213, 210, 210);
+    background-color: white;
     padding: 0 5px;
     /* border: 1px solid black; */
     border-radius: 5px;
@@ -103,6 +103,7 @@ h3{
   }
   .master_part p {
     margin: 5px;
+    font-size: 9px;
   }
 
   .master_part {
@@ -130,7 +131,7 @@ h3{
     font-weight:bold;
     border:2px solid rgba(25, 24, 24, 0.153);
     padding: 11px;
-    background-color: rgba(183, 184, 192, 0.955);
+    background-color: white;
     /* box-shadow: 0 15px 20px rgba(0,0,0,3); */
     height:50vh;
     border-radius: 5px;

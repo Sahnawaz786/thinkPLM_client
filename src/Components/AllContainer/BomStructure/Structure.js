@@ -124,8 +124,8 @@ const Structure = ({ id }) => {
                   <img
                     src='/images/parts.png'
                     className={styles.icon_pointer}
-                    width={35}
-                    height={35}
+                    width={20}
+                    height={20}
                     alt='part'
                     onClick={(e) => modalAddHandler(e)}
                   />
@@ -152,8 +152,8 @@ const Structure = ({ id }) => {
                 <p>
                   <img
                     src='https://cdn-icons-png.freepik.com/512/9740/9740598.png'
-                    width={30}
-                    height={30}
+                    width={20}
+                    height={20}
                     alt=''
                     className={styles.deleteIcon && styles.icon_pointer}
                     onClick={(e) => setShowDeleteBomModal(true)}
@@ -166,8 +166,8 @@ const Structure = ({ id }) => {
                 <p>
                   <img
                     src='/images/parts.png'
-                    width={35}
-                    height={35}
+                    width={20}
+                    height={20}
                     alt='part'
                     onClick={(e) => createModalAddHandler(e)}
                     className={styles.icon_pointer}

@@ -1,10 +1,10 @@
 .rightBar_bomContainer{
     border:1px solid black;
     width:56vw !important;
-    height:69vh !important;
+    height:65.4vh !important;
     margin: -5px;
     position:relative;
-    bottom:-13px;
+    bottom:-9px;
 }
 
 .detailContainer{
@@ -25,7 +25,7 @@
     max-width: 85vw;
     width: 53vw !important;
     max-height: auto;
-    height: 13.5rem;
+    height: 16.5rem;
     border: 1px solid black;
     padding: 20px;
     position: relative;
@@ -59,7 +59,7 @@
     max-width: 85vw;
     width: 53vw !important;
     max-height: auto;
-    height: 13.5rem;
+    height: 14.5rem;
     border: 1px solid black;
     padding: 20px;
     position: relative;
